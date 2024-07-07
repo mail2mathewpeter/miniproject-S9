@@ -65,10 +65,15 @@
 						  </div>
 								<form action="{% url 'verify_otp' %}"method="post" class="signin-form">
 									{% csrf_token %} 
-									{% csrf_token %} 
-								<center><font color="red">{% if error %}
-									<p>{{ error }}</p>
-								{% endif %}</font></center>
+									{% if messages %}
+									{% for message in messages %}
+										<div class="alert alert-{{ message.tags }}">
+											<font color="red">{{ message }}</font>
+										</div>
+									{% endfor %}
+								{% endif %}
+									
+								
 							  <div class="form-group mb-3">
 								  <label class="label" for="name1"></label>
 								  <input type="text" class="form-control" placeholder="Enter otp"name="otp" required>
@@ -102,9 +107,9 @@
 	  <script src="js/main.js"></script>
 	</div>
 	<nav1>
-		<div style="margin-left:60px;margin-top:5px"><i><font size="5"color="orange">Expert Homecare</font></i></div>  
+		<div style="margin-left:60px;margin-top:5px"><i><font size="5" color="orange"><img src ="{% static 'images/1.png' %}" width="250"></font></i></div>
 		<div class="w-100">
-			<div style="margin-top:-30px;margin-left:-60px;">
+			<div style="margin-top:-60px;margin-left:-60px;">
 			<p class="social-media d-flex justify-content-end">
 				<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-instagram"></span></a>
 				<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>

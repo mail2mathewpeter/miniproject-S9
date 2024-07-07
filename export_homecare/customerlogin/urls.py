@@ -20,6 +20,18 @@ urlpatterns = [
        path('updatepassword', views.updatepassword, name='updatepassword'),
       path('deactiveaccountuser', views.deactiveaccountuser, name='deactiveaccountuser'),
           path('deactivefunctionuser', views.deactivefunctionuser, name='deactivefunctionuser'),
-      
-       
+    path('error/', views.custom_error_view, name='your_custom_error_view'),
+   path('validate_email/', views.validate_email, name='validate_email'),
+    path('logout/', views.logout_view, name='logout'),
+          path('verify_otp1emailset/', views.verify_otp1emailset, name='verify_otp1emailset'),
+         
+
+ path('emailverify/', views.emailverify, name='emailverify'),
+
+
+
+    #    path('reset_password/', auth_views.PasswordResetView.as_view(), name="reset_password"),
+    # path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
+    # path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
+    # path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(), name="password_reset_complete"),
 ]

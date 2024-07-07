@@ -116,6 +116,17 @@
 
                     }
                 }),
+                $("#gender").keyup(function () {
+                    var n9 = document.getElementById("gender");
+                    var n10 = document.getElementById("gender1");
+                   
+                    if (n9.value == "" || n10.value == "" ) {
+                        document.getElementById("text10").innerHTML = "<span class='error'>Please Select Gender</span>";
+                        mod9=1;
+
+                    }
+                 
+                }),
                 $("#cpassword").keyup(function () {
                     var n7 = document.getElementById("password");
                     var n8 = document.getElementById("cpassword");
@@ -139,7 +150,7 @@
                     }
                 }),
                 $("#register").click(function () {
-                    if(mod1==1 ||mod2==1 ||mod3==1 ||mod4==1 ||mod5==1 ||mod6==1)
+                    if(mod1==1 ||mod2==1 ||mod3==1 ||mod4==1 ||mod5==1 ||mod6==1 ||mod9==1)
 {
     $('#register').attr("disabled", true);
     $('#register').css("background","lightblue");
@@ -219,7 +230,7 @@
                         </div>
                         <a class="list-group-item " href="{% url 'deactiveaccountuser' %}"><i class="fe-icon-map-pin text-muted"></i>Deactivate account</a>
                     
-                    <a class="list-group-item" href="userloginpage.php">
+                    <a class="list-group-item" href="{% url 'userloginhome' %}">
                         <div class="d-flex justify-content-between align-items-center">
                             <div><i class="fe-icon-tag mr-1 text-muted"></i>
                                 <div class="d-inline-block font-weight-medium text-uppercase">Home page</div>
@@ -275,9 +286,10 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="account-phone">Gender</label>
-<br><input type="radio"  {% if customer.gender == 'male' %} checked {% endif %} name="gender" value="male"> Male
-<input type="radio"  {% if customer.gender == 'female' %} checked {% endif %} name="gender" value="female"> Female<br>
-                    </div>
+<br><input type="radio"  {% if customer.gender == 'male' %} checked {% endif %} id="gender" name="gender" value="male"> Male
+<input type="radio"  {% if customer.gender == 'female' %} checked {% endif %} id="gender1"name="gender" value="female"> Female<br>
+<span id="text10"></span></td>                   
+</div>
                 </div>
                
                 <!-- <div class="col-md-6">
@@ -302,7 +314,7 @@
                             <input class="custom-control-input" type="checkbox" id="subscribe_me" checked="">
                            <a href="{% url 'userloginhome' %}"class="btn btn-style-1 btn-primary" >Back</a>
                         </div>
-                        <button type="submit" class="btn btn-style-1 btn-primary" name="sub" id="register">Update</button>
+                        <button type="submit" class="btn btn-style-1 btn-primary"  name="sub" id="register">Update</button>
                     </div>
                 </div>
             </form>

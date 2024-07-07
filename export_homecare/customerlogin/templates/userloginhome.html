@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   {% load static %}
@@ -12,6 +13,24 @@
     <title></title>
     <style>
         .error {
+            color: red;
+          
+            font-size: 15px;
+        }
+        k{
+position: absolute;
+  text-indent: 50px;
+top: -25;
+left: 53;
+color: #7ab700;
+font: bold 100px urw gothic l;
+background-color: #2cac23;
+background: white;
+width: 96%;
+size:10px;
+height: 45px;
+}
+.error {
             color: red;
     
             font-size: 15px;
@@ -107,7 +126,35 @@
         a.text-button-icon1:hover i {
             padding-left: 5px;
         }
-        </style>
+a.text-button-icon1 {
+  text-transform: uppercase;
+  color: green;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  -webkit-transition: all 0.3s ease 0s;
+  -moz-transition: all 0.3s ease 0s;
+  -o-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+}
+
+a.text-button-icon1 i {
+  margin-left: 5px;
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  -moz-transition: all 0.3s ease-in-out 0s;
+  -o-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+a.text-button-icon1:hover {
+  color: #5fb759;
+}
+
+a.text-button-icon1:hover i {
+  padding-left: 5px;
+}
+
+    </style>
 <script>
    
         $(document).ready(function () {
@@ -296,8 +343,8 @@ mod4=0;
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
-                        <!-- ***** Logo Start ***** --><div style="margin-top:15px;">
-<img src="https://www.keralatourism.org/images/caravan-tourism/caravan-kerala-logo.png" alt=""width="200"height="60">
+                        <!-- ***** Logo Start ***** --><div style="margin-top:1px;">
+                          <img src ="{% static 'images/logonew.png' %}" width="250">
                         
 </div>   
                         <!-- ***** Logo End ***** -->
@@ -308,8 +355,9 @@ mod4=0;
                             <li class="scroll-to-section"><a href="#top" class="active"><font color="black">Home</font></a></li>
                             <li class="scroll-to-section"><a href="#about">About</a></li>
                             <li class="scroll-to-section"><a href="#projects">Images</a></li>
-                            <li class="scroll-to-section"><a href="caravanhome.php">Caravan</a></li>
+                            <li class="scroll-to-section"><a href="">Services</a></li>
                             <li class="scroll-to-section"><a href="#contact-us">Contact Us</a></li> 
+                             
                             {% if customer %}
                             {{ customer.email }}
                             {% else %}
@@ -318,7 +366,7 @@ mod4=0;
                             <div style="margin-top:9px;">
                                 <div class="dropdown">
                                
-                                    <img src="images/" alt="Cinque Terre" width="70"
+                                    <img src="{% static customer.photo %}" alt="Cinque Terre" width="70"
                                         height="50" class="k">
                                     <div class="dropdown-content" style="right:0;">
 
@@ -328,7 +376,7 @@ mod4=0;
                                                 >My Bookings</a></div></div>
 
                                         <div style="margin-left:50px">
-                                            <div class="desc"><a href="logout.php" class=n9>LOGOUT</a></div>
+                                            <div class="desc"><a href="{% url 'logout' %}" class=n9>LOGOUT</a></div>
                                         </div>
 
                                     </div>
@@ -337,7 +385,6 @@ mod4=0;
                            
                             </div>
 
-                        </ul>
                         </ul>        
                         <a class='menu-trigger'>
                             <span>Menu</span>
@@ -372,14 +419,14 @@ mod4=0;
           <!-- Item -->
           <div class="item">
             <div class="img-fill">
-                <img src="img/71.jpg"height="500" alt="">            
+                <img src="{% static 'images/wall7.jpg' %}"height="500" alt="">            
 
                 <div class="text-content">
 
-                  <h3><font color="orange"size="5">Welcome To carevan website</font></h3>
-                  <h5>Life is a journey, enjoy the ride</h5>
+                  <h3><font color="yellow"size="5"><div style="margin-top: 70px;"> Welcome To Expert Homecare website</div></font></h3>
+                  <h5><font color="#feffea">Trusted Solutions for Every Home , Where Quality Meets Care</font></h5>
                   <a href="#about" class="main-stroked-button">Learn More</a>
-                  <a href="#" class="main-filled-button">Book Your Ticket</a>
+                  <a href="#" class="main-filled-button">Book Your Service</a>
  
                 </div>
 
@@ -391,12 +438,12 @@ mod4=0;
           
           <div class="item">
             <div class="img-fill">
-                <img src="uploads/8.jpg" alt=""height="300">
+                <img src="{% static 'images/wall2.jpg' %}" alt=""height="300">
                 <div class="text-content">
-                  <h3><font color="black"size="5">Welcome To carevan website</font></h3>
-                  <h5>Home is where you park it</h5>
+                  <h3><font color="yellow"size="5">Welcome To Expert Homecare website</font></h3>
+                  <h5>Your Home, Our Expertise , Ensuring Comfort and Care Every Step of the Way</h5>
                   <a href="#about" class="main-stroked-button">Read More</a>
-                  <a href="#" class="main-filled-button">Book Your Ticket </a>
+                  <a href="#" class="main-filled-button">Book Your Service </a>
                 </div>
             </div>
           </div>
@@ -417,37 +464,37 @@ mod4=0;
                     <div class="left-text-content">
                         <div class="section-heading">
                             <h6>About Us</h6>
-                            <h2>Our top features in Caravan is</h2>
+                            <h2>Our top features in expert homecare </h2>
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <div class="service-item">
                                     <img src="{% static 'assets/images/service-item-01.png' %}" alt="">
-                                    <h4>Location Tracking</h4>
+                                    <h4>Plumbing Services</h4>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="service-item">
                                     <img src="{% static 'assets/images/service-item-01.png' %}" alt="">
-                                    <h4> charging system</h4>
+                                    <h4> Electrical Repairs</h4>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="service-item">
                                     <img src="{% static 'assets/images/contact-info-03.png' %}" alt="">
-                                    <h4>Net Connectivity</h4>
+                                    <h4>Appliance Repair</h4>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="service-item">
                                     <img src="{% static 'assets/images/contact-info-03.png' %}" alt="">
-                                    <h4>Audio / Video Facility</h4>
+                                    <h4>HVAC Maintenancey</h4>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="service-item">
                                     <img src="{% static 'assets/images/contact-info-03.png' %}" alt="">
-                                    <h4>kitchen  facility</h4>
+                                    <h4>Home Theater Setup</h4>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
@@ -460,20 +507,15 @@ mod4=0;
                             <div class="col-md-6 col-sm-6">
                                 <div class="service-item">
                                     <img src="{% static 'assets/images/contact-info-03.png' %}" alt="">
-                                    <h4>Air-conditioning</h4>
+                                    <h4>Garage Door Repair</h4>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="service-item">
                                     <img src="{% static 'assets/images/contact-info-03.png' %}" alt="">
-                                    <h4>Bedroom</h4>
+                                    <h4>Smart Home Setup</h4>
                                 </div>
                             </div>
-                            {% if customer %}
-                            {{ customer.email }}
-                            {% else %}
-                            <p>No customer data found.</p>
-                            {% endif %}
                             <div class="col-md-12">
                                 <a href="#" class="main-button-icon">
                                    Learn More <i class="fa fa-arrow-right"></i>
@@ -484,12 +526,16 @@ mod4=0;
                 </div>
                 <div class="col-lg-6 col-md-6 col-xs-12">
                     <div class="right-text-content">
-                        <p><font color="blue">Tourist Caravans</font> are vehicles specially built for the purpose of travel, leisure and accommodation. The customized stylish vehicles will be equipped with all the trappings for
-                             a smooth ride and comfortable stay. They include Rigid as well as Towed/Trailer Caravans. In Rigid Caravans, the propelling mechanism and accommodation facilities will be built as a single unit. However in Trailers,
-                             the accommodation facilities shall be a separate unit which will be towed by a suitable vehicle for transportation. The ideal length for the Caravan shall be about 8.5 m.
-                            <br><br>
-                            Keravan Kerala offers big opportunities for investors to operate specially-built caravans for travel, leisure and stay. It also envisages a key role for a host of stake-holders, including local self government institutions, 
-                            to set up eco-friendly Caravan Parks across the state to enable the visitors to spend a night or a day or station for an extended period to explore the destination of their choice.
+                      <p> At <font color="blue">Expert Homecare</font> , we are dedicated to providing top-notch home maintenance and repair services that cater to all your household needs. Our mission is to ensure your home remains a safe, comfortable, and well-maintained space through our extensive range of services.
+
+                          Our customer-centric approach prioritizes your satisfaction by listening to your needs and customizing our services to meet your expectations. We partner with skilled and verified professionals to deliver high-quality and reliable services you can trust. Our comprehensive solutions cover everything from plumbing and electrical repairs to interior design consultations and smart home setups.
+                          
+                          We strive to provide maximum convenience with our user-friendly platform, enabling you to easily book services, track progress in real-time, and make secure payments. Innovation is at the heart of our service enhancements, with features like AI chatbot support and advanced search and filtering to ensure you get the best service experience.
+                        </div>  
+                          
+                          
+                  
+
                             </p>
                     </div>
                 </div>
@@ -508,8 +554,10 @@ mod4=0;
                             <img src="{% static 'assets/images/features-icon-1.png' %}" alt="">
                         </div>
                         <div class="features-content">
-                            <h4>Caravan Parks </h4>
-                            <p>Caravan Parks will be located in natural settings, giving top priority to tourists' safety and security and hygienic features. These parks will be a completely safe and secure zone offering hassle-free and stress-free environment to tourists, protected with necessary features like proper fencing, adequate security and safety arrangements, patrolling and surveillance cameras.</p>
+                            <h4>Customer Support </h4>
+                            <p>At Expert Homecare, we prioritize your satisfaction and convenience. Our dedicated customer support team is here to assist you every step of the way. Whether you have questions about our services, need help with booking, or require assistance after a repair, we're just a call or click away.We understand the importance of timely assistance. Our customer support agents are trained to provide prompt responses to your queries and concerns and also we prioritize your satisfaction and convenience. 
+                            </p>
+                           
                             <a href="#" class="text-button-icon">
                                 <div style="margin-top:25px"> Learn More<i class="fa fa-arrow-right"></i></div> 
                             </a>
@@ -522,10 +570,11 @@ mod4=0;
                             <img src="{% static 'assets/images/features-icon-1.png' %}" alt="">
                         </div>
                         <div class="features-content">
-                            <h4>Waste Management</h4>
-                         <div style="margin-top:-15px"><P><font size="10">.</font> Provision for the segregation of the garbage into biodegradable (kitchen waste etc), non- bio-degradable (thermo coal products, aluminium foil, cigarette buts etc) & recyclable (newspapers, bottles, cans etc) material.
-                          <br> <font size="10">.</font>System for the reception, storage and disposal of all the refuse and waste matter originating from the park.</P> 
-<br></div> 
+                            <h4>Quality Assurance</h4>
+                         <div style="margin-top:-15px"><P><font size="10"></font> Expert Homecare is committed to delivering high-quality repair services that meet industry standards and exceed customer expectations. We ensure thorough inspections and use of quality materials for every repair job to guarantee lasting results.Our pricing policy is transparent and upfront. Before any work begins, we provide detailed estimates outlining the costs involved. 
+                          We stand behind our workmanship. Expert Homecare offers a satisfaction guarantee on all repair services. 
+                       
+</div> 
                             <a href="#" class="text-button-icon">
                                 Learn More <i class="fa fa-arrow-right"></i>
                             </a>
@@ -539,7 +588,8 @@ mod4=0;
                         </div>
                         <div class="features-content">
                             <h4>Safety & security</h4>
-                            <p>A properly equipped First Aid kit should be available at the reception and adequate first aid training should be provided to the staff. The facility of doctor on call should be available at the park and a well defined mechanism shall be in place to handle any medical emergency. The park management shall maintain effective coordination with the local medical establishments.</p>
+                            <p>At Expert Homecare, safety is our top priority in every repair and maintenance service we provide. We adhere strictly to industry safety standards and regulations to ensure the well-being of our customers, employees, and properties. Our team is trained extensively in safety protocols, minimizing risks and ensuring a secure environment during all service operations.
+                            Our goal is not only to fix your home but also to provide peace of mind, knowing that your safety and security are in good hands with Expert Homecare.</p>
                             <a href="#" class="text-button-icon">
                                 Learn More <i class="fa fa-arrow-right"></i>
                             </a>
@@ -561,7 +611,7 @@ mod4=0;
                         <h2>Don’t miss this chance!</h2>
                     </div>
                     <div class="subscribe-content">
-                        <p>Keravan Kerala offers big opportunities for investors to operate specially-built caravans for travel, leisure and stay. It also envisages a key role for a host of stake-holders, including local self government institutions, to set up eco-friendly Caravan Parks across the state to enable the visitors to spend a night or a day or station for an extended period to explore the destination of their choice.</p>
+                        <p>Choose Expert Homecare for our extensive experience in the industry, proven track record of customer satisfaction, and deep community engagement. We prioritize environmental responsibility by implementing eco-friendly practices without compromising on quality.</p>
                         <div class="subscribe-form">
                             <form id="subscribe-now" action="" method="get">
                                 <div class="row">
@@ -594,16 +644,16 @@ mod4=0;
             <div class="col-lg-3">
                 <div class="section-heading">
                     <div style="margin-top:60px">
-                    <h6>Our Images</h6>
-                    <h2>Some of our latest Images</h2>
+                    <h6>Our Images</h6><Br>
+                    <h3>Some of our latest Product and Service Images</h3>
                 </div>
                
                 <div class="filters">
                     <ul>
                         <li class="active" data-filter="*">All</li>
-                        <li data-filter=".des">Caravan </li>
-                        <li data-filter=".dev">Hill stations</li>
-                        <li data-filter=".gra">Waterfalls</li>
+                        <li data-filter=".des">Plumbing </li>
+                        <li data-filter=".dev">Electrical</li>
+                        <li data-filter=".gra">Appliance Repair</li>
                       <li data-filter=".tsh"></li>
                     </ul>
                 </div>
@@ -614,94 +664,80 @@ mod4=0;
                     <div class="row grid">
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all des">
                           <div class="item">
-                            <a href="img/1.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/1.jpg"width="150"height="150" alt=""></a>
+                            <a href="{% static 'images/5.png' %}" data-lightbox="image-1" data-title="Our Projects"><img src="{% static 'images/5.png' %}"width="150"height="150" alt=""></a>
                           </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all des">
                             <div class="item">
-                              <a href="img/9.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/9.jpg"width="150"height="150" alt=""></a>
+                              <a href="{% static 'images/6.png' %}" data-lightbox="image-1" data-title="Our Projects"><img src="{% static 'images/6.png' %}"width="150"height="150" alt=""></a>
                             </div>
                           </div>
                         
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all dev">
                           <div class="item">
-                            <a href="img/8.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/8.jpg" height="150"alt=""></a>
+                            <a href="{% static 'images/13.png' %}" data-lightbox="image-1" data-title="Our Projects"><img src="{% static 'images/13.png' %}" height="150"alt=""></a>
                           </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all dev">
                             <div class="item">
-                              <a href="img/15.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/15.jpg" height="150"alt=""></a>
+                              <a href="{% static 'images/15.png' %}" data-lightbox="image-1" data-title="Our Projects"><img src="{% static 'images/15.png' %}" height="150"alt=""></a>
                             </div>
                           </div>
                           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all dev">
                             <div class="item">
-                              <a href="img/16.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/16.jpg" height="150"alt=""></a>
+                              <a href="{% static 'images/18.png' %}" data-lightbox="image-1" data-title="Our Projects"><img src="{% static 'images/14.png' %}" height="150"alt=""></a>
                             </div>
                           </div>
                           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all dev">
                             <div class="item">
-                              <a href="img/17.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/17.jpg" height="150"alt=""></a>
+                              <a href="{% static 'images/17.png' %}" data-lightbox="image-1" data-title="Our Projects"><img src="{% static 'images/17.png' %}" height="150"alt=""></a>
                             </div>
                           </div>
-                          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all dev">
+                        
+                          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all gra">
                             <div class="item">
-                              <a href="img/18.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/18.jpg" height="150"alt=""></a>
-                            </div>
+                              <a href="{% static 'images/18.png' %}" data-lightbox="image-1" data-title="Our Projects"><img src="{% static 'images/18.png' %}" height="150"alt=""></a>
+                            </div>  
                           </div>
-                          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all dev">
+                          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all gra">
                             <div class="item">
-                              <a href="img/8.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/8.jpg" height="150"alt=""></a>
-                            </div>
-                          </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all gra">
-                            <div class="item">
-                              <a href="img/10.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/10.jpg" height="150"alt=""></a>
+                              <a href="{% static 'images/19.png' %}" data-lightbox="image-1" data-title="Our Projects"><img src="{% static 'images/19.png' %}" height="150"alt=""></a>
                             </div>
                           </div>
                           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all gra">
                             <div class="item">
-                              <a href="img/11.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/11.jpg" height="150"alt=""></a>
+                              <a href="{% static 'images/20.png' %}" data-lightbox="image-1" data-title="Our Projects"><img src="{% static 'images/20.png' %}" height="150"alt=""></a>
                             </div>
                           </div>
                           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all gra">
                             <div class="item">
-                              <a href="img/12.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/12.jpg" height="150"alt=""></a>
-                            </div>
-                          </div>
-                          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all gra">
-                            <div class="item">
-                              <a href="img/13.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/13.jpg" height="150"alt=""></a>
-                            </div>
-                          </div>
-                          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all gra">
-                            <div class="item">
-                              <a href="img/14.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/14.jpg" height="150"alt=""></a>
+                              <a href="{% static 'images/21.png' %}" data-lightbox="image-1" data-title="Our Projects"><img src="{% static 'images/21.png' %}" height="150"alt=""></a>
                             </div>
                           </div>
                        
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all gra">
                           <div class="item">
-                            <a href="img/6.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/6.jpg"height="150" alt=""></a>
+                            <a href="{% static 'images/22.png' %}" data-lightbox="image-1" data-title="Our Projects"><img src="{% static 'images/22.png' %}"height="150" alt=""></a>
                           </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all des">
                           <div class="item">
-                            <a href="img/2.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/2.jpg" height="150"alt=""></a>
+                            <a href="{% static 'images/9.png' %}" data-lightbox="image-1" data-title="Our Projects"><img src="{% static 'images/9.png' %}" height="150"alt=""></a>
                           </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all des">
                             <div class="item">
-                              <a href="img/3.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/3.jpg" height="150"alt=""></a>
+                              <a href="{% static 'images/10.png' %}" data-lightbox="image-1" data-title="Our Projects"><img src="{% static 'images/10.png' %}" height="150"alt=""></a>
                             </div>
                           </div>
                           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all des">
                             <div class="item">
-                              <a href="img/71.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/71.jpg" height="150"alt=""></a>
+                              <a href="{% static 'images/11.png' %}" data-lightbox="image-1" data-title="Our Projects"><img src="{% static 'images/11.png' %}" height="150"alt=""></a>
                             </div>
                           </div>
                           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 all des">
                             <div class="item">
-                              <a href="img/4.jpg" data-lightbox="image-1" data-title="Our Projects"><img src="img/4.jpg" height="150"alt=""></a>
+                              <a href="{% static 'images/12.png' %}" data-lightbox="image-1" data-title="Our Projects"><img src="{% static 'images/12.png' %}" height="150"alt=""></a>
                             </div>
                           </div>
                     </div>
@@ -719,15 +755,15 @@ mod4=0;
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-heading">
-                        <h6>Our best caravan</h6>
-                        <h2>Book your trip</h2>
+                        <h6>OUR BEST EXPERT HOMECARE SERVICE</h6>
+                        <h2>Book your Service</h2>
                     </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 mobile-bottom-fix-big" data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
                     <div class="owl-carousel owl-theme">
                         <div class="item author-item">
                             <div class="member-thumb">
-                                <img src="img/21.jpg "height="400" alt="">
+                                <img src="{% static 'images/10.png' %} "height="400" alt="">
                                 <div class="hover-effect">
                                     <div class="hover-content">
                                         <ul>
@@ -746,12 +782,12 @@ mod4=0;
                                     </div>
                                 </div>
                             </div>
-                            <h4>Wanderlust caravan</h4>
+                            <h4>PLUMBING SERVICE</h4>
                            
                         </div>
                         <div class="item author-item">
                             <div class="member-thumb">
-                                <img src="img/1.jpg "height="400" alt="">
+                                <img src="{% static 'images/16.png' %} "height="400" alt="">
                                 <div class="hover-effect">
                                     <div class="hover-content">
                                         <ul>
@@ -770,12 +806,12 @@ mod4=0;
                                     </div>
                                 </div>
                             </div>
-                            <h4>Wandering Star caravan</h4>
+                            <h4>ELECTRICAL SERVICE</h4>
                            
                         </div>
                         <div class="item author-item">
                             <div class="member-thumb">
-                                <img src="img/22.jpg "height="400" alt="">
+                                <img src="{% static 'images/18.png' %} "height="400" alt="">
                                 <div class="hover-effect">
                                     <div class="hover-content">
                                         <ul>
@@ -794,7 +830,7 @@ mod4=0;
                                     </div>
                                 </div>
                             </div>
-                            <h4>Carry home caravan</h4>
+                            <h4>APPLIANCE REPAIR</h4>
                            
                         </div>
                        
@@ -813,8 +849,8 @@ mod4=0;
                         </div>
                         <ul class="contact-info">
                             <li><img src="{% static 'assets/images/contact-info-01.png' %}" alt="">9497036814</li>
-                            <li><img src="{% static 'assets/images/contact-info-02.png' %}" alt="">mail2mathewpeter@gmail.com</li>
-                            <li><img src="{% static 'assets/images/contact-info-03.png' %}" alt="">www.caravan.com</li>
+                            <li><img src="{% static 'assets/images/contact-info-02.png' %}" alt="">experthomecare43@gmail.com</li>
+                            <li><img src="{% static 'assets/images/contact-info-03.png' %}" alt="">www.experhomecare.com</li>
                         </ul>
                     </div>
                 </div>

@@ -54,8 +54,16 @@
 							<div class="login-wrap p-4 p-lg-5">
 						  <div class="d-flex">
 							  <div class="w-100">
+								{% if messages %}
+								{% for message in messages %}
+									<div class="alert alert-{{ message.tags }}">
+										<font color="red">{{ message }}</font>
+									</div>
+								{% endfor %}
+							{% endif %}
 								 <i><h5 class="mb-4">Forgot Password</h5></i> 
 							  </div>
+							
 									<div class="w-100">
 										<p class="social-media d-flex justify-content-end">
 											<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
@@ -98,9 +106,9 @@
 	  <script src="js/main.js"></script>
 	</div>
 	<nav1>
-		<div style="margin-left:60px;margin-top:5px"><i><font size="5"color="orange">Expert Homecare</font></i></div>  
+		<div style="margin-left:60px;margin-top:5px"><i><font size="5" color="orange"><img src ="{% static 'images/1.png' %}" width="250"></font></i></div> 
 		<div class="w-100">
-			<div style="margin-top:-30px;margin-left:-60px;">
+			<div style="margin-top:-60px;margin-left:-60px;">
 			<p class="social-media d-flex justify-content-end">
 				<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-instagram"></span></a>
 				<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>

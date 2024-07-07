@@ -7,7 +7,8 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.hashers import make_password
 from .models import Customer  # Import your Customer model
 from django.core.files.storage import FileSystemStorage
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import update_session_auth_hash   
+from django.contrib import messages 
 # Create your views here.
 # def registercustomer(request):
 #     if request.method=="POST":
@@ -35,6 +36,9 @@ def login1(request):
 
 def home(request):
     return render(request, 'index.html')
+
+def emailverify(request):
+    return render(request, 'emailverify.html')
 
 
 def userloginhome(request):
@@ -68,6 +72,13 @@ def send_otp_email(user_email, otp):
     recipient_list = [user_email]
     send_mail(subject, message, from_email, recipient_list)
 
+def send_otp_emailregister(user_email, otp):
+    subject = 'OTP for Email Register in Expert Homecare Account'
+    message = f'Your OTP Register Email is: {otp}'
+    from_email = settings.EMAIL_HOST_USER
+    recipient_list = [user_email]
+    send_mail(subject, message, from_email, recipient_list)
+
 def forgotpassword(request):
     if request.method == 'POST':
         email = request.POST['username']
@@ -77,12 +88,21 @@ def forgotpassword(request):
             request.session['otp'] = otp # Store OTP in session for verification
             request.session['email'] = email  
             send_otp_email(user.email, otp)
+            messages.success(request, 'OTP Send Successfully')
             return render(request, 'verify_otp.html')
         except Customer.DoesNotExist:
-            messages.error(request, 'User does not exist.')
-            return render(request, 'forgotpassword.html')
-    return render(request, 'forgotpassword.html')
+            messages.error(request, 'User Not Found')
+            return render(request, 'forgot.html')
+    return render(request, 'forgot.html')
 
+def registeremail(request,email):
+            user = Customer.objects.get(email=email)
+            otp = get_random_string(length=6, allowed_chars='1234567890')
+            request.session['otp'] = otp # Store OTP in session for verification
+            request.session['email'] = email
+            send_otp_emailregister(user.email, otp)
+            
+ 
 def verify_otp(request):
     if request.method == 'POST':
         entered_otp = request.POST['otp']
@@ -92,7 +112,21 @@ def verify_otp(request):
             messages.error(request, 'Invalid OTP. Please try again.')
     return render(request, 'verify_otp.html', {'error': 'Invalid OTP. Please try again.'})
    
-
+def verify_otp1emailset(request):
+    if request.method == 'POST':
+        entered_otp = request.POST['otp']
+        if entered_otp == request.session.get('otp'):
+            email=request.session.get('email')
+            user = Customer.objects.get(email=email)
+            user.is_active=True
+            messages.success(request, 'Account Registered Successfully.')
+            return render(request, 'login1.html')
+        else:
+            messages.error(request, 'Invalid OTP. Please try again.')
+            user = Customer.objects.get(email=email)
+            user.is_active=True
+    return render(request, 'emailverify.html', {'error': 'Invalid OTP. Please try again.'})
+   
 
 from django.contrib.auth.hashers import make_password
 
@@ -142,10 +176,12 @@ def registercustomer(request):
             photo=f'images/{filename}'
         )
         customer.save()
-
-        return render(request, 'home.html') # Redirect to a success page
+        registeremail(request,email) 
+      
+        return render(request, 'emailverify.html')
+        # Redirect to a success page
     else:
-        return render(request, 'register.html')
+        return render(request, 'forgotpassword1emailset')
     
 
   
@@ -183,12 +219,12 @@ def updatecustomerdata(request):
         
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
-        gender = request.POST['gender']
+        #gender = request.POST['gender']
         phone1 = request.POST['phone1']
         filenotupdate = request.POST['file1']
         
 
-        
+        gender = request.POST.get('gender')
       
         file = request.FILES.get('file')
         filename = None  
@@ -216,7 +252,7 @@ def updatecustomerdata(request):
 def deactivefunctionuser(request):
   if request.method == 'POST':
         customer = request.user
-        request.user.is_active = False
+        request.user.status = 0
         request.user.save()
         messages.success(request, 'Your account has been deactivated.')
         return redirect('login1')  # Redirect to a safe place, e.g., home page
@@ -247,3 +283,78 @@ def logincustomer(request):
             return render(request, 'login1.html', {'error': 'Invalid credentials'})
     
     return HttpResponse("GET request received. POST request expected.")
+
+
+
+from django.shortcuts import redirect
+from allauth.socialaccount.models import SocialAccount
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
+@login_required
+def handle_google_login(request):
+    try:
+        # Attempt to retrieve the Google account associated with the authenticated user
+        google_account = SocialAccount.objects.get(provider='google', user=request.user)
+        
+        # Google account already associated, redirect to profile page
+        return redirect('profile')
+    
+    except SocialAccount.DoesNotExist:
+        # If Google account is not already associated, proceed with normal Google login flow
+        # This part typically handles the OAuth flow for Google login
+        # Ensure this matches your existing Google OAuth configuration
+        return redirect('social:begin', 'google-oauth2')
+
+    except Exception as e:
+        # Handle any other exceptions or errors that may occur during the process
+        messages.error(request, f"An error occurred: {str(e)}")
+        return redirect('home')  # Redirect to an appropriate page
+
+    # Additional handling or fallback logic can be added here as needed
+
+
+from django.shortcuts import render
+
+# views.py
+from django.shortcuts import render
+
+def custom_error_view(request):
+    return render(request, 'custom_error_template.html', {
+        'message': 'This Google account is already in use. Please use a different account or contact support for assistance.'
+    })
+from django.contrib.auth import logout
+
+def logout_view(request):
+    logout(request)
+    # Redirect to a success page or login page
+    return redirect('login1')
+
+
+
+# customerlogin/views.py
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import Customer  # Import your Customer model here
+
+@csrf_exempt
+def validate_email(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        
+        # Check if email already exists in the database
+        if Customer.objects.filter(email=email).exists():
+            data = {
+                'valid': False,
+                'message': 'Email already exists.'
+            }
+        else:
+            data = {
+                'valid': True,
+                'message': 'Email is available.'
+            }
+        
+        return JsonResponse(data)
+    
+    return JsonResponse({'error': 'Invalid request method.'}, status=400)
