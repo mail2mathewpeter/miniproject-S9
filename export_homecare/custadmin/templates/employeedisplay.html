@@ -15,9 +15,11 @@
 </head>
 <script src="path/to/jquery.js"></script>
 <script src="path/to/bootstrap.js"></script>
-<script>
-  
-</script>
+<style>
+  .right{
+    float: right;
+  }
+</style>
 <body id="page-top">
   <div id="wrapper">
     <!-- Sidebar -->
@@ -38,23 +40,24 @@
       <div class="sidebar-heading">
         Features
       </div>
-      <li class="nav-item active  ">
+      <li class="nav-item ">
         <a class="nav-link" href="{% url 'displayuser' %}">
           <i class="fa fa-users"></i>
           <span>User Details</span>
         </a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true"
           aria-controls="collapseForm">
-          <i class="fas fa-user-cog"></i>
+         <i class="fas fa-user-cog"></i>
           <span>Employee</span>
         </a>
         <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Employee</h6>
             <a class="collapse-item" href="{% url 'addemployee' %}">Add Employee</a>
-            <a class="collapse-item" href="{% url 'employeedisplay' %}">View Employee</a>
+            <a class="collapse-item active" href="{% url 'employeedisplay' %}">View Employee</a>
+          
           </div>
         </div>
       </li>
@@ -295,19 +298,30 @@
             </li>
           </ul>
         </nav>
-
+        <div class="row">
+        <div class="right">
+          {% if messages %}
+          {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      {% endif %}
+    </div>  
         <!-- Topbar -->
         <!-- Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
         
-        
+
           <!-- Row -->
-        
+          <div class="row">
+            
             <!-- Datatables -->
             <div class="col-lg-12">
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Customer Data</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Employeer Data</h6>
+                  
                 </div>
                 
                 <div class="table-responsive p-3">
@@ -317,8 +331,10 @@
                         <th>Name</th>
                         <th>Photo</th>
                         <th>Mobile</th>
+                          <th>Gender</th>
+                         
                         <th>More Info</th>
-                        <!-- <th>Gender</th> -->
+                      
                         <th>Status </th>
                         <th>Action</th>
                       </tr>
@@ -335,31 +351,36 @@
                       </tr>
                     </tfoot> -->
                     <tbody>
-                      {% for customer_data in data_to_display %}
+                      {% for employee_data in data_to_display %}
                       <tr>
-                        <td>{{ customer_data.first_name }} {{ customer_data.last_name }}</td>
-                <td><img src="{% static '' %}{{ customer_data.photo }}" alt="Customer Photo" width="68"height="50"></td>
-                <td>{{ customer_data.phone }}</td>
+                        <td>{{ employee_data.name }} </td>
+                <td><img src="{% static '' %}{{ employee_data.photo }}" alt="Customer Photo" width="68"height="50"></td>
+                <td>{{ employee_data.phone }}</td>
+                <td>{{ employee_data.gender }}</td>
               <td>  <button class="btn btn-primary edit" data-toggle="modal" data-target="#editModal" 
-                data-name="{{ customer_data.first_name }} {{ customer_data.last_name }}" 
-                data-email="{{ customer_data.email }}" 
-                data-phone="{{ customer_data.phone }}" 
-                data-gender="{{ customer_data.gender }}" 
+                data-name="{{ employee_data.name }} " 
+                data-email="{{ employee_data.email }}" 
+                data-phone="{{ employee_data.phone }}" 
+                data-gender="{{ employee_data.gender }}" 
+                data-designation="{{ employee_data.designation }}" 
+                data-experience="{{ employee_data.experience }}" 
+                data-address="{{ employee_data.address }}" 
               
-                data-id="{{ customer_data.id }}">View</button></td>
+                data-id="{{ employee_data.id }}">View</button></td>
       </td>
                 <!-- <td>{{ customer_data.phone }}</td> -->
-                <!-- <td>{{ customer_data.gender }}</td> -->
+              
                      <!-- <td>{{ customer_data.status }}</td> -->
                <td>
              
-                  {% if customer_data.status == '0' %}
+                  {% if employee_data.status == '1' %}
                     <span class="badge badge-success">Active</span>
                   {% else %}
                     <span class="badge badge-danger">Inactive</span>
                   {% endif %}
                       </td>
-               <td><a href="{% url 'changeuserstatus' customer_data.email %}" class="btn btn-danger btn-sm">Enable/Disable</a></td> 
+               <td><a href="{% url 'editemployee' employee_data.email %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'disableemployee' employee_data.email %}" class="btn btn-danger btn-sm">disable/enable</a></td> 
 
                       </tr>
                       {% endfor %}
@@ -413,7 +434,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Customer Detail</h5>
+                <h5 class="modal-title" id="editModalLabel">Employee Detail</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -424,6 +445,10 @@
                         <label for="modal_name">Name:</label>
                         <input type="text" class="form-control" id="modal_name" readonly>
                     </div>
+                    <div class="form-group">
+                      <label for="modal_Address">Address:</label>
+                      <input type="text" class="form-control" id="modal_address" readonly>
+                  </div>
                     <div class="form-group">
                         <label for="modal_email">Email:</label>
                         <input type="text" class="form-control" id="modal_email" readonly>
@@ -436,6 +461,14 @@
                         <label for="modal_gender">Gender:</label>
                         <input type="text" class="form-control" id="modal_gender" readonly>
                     </div>
+                    <div class="form-group">
+                      <label for="modal_designation">Designation:</label>
+                      <input type="text" class="form-control" id="modal_designation" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="modal_Experience">Experience:</label>
+                    <input type="text" class="form-control" id="modal_experience" readonly>
+                </div>
                    
                     <input type="hidden" id="modal_id">
                 </form>
@@ -472,6 +505,10 @@
               var phone = $(this).data('phone');
               var gender = $(this).data('gender');
               var status = $(this).data('status');
+              var address = $(this).data('address');
+              var designation = $(this).data('designation');
+              var experience = $(this).data('experience');
+              var status = $(this).data('status');
       
               console.log("Clicked ID:", id); // Verify in the console that the correct ID is logged
               console.log("Name:", name);
@@ -486,6 +523,9 @@
               $('#modal_phone').val(phone);
               $('#modal_gender').val(gender);
               $('#modal_status').val(status);
+              $('#modal_address').val(address);
+              $('#modal_designation').val(designation);
+              $('#modal_experience').val(experience);
               $('#modal_id').val(id);
       
               // Show the modal
