@@ -22,7 +22,7 @@
   <div id="wrapper">
     <!-- Sidebar -->
     <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'index' %}">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'admin1:index' %}">
         <div class="sidebar-brand-icon">
           <img src="{% static 'img/logo/logo2.png' %}">
         </div>
@@ -30,7 +30,7 @@
       </a>
       <hr class="sidebar-divider my-0">
       <li class="nav-item ">
-        <a class="nav-link" href="{% url 'index' %}">
+        <a class="nav-link" href="{% url 'admin1:index' %}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -39,7 +39,7 @@
         Features
       </div>
       <li class="nav-item active  ">
-        <a class="nav-link" href="{% url 'displayuser' %}">
+        <a class="nav-link" href="{% url 'admin1:displayuser' %}">
           <i class="fa fa-users"></i>
           <span>User Details</span>
         </a>
@@ -53,8 +53,8 @@
         <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Employee</h6>
-            <a class="collapse-item" href="{% url 'addemployee' %}">Add Employee</a>
-            <a class="collapse-item" href="{% url 'employeedisplay' %}">View Employee</a>
+            <a class="collapse-item" href="{% url 'admin1:addemployee' %}">Add Employee</a>
+            <a class="collapse-item" href="{% url 'admin1:employeedisplay' %}">View Employee</a>
           </div>
         </div>
       </li>
@@ -353,13 +353,13 @@
                      <!-- <td>{{ customer_data.status }}</td> -->
                <td>
              
-                  {% if customer_data.status == '0' %}
+                  {% if customer_data.status == '1' %}
                     <span class="badge badge-success">Active</span>
                   {% else %}
                     <span class="badge badge-danger">Inactive</span>
                   {% endif %}
                       </td>
-               <td><a href="{% url 'changeuserstatus' customer_data.email %}" class="btn btn-danger btn-sm">Enable/Disable</a></td> 
+               <td><a href="{% url 'admin1:changeuserstatus' customer_data.email %}" class="btn btn-danger btn-sm">Enable/Disable</a></td> 
 
                       </tr>
                       {% endfor %}

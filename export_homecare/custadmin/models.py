@@ -14,6 +14,7 @@ class Employee(models.Model):
     experience = models.CharField(max_length=100)
     photo = models.ImageField(upload_to='images/')
     status = models.CharField(max_length=100)
+    password = models.CharField(max_length=1000,blank=True,null=True)
  
 
     def __str__(self):

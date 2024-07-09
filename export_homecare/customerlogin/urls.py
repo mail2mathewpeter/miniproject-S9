@@ -21,7 +21,7 @@ urlpatterns = [
       path('deactiveaccountuser', views.deactiveaccountuser, name='deactiveaccountuser'),
           path('deactivefunctionuser', views.deactivefunctionuser, name='deactivefunctionuser'),
     path('error/', views.custom_error_view, name='your_custom_error_view'),
-   path('validate_email/', views.validate_email, name='validate_email'),
+  path('validate_email/', views.validate_email, name='validate_email'),
     path('logout/', views.logout_view, name='logout'),
           path('verify_otp1emailset/', views.verify_otp1emailset, name='verify_otp1emailset'),
          

@@ -73,7 +73,7 @@ def send_otp_email(user_email, otp):
     send_mail(subject, message, from_email, recipient_list)
 
 def send_otp_emailregister(user_email, otp):
-    subject = 'OTP for Email Register in Expert Homecare Account'
+    subject = 'OTP for Email Registration on Expert Homecare Account'
     message = f'Your OTP Register Email is: {otp}'
     from_email = settings.EMAIL_HOST_USER
     recipient_list = [user_email]
@@ -117,14 +117,15 @@ def verify_otp1emailset(request):
         entered_otp = request.POST['otp']
         if entered_otp == request.session.get('otp'):
             email=request.session.get('email')
-            user = Customer.objects.get(email=email)
-            user.is_active=True
+            customer = Customer.objects.get(email=email)
+            print(customer)
+            customer.status='1'
+            customer.save()
             messages.success(request, 'Account Registered Successfully.')
             return render(request, 'login1.html')
         else:
             messages.error(request, 'Invalid OTP. Please try again.')
-            user = Customer.objects.get(email=email)
-            user.is_active=True
+            return render(request, 'emailverify.html')
     return render(request, 'emailverify.html', {'error': 'Invalid OTP. Please try again.'})
    
 
@@ -150,12 +151,12 @@ def registercustomer(request):
     if request.method == 'POST':
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
-        gender = request.POST['gender']
+        gender = request.POST.get('gender')
         phone1 = request.POST['phone1']
         email = request.POST['email']
         passw = request.POST['pass']
         cpass = request.POST['cpass']
-        file = request.FILES['file']
+        # file = request.FILES.get('file', None)
 
         if passw != cpass:
             return HttpResponse("Passwords do not match")
@@ -163,8 +164,8 @@ def registercustomer(request):
         # Save the file
         hashed_password = make_password(passw)
        
-        fs = FileSystemStorage(location=f'customerlogin/static/images/')
-        filename = fs.save(file.name, file)
+        # fs = FileSystemStorage(location=f'customerlogin/static/images/')
+        # filename = fs.save(file.name, file)
         # Create a new customer record
         customer = Customer(
             first_name=first_name,
@@ -173,7 +174,7 @@ def registercustomer(request):
             phone1=phone1,
             email=email,
             password=hashed_password,  # You might want to hash this before saving
-            photo=f'images/{filename}'
+            # photo=f'images/{filename}'
         )
         customer.save()
         registeremail(request,email) 
@@ -243,7 +244,7 @@ def updatecustomerdata(request):
        
         customer.save()
 
-        messages.success(request, 'Your profile has been updated successfully!')
+        # messages.success(request, 'Your profile has been updated successfully!')
         return redirect('useraccount')  # Redirect to a success page
    
 
@@ -252,7 +253,7 @@ def updatecustomerdata(request):
 def deactivefunctionuser(request):
   if request.method == 'POST':
         customer = request.user
-        request.user.status = 0
+        request.user.status = '0'
         request.user.save()
         messages.success(request, 'Your account has been deactivated.')
         return redirect('login1')  # Redirect to a safe place, e.g., home page
@@ -316,7 +317,7 @@ def handle_google_login(request):
 
 from django.shortcuts import render
 
-# views.py
+# views.py  
 from django.shortcuts import render
 
 def custom_error_view(request):

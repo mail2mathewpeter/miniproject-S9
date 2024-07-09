@@ -43,7 +43,7 @@ class Customer(AbstractBaseUser, PermissionsMixin):
     phone1 = models.CharField(max_length=15)
     photo = models.ImageField(upload_to='images/')
     is_active = models.BooleanField(default=True,blank=True,null=True)
-    status = models.CharField(max_length=30)
+    status = models.CharField(max_length=30,default='0')
     is_staff = models.BooleanField(default=False)
     
     objects = CustomerManager()
