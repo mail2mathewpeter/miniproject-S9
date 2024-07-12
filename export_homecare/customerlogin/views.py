@@ -5,7 +5,8 @@ from django .http import HttpResponse
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.hashers import make_password
-from .models import Customer  # Import your Customer model
+from .models import Customer 
+from custadmin.models import Employee;  # Import your Customer model
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth import update_session_auth_hash   
 from django.contrib import messages 
@@ -259,32 +260,86 @@ def deactivefunctionuser(request):
         return redirect('login1')  # Redirect to a safe place, e.g., home page
   else:
     return render(request, 'useraccount')
+# def logincustomer(request):
+#     if request.method == 'POST':
+#         # email = "mail2mathewpeter@gmail.com"
+#         email = request.POST['email']
+#         password = request.POST['password']
+#         # password="Mathew@2001"
+#         user = authenticate(request, email=email, password=password,status='1')
+#         print(f"Username entered: {email}")
+#         print(f"Password entered: {password}")
+        
+#         if user is not None:
+#             # Login successful
+#             login(request, user)
+#             # Fetch customer details directly from the authenticated user
+#             try:
+#                 customer1 = Customer.objects.get(email=user.email)
+#                 return render(request, 'userloginhome.html', {'customer': customer1})
+#             except Customer.DoesNotExist:
+#                 # Handle case where Customer record doesn't exist for the user
+#                 return HttpResponse("Customer record not found.")
+#         else:
+#             # Authentication failed
+#             return render(request, 'login1.html', {'error': 'Invalid credentials'})
+    
+#     return HttpResponse("GET request received. POST request expected.")
+
+# customerlogin/views.py
+
+from django.shortcuts import render, redirect, HttpResponse
+from django.contrib.auth import authenticate, login
+
+
 def logincustomer(request):
     if request.method == 'POST':
-        # email = "mail2mathewpeter@gmail.com"
         email = request.POST['email']
         password = request.POST['password']
-        # password="Mathew@2001"
+        employee = Employee.objects.get(email='experthomecare43@gmail.com')
+        print(employee)
+        # Authenticate user with email, password, and status check ('1' for customers)
         user = authenticate(request, email=email, password=password)
+        print(user);
         print(f"Username entered: {email}")
         print(f"Password entered: {password}")
+        print(employee.email)
+        print(employee.password);
         
         if user is not None:
-            # Login successful
-            login(request, user)
-            # Fetch customer details directly from the authenticated user
+            # Check if the authenticated user is a customer
             try:
-                customer1 = Customer.objects.get(email=user.email)
-                return render(request, 'userloginhome.html', {'customer': customer1})
+                customer = Customer.objects.get(email=user.email)
+                login(request, user)
+                if(customer.status=='1'):
+                
+                    return render(request, 'userloginhome.html', {'customer': customer})
+                else:
+                     messages.success(request, 'Your account is in deactivated mode.')
+                     return render(request, 'login1.html')
+
+                
+                
+            
             except Customer.DoesNotExist:
-                # Handle case where Customer record doesn't exist for the user
+                # Handle case where Customer record doesn't exist
                 return HttpResponse("Customer record not found.")
+        
+        elif employee.email==email and employee.password==password and employee.status =='2':
+            # Authenticate user with email and password only (without status check)
+            # login(request, user)
+            name=employee.name;
+            request.session['username']=name;
+            name=request.session.get('username')
+            return redirect('employee:index1',{'customer':name}) 
+            
+            
+            
         else:
-            # Authentication failed
+                # Authentication failed
             return render(request, 'login1.html', {'error': 'Invalid credentials'})
     
     return HttpResponse("GET request received. POST request expected.")
-
 
 
 from django.shortcuts import redirect

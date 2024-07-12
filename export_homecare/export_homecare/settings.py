@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'customerlogin',
     'custadmin',
+    'employee',
     'django.contrib.staticfiles',
 
     'social_django',
@@ -53,6 +54,7 @@ AUTHENTICATION_BACKENDS = (
    'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
     'social_core.backends.google.GoogleOAuth2', 
+     'customerlogin.backends.CustomUserBackend', 
       
 )
 
@@ -245,6 +247,7 @@ AUTH_USER_MODEL = 'customerlogin.Customer'
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
+     
 )
 
 SOCIAL_AUTH_PIPELINE = (
