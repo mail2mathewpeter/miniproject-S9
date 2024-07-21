@@ -16,8 +16,9 @@
 <script src="path/to/jquery.js"></script>
 <script src="path/to/bootstrap.js"></script>
 <script>
-  
+
 </script>
+
 <body id="page-top">
   <div id="wrapper">
     <!-- Sidebar -->
@@ -45,28 +46,37 @@
         </a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'employee:displayservice' %}">
-          <i class="fa-solid fa-gift"></i>
-          <span>Display Service</span>
-        </a>
-      </li>
-     
-   
-      <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true"
           aria-controls="collapseForm">
           <i class="fas fa-user-cog"></i>
-          <span>Employee</span>
-        </a> -->
-        <!-- <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
+          <span>Services</span>
+        </a> 
+        <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Employee</h6>
-            <a class="collapse-item" href="{% url 'admin1:addemployee' %}">Add Employee</a>
-            <a class="collapse-item" href="{% url 'admin1:employeedisplay' %}">View Employee</a>
+            <a class="collapse-item" href="{% url 'employee:addservice1' %}">Add Service</a>
+            <a class="collapse-item active" href="{% url 'employee:displayservice' %}">View Service</a>
+          </div>
+        </div>
+      </li> 
+      <li class="nav-item ">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm2" aria-expanded="true"
+          aria-controls="collapseForm">
+          <i class="fas fa-user-cog"></i>
+          <span>Service Provider</span>
+        </a>
+        <div id="collapseForm2" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Service Provider Details    </h6>
+            <a class="collapse-item " href="{% url 'employee:addserviceprovider' %}">Add Service Provider</a>
+            <a class="collapse-item" href="{% url 'employee:displayserviceproviderdata1' %}">View Service Provider</a>
           </div>
         </div>
       </li>
-      <li class="nav-item">
+   
+   
+      
+      <!-- <li class="nav-item">
         
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
           aria-expanded="true" aria-controls="collapseBootstrap">
@@ -315,7 +325,7 @@
             <div class="col-lg-12">
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Customer Data</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Service Data</h6>
                 </div>
                 
                 <div class="table-responsive p-3">
@@ -361,8 +371,8 @@
                 <td><img src="{% static '' %}{{ customer_data.photo }}" alt="Customer Photo" width="68"height="50"></td>
 
         
-               <td><a href="{% url 'employee:editservice' customer_data.id %}" class="btn btn-primary btn-sm">Edit</a>
-                <a href="{% url 'employee:deleteservice' customer_data.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete {{ customer_data.service_name }}?')">Delete</a>
+               <td><a href="{% url 'employee:editservice' customer_data.id %}" class="btn btn-primary btn-sm">Edit&nbsp;  &nbsp;</a>
+              <div style="margin-left:55px;margin-top: -30px;">  <a href="{% url 'employee:deleteservice' customer_data.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete {{ customer_data.service_name }}?')">Delete</a></div>
                      
                       
                       {% endfor %}

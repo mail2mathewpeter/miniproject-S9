@@ -6,7 +6,8 @@ from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.hashers import make_password
 from .models import Customer 
-from custadmin.models import Employee;  # Import your Customer model
+from custadmin.models import Employee;
+from employee.models import service;   # Import your Customer model
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth import update_session_auth_hash   
 from django.contrib import messages 
@@ -28,6 +29,20 @@ from django.contrib import messages
 
 def forgot(request):
     return render(request,'forgot.html')
+def service1(request):
+    services = service.objects.all()  
+    print(services)
+    data_to_display1 = []
+    for services in services:
+          customer_data = {
+              'id': services.id,
+            'service_name': services.service_name,
+            'service_description': services.service_description,
+            'photo': services.photo,
+        }
+          data_to_display1.append(customer_data)
+
+    return render(request,'service.html', {'data_to_display': data_to_display1})
 
 def register(request):
     return render(request,'register.html')
@@ -36,15 +51,20 @@ def login1(request):
     return render(request, 'login1.html')
 
 def home(request):
-    return render(request, 'index.html')
+   
+      return render(request, 'index.html')
+   
 
 def emailverify(request):
     return render(request, 'emailverify.html')
 
 
 def userloginhome(request):
-    customer = request.user  # Get the logged-in user
-    return render(request, 'userloginhome.html', {'customer': customer})
+    if request.session.get('login') == 'yes':
+       customer = request.user  # Get the logged-in user
+       return render(request, 'userloginhome.html', {'customer': customer})
+    else:
+        return redirect('login1')
 def useraccount(request):
     customer = request.user  # Get the logged-in user
     return render(request, 'accountview.html', {'customer': customer})
@@ -312,6 +332,7 @@ def logincustomer(request):
                 customer = Customer.objects.get(email=user.email)
                 login(request, user)
                 if(customer.status=='1'):
+                    request.session['login'] = 'yes'
                 
                     return render(request, 'userloginhome.html', {'customer': customer})
                 else:
@@ -330,6 +351,7 @@ def logincustomer(request):
             # login(request, user)
             name=employee.name;
             request.session['username']=name;
+            request.session['login'] = 'yes'
             name=request.session.get('username')
             return redirect('employee:index1',{'customer':name}) 
             

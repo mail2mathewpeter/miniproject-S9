@@ -22,7 +22,10 @@ from django.utils.crypto import get_random_string
 # Create your views here.
 
 def index(request):
-    return render(request, 'adminindex.html')
+    if request.session.get('login') == 'yes':
+       return render(request, 'adminindex.html')
+    else:
+        return render(request, 'login1.html')
 
 def editemployee(request,email):
     employee = Employee.objects.get(email=email)
