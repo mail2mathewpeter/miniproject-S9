@@ -305,15 +305,7 @@
           </ul>
         </nav>
         <div class="row">
-        <div class="right">
-          {% if messages %}
-          {% for message in messages %}
-              <div class="alert alert-{{ message.tags }}">
-                  {{ message }}
-              </div>
-          {% endfor %}
-      {% endif %}
-    </div>  
+       
         <!-- Topbar -->
         <!-- Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
@@ -327,7 +319,15 @@
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Service Provider Data</h6>
-                  
+                  <div class="right">
+                    {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+              </div>  
                 </div>
                 
                 <div class="table-responsive p-3">
@@ -387,7 +387,7 @@
                   {% endif %}
                       </td>
                <td><a href="" class="btn btn-primary btn-sm">Edit</a>
-                <a href="" class="btn btn-danger btn-sm">Change</a></td> 
+               <div style="margin-left: 50px;margin-top: -30px;"> <a href="{% url 'employee:changeserviceproviderstatus1' employee_data.id %}" class="btn btn-danger btn-sm">Enable/Disable</a></div></td> 
 
                       </tr>
                       {% endfor %}

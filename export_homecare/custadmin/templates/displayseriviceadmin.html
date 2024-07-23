@@ -12,261 +12,16 @@
   <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
   <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
   <link href="{% static 'css/ruang-admin.min.css' %}" rel="stylesheet">
-    
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <script src="path/to/jquery.js"></script>
 <script src="path/to/bootstrap.js"></script>
-<style>
-      
-        .k {
-            width: 90%;
-        }
-        .error{
-            color:red;
-            font-size: 16px; 
-        }
-        
-</style>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                var mod1=0;
-                var mod2=0;
-                var mod3=0;
-                var mod4=0;
-                var mod5=0;
-                var mod6=0;
-                var mod7=0;
-                $("#txt1").keyup(function () {
-                    var n = document.getElementById("txt1");
-                    var letter = /^[A-Za-z ' ']+$/;
-                    if (n.value == "") {
-                        document.getElementById("text1").innerHTML = "<span class='error'>Please enter employee name</span>";
-                        $('#register').attr("disabled", true);
-                            $('#register').css("background","lightblue");
-                        mod1=1;
-                    }
-                    else if (!n.value.match(letter)) {
-                        document.getElementById("text1").innerHTML = "<span class='error'>This is not a valid employee name. Please try again</span>";
-                        $('#register').attr("disabled", true);
-                            $('#register').css("background","lightblue");
-                            mod1=1;
-                    }
-                    else if (n.value.match(letter)) {
-                        mod1=0;
-                        document.getElementById("text1").innerHTML = "<span class='error'></span>";
-                        $('#register').attr("disabled", false);
-    $('#register').css("background","#4272d7");
-    $('#register').hover(function(){
-    $(this).css("background-color", "green");
-    }, function(){
-    $(this).css("background-color", "#4272d7");
-    });
-
-                    }
-                }),
-                    $("#txt2").keyup(function () {
-                        var n = document.getElementById("txt2");
-                        var letter = /^[A-Za-z0-9 ' ' .]+$/;
-                        if (n.value == "") {
-                            mod2=1;
-                            document.getElementById("text2").innerHTML = "<span class='error'>Please enter employee address</span>";
-                            $('#register').attr("disabled", true);
-                            $('#register').css("background","lightblue");
-                        }
-                        else if (!n.value.match(letter)) {
-                            mod2=1;
-                            document.getElementById("text2").innerHTML = "<span class='error'>This is not a  valid employee address. Please try again</span>";
-                            $('#register').attr("disabled", true);
-                            $('#register').css("background","lightblue");
-                        }
-                        else if (n.value.match(letter)) {
-                            document.getElementById("text2").innerHTML = "<span class='error'></span>";
-                            $('#register').attr("disabled", false);
-    $('#register').css("background","#4272d7");
-    $('#register').hover(function(){
-    $(this).css("background-color", "green");
-    }, function(){
-    $(this).css("background-color", "#4272d7");
-    });
-    mod2=0;
-                        }
-                    }),
-                    $("#Designation").keyup(function () {
-                    var n = document.getElementById("Designation");
-                    var letter = /^[A-Za-z ' ']+$/;
-                    if (n.value == "") {
-                        document.getElementById("text5").innerHTML = "<span class='error'>Please enter employee designation</span>";
-                        $('#register').attr("disabled", true);
-                            $('#register').css("background","lightblue");
-                        mod3=1;
-                    }
-                    else if (!n.value.match(letter)) {
-                        document.getElementById("text5").innerHTML = "<span class='error'>This is not a valid employee designation. Please try again</span>";
-                        $('#register').attr("disabled", true);
-                            $('#register').css("background","lightblue");
-                            mod3=1;
-                    }
-                    else if (n.value.match(letter)) {
-                        mod3=0;
-                        document.getElementById("text5").innerHTML = "<span class='error'></span>";
-                        $('#register').attr("disabled", false);
-    $('#register').css("background","#4272d7");
-    $('#register').hover(function(){
-    $(this).css("background-color", "green");
-    }, function(){
-    $(this).css("background-color", "#4272d7");
-    });
-
-                    }
-                }),
-                    $("#phone1").keyup(function () {
-                        var n = document.getElementById("phone1");
-                        var letter =  /([789][0-9]{9})+$/;
-                        if (n.value == "") {
-                            mod4=1;
-                            document.getElementById("text4").innerHTML = "<span class='error'>Please enter a valid phone number</span>";
-                            $('#register').attr("disabled", true);
-                            $('#register').css("background","lightblue");
-                        }
-                        else if (!n.value.match(letter)) {
-                            mod4=1;
-                            document.getElementById("text4").innerHTML = "<span class='error'>This is not a valid phone number</span>";
-                            $('#register').attr("disabled", true);
-                            $('#register').css("background","lightblue");
-                        }
-                        else if (n.value.match(letter)) {
-                            document.getElementById("text4").innerHTML = "<span class='error'></span>";
-                            $('#register').attr("disabled", false);
-    $('#register').css("background","#4272d7");
-    $('#register').hover(function(){
-    $(this).css("background-color", "green");
-    }, function(){
-    $(this).css("background-color", "#4272d7");
-    });
-    mod4=0;
-                        }
-                    }),
-                
-                    $("#Experience").keyup(function () {
-                        var n = document.getElementById("Experience");
-                        var letter =  /^[0-9]+$/;
-                        if (n.value == "") {
-                            mod5=1;
-                            document.getElementById("text6").innerHTML = "<span class='error'>Please enter a employee year of experience</span>";
-                            $('#register').attr("disabled", true);
-                            $('#register').css("background","lightblue");
-                        }
-                        else if (!n.value.match(letter)) {
-                            mod5=1;
-                            document.getElementById("text6").innerHTML = "<span class='error'>This is not a valid employee year of experience </span>";
-                            $('#register').attr("disabled", true);
-                            $('#register').css("background","lightblue");
-                        }
-                        else if (n.value.match(letter)) {
-                            document.getElementById("text6").innerHTML = "<span class='error'></span>";
-                            $('#register').attr("disabled", false);
-    $('#register').css("background","#4272d7");
-    $('#register').hover(function(){
-    $(this).css("background-color", "green");
-    }, function(){
-    $(this).css("background-color", "#4272d7");
-    });
-    mod5=0;
-                        }
-                    }),
-                
-                    $("#register").click(function () {
-                        if(mod1==1 ||mod2==1 ||mod3==1 ||mod4==1 ||mod5==1)
-    {
-        $('#register').attr("disabled", true);
-        $('#register').css("background","lightblue");
-    }
-                    });
-
-
-                
-    });
-
-        </script>
-        <script>
-                
-        function fileValidation() {
-                var fileInput =
-                    document.getElementById('inputfileupload');
-                
-                var filePath = fileInput.value;
-            
-                // Allowing file type
-                var allowedExtensions =
-                        /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-                
-                if (!allowedExtensions.exec(filePath)) {
-                
-                    document.getElementById("text17").innerHTML = "<span class='error'>invalid file type</span>";
-                    fileInput.value = '';
-                    return false;
-                }
-                else
-                {
-                    document.getElementById("text17").innerHTML = "<span class='error'></span>";
-                }
-            }
-    </script>
-    <script>
-        function checkEmailAvailability(email) {
-            $.ajax({
-                url: '/validate_email/',  // URL to your Django view for validation
-                method: 'POST',
-                data: {
-                    'email': email,
-                    'csrfmiddlewaretoken': '{{ csrf_token }}'  // Ensure proper CSRF token inclusion
-                },
-                dataType: 'json',
-                success: function(data) {
-                    console.log('Success:', data);
-                    // Example: Update UI to indicate availability or handle success
-                    if (data.valid) {
-                        var n = document.getElementById("email1");
-                        p = /\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-                        if (n.value == "") {
-                            document.getElementById("emailFeedback").innerHTML = "<span class='error'>Please enter a valid email address</span>";
-                            $('#register').attr("disabled", true);
-                            $('#register').css("background","lightblue");
-                            mod3=1;
-                        }
-                        else if (!n.value.match(p)) {
-                            document.getElementById("emailFeedback").innerHTML = "<span class='error'>This is not a valid email address. Please try again</span>";
-                            $('#register').attr("disabled", true);
-                            $('#register').css("background","lightblue");
-                            mod3=1;
-                        }
-                        else{
-                        // Email is available, update UI accordingly
-                        $('#emailInput').removeClass('is-invalid').addClass('is-valid');
-                        $('#emailFeedback').html('<span style="color: green;">' + data.message + '</span>');
-                    }
-                    } else {
-                        // Email already exists, update UI accordingly
-                        $('#emailInput').removeClass('is-valid').addClass('is-invalid');
-                        $('#emailFeedback').html('<span style="color: red;">' + data.message + '</span>');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error:', error);
-                    // Example: Handle error or display error message
-                }
-            });
-        }
-    </script>       
-</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <body id="page-top">
   <div id="wrapper">
     <!-- Sidebar -->
     <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'index' %}">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'admin1:index' %}">
         <div class="sidebar-brand-icon">
           <img src="{% static 'img/logo/logo2.png' %}">
         </div>
@@ -288,7 +43,7 @@
           <span>User Details</span>
         </a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true"
           aria-controls="collapseForm">
           <i class="fa fa-user-plus" style="font-size:16px"></i>
@@ -298,11 +53,11 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Employee</h6>
             <a class="collapse-item" href="{% url 'admin1:addemployee' %}">Add Employee</a>
-            <a class="collapse-item active" href="{% url 'admin1:employeedisplay' %}">View Employee</a>
+            <a class="collapse-item" href="{% url 'admin1:employeedisplay' %}">View Employee</a>
           </div>
         </div>
       </li>
-      <li class="nav-item   ">
+      <li class="nav-item active">
         <a class="nav-link" href="{% url 'admin1:displayserviceadmin' %}">
           <i class="fa fa-gear" style="font-size:15px;"></i>
           <span>View Services</span>
@@ -555,91 +310,78 @@
             </li>
           </ul>
         </nav>
-
         <!-- Topbar -->
         <!-- Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
         
-
+        
           <!-- Row -->
-          <div class="row">
-            <div class="k">
-              <!-- Form Basic -->
+        
+            <!-- Datatables -->
+            <div class="col-lg-12">
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Edit Employee</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Service Data</h6>
                 </div>
-                <div class="card-body">
-                 
-                <form action="{% url 'editemployeeupdate' data_to_display.email %}" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Employee Name</label>
-                      <input type="text" class="form-control" name="name"id="txt1" value="{{data_to_display.name}}" aria-describedby="emailHelp"
-                        placeholder="Enter Name"required>
-                        <span id="text1"></span>
-                    
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputPassword1">Employee Address</label>
-                      <input type="text" class="form-control"name="address" id="txt2" placeholder="Enter Address"value="{{data_to_display.address}}" required>
-                      <span id="text2"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Employee Email</label>
-                        <input type="email" class="form-control" id="email1"name="email" placeholder="Enter Email"value="{{data_to_display.email}}"  onkeyup="checkEmailAvailability(this.value)"required>
-                       <span id="emailFeedback"></span>
+                
+                <div class="table-responsive p-3">
+                  {% if messages %}
+                  {% for message in messages %}
+                      <div class="alert alert-{{ message.tags }}">
+                          {{ message }}
                       </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Employee Phone</label>
-                        <input type="text" class="form-control" id="phone1" name="phone" maxlength="10"placeholder="Enter Phone"value="{{data_to_display.phone}}" required>
-                        <span id="text4"></span>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Employee Gender</label><br>
-                        <input type="radio" name="gender" value="Male" {% if data_to_display.gender == "Male" %}checked{% endif %} required>&nbsp Male &nbsp&nbsp
-                        <input type="radio" name="gender" value="Female" {% if data_to_display.gender == "Female" %}checked{% endif %} required>&nbsp Female &nbsp&nbsp
-                        <input type="radio" name="gender" value="Other" {% if data_to_display.gender == "Other" %}checked{% endif %} required>&nbsp Other
-                    </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Employee Designation</label>
-                        <select name="designation" class="form-control" id="txt5" required>
-
-                            <option value="Customer Support" {% if data_to_display.designation == "Customer Support" %}selected{% endif %}>Customer Support</option>
-                            <option value="Developer" {% if data_to_display.designation == "Developer" %}selected{% endif %}>Developer</option>
-                        </select>
-                             <span id="text5"></span>
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">  Employee year of Experience</label>
-                        <input type="text" class="form-control" value="{{data_to_display.experience}}" id="Experience"name="experience" placeholder="Employee year of Experience"required>
-                        <span id="text6"></span>
-                      </div>
-                    
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Employee Image</label>
-                      <div class="custom-file">
-                    
+                  {% endfor %}
+              {% endif %}
+                  <table class="table align-items-center table-flush" id="dataTable">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Service Name</th>
+                        <th>Service Description</th>
+                        <th>Image</th>
+                        <th>Action</th>
+                        <!-- <th>Gender</th> -->
+                   
+                      </tr>
+                    </thead>
+                    <!-- <tfoot>
+                      <tr>
+                        <th>Name</th>
+                        <th>Photo</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Gender</th>
+                        <th>Status </th>
+                        <th>Action</th>
+                      </tr>
+                    </tfoot> -->
+                    <tbody>
+                      {% for customer_data in data_to_display %}
+                      <tr>
+                     
                        
-                        <input type="file" class="form-control" id="inputfileupload" name="file1"accept="image/png,image/gif,image/jpeg" onchange="fileValidation()"required
-                        placeholder="upload pdf">                                                                     
-                        
-                        <span id="text17"></span>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
-                        <label class="custom-control-label" for="customControlAutosizing">Remember me</label>
-                      </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </form>
+                     
+                       
+                        <td>{{ customer_data.service_name }}</td>
+                
+                <td>{{ customer_data.service_description }}</td>
+                <td><img src="{% static '' %}{{ customer_data.photo }}" alt="Customer Photo" width="68"height="50"></td>
+
+        
+               <td>
+               <a href="{% url 'employee:deleteservice' customer_data.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete {{ customer_data.service_name }}?')">Delete</a>
+                     
+                      
+                      {% endfor %}
+                    
+                   
+                     
+                     
+                    </tbody>
+                  </table>
                 </div>
               </div>
-
-              <!-- Form Sizing -->
-              
+            </div> 
+            
           <!--Row
 
           <!-- Documentation Link -->

@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import make_password
  # Import your Customer model
 from django.shortcuts import redirect, get_object_or_404
 from customerlogin.models import Customer; 
-  
+from employee.models import service,service_provider; 
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth import update_session_auth_hash   
 from django.contrib import messages 
@@ -298,3 +298,64 @@ def passwordaddemployee(request, email):
 def employeepasswordadd(request,email):
         
     return render(request, 'employeepasswordadd.html',{'email':email})
+
+
+def displayserviceadmin(request):
+    services = service.objects.all()  
+    print(services)
+    data_to_display1 = []
+    for services in services:
+          customer_data = {
+              'id': services.id,
+            'service_name': services.service_name,
+            'service_description': services.service_description,
+            'photo': services.photo,
+        }
+          data_to_display1.append(customer_data)
+
+        
+    return render(request, 'displayseriviceadmin.html', {'data_to_display': data_to_display1})
+
+def displayserviceprovideradmin(request):
+    service_providers = service_provider.objects.all()
+    data_to_display1 = []
+
+    for provider in service_providers:
+        # Fetch the related service instance
+        services = get_object_or_404(service, id=provider.service_table)
+       
+        customer_data = {
+            'id': provider.id,
+            'service_name': provider.service_provider_name,
+            'service_address': provider.Service_Provider_Address,
+            'Service_Provider_Email': provider.Service_Provider_Email,
+            'Service_Provider_Phone': provider.Service_Provider_Phone,
+            'Service_Provider_gender': provider.Service_Provider_gender,
+            'Service_Provider_Designation': services.service_name,
+            'Service_Provider_Experience': provider.Service_Provider_Experience,
+            'photo': provider.photo,
+            'Service_Provider_Id_proof': provider.Service_Provider_Id_proof,
+            'Service_Provider_Qualification_Certificate': provider.Service_Provider_Qualification_Certificate,
+            'status':provider.status,
+        }
+
+        data_to_display1.append(customer_data)
+
+    return render(request, 'displayserviceprovideradmin.html', {'data_to_display': data_to_display1})
+
+def changeserviceproviderstatus2(request, service_id):
+    try:
+        customer = service_provider.objects.get(id=service_id)
+        print(customer)
+        if customer.status == '1':  # Assuming 1 means active and 0 means inactive
+            customer.status = '0'
+            customer.save()
+            messages.success(request, f'{customer.service_provider_name}\'s account has been deactivated.')
+        else:
+            customer.status = '1'
+            customer.save()
+            messages.success(request, f'{customer.service_provider_name} \'s account has been activated.')
+    except Customer.DoesNotExist:
+        messages.error(request, 'Customer not found.')
+
+    return redirect('admin1:displayserviceprovideradmin')

@@ -15,6 +15,8 @@ urlpatterns = [
    path('deleteservice/<int:service_id>/', views.delete_service, name='deleteservice'),
    path('editservice/<int:service_id>/', views.edit_service, name='editservice'),
     path('displayservice/', views.display_service, name='displayservice'),
+    path('changeserviceproviderstatus1/<int:service_id>/', views.changeserviceproviderstatus1, name='changeserviceproviderstatus1'),
+        path('editserviceproviderdata/<int:service_id>/', views.changeserviceproviderstatus1, name='changeserviceproviderstatus1'),
 ]
     
     

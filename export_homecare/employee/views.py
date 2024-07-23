@@ -106,6 +106,7 @@ def displayserviceproviderdata1(request):
             'photo': provider.photo,
             'Service_Provider_Id_proof': provider.Service_Provider_Id_proof,
             'Service_Provider_Qualification_Certificate': provider.Service_Provider_Qualification_Certificate,
+            'status':provider.status,
         }
 
         data_to_display1.append(customer_data)
@@ -216,3 +217,21 @@ def addserviceproviderdata(request):
         # Redirect to a success page
     else:
         return render(request, 'addserviceprovideremployee.html')
+    
+
+def changeserviceproviderstatus1(request, service_id):
+    try:
+        customer = service_provider.objects.get(id=service_id)
+        print(customer)
+        if customer.status == '1':  # Assuming 1 means active and 0 means inactive
+            customer.status = '0'
+            customer.save()
+            messages.success(request, f'{customer.service_provider_name}\'s account has been deactivated.')
+        else:
+            customer.status = '1'
+            customer.save()
+            messages.success(request, f'{customer.service_provider_name} \'s account has been activated.')
+    except Customer.DoesNotExist:
+        messages.error(request, 'Customer not found.')
+
+    return redirect('employee:displayserviceproviderdata1')

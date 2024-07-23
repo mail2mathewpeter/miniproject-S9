@@ -60,11 +60,10 @@ def emailverify(request):
 
 
 def userloginhome(request):
-    if request.session.get('login') == 'yes':
-       customer = request.user  # Get the logged-in user
-       return render(request, 'userloginhome.html', {'customer': customer})
-    else:
-        return redirect('login1')
+    
+    customer = request.user  # Get the logged-in user
+    return render(request, 'userloginhome.html', {'customer': customer})
+
 def useraccount(request):
     customer = request.user  # Get the logged-in user
     return render(request, 'accountview.html', {'customer': customer})
@@ -316,15 +315,15 @@ def logincustomer(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
-        employee = Employee.objects.get(email='experthomecare43@gmail.com')
-        print(employee)
+       # employee = Employee.objects.get(email='experthomecare43@gmail.com')
+        #print(employee)
         # Authenticate user with email, password, and status check ('1' for customers)
         user = authenticate(request, email=email, password=password)
         print(user);
         print(f"Username entered: {email}")
         print(f"Password entered: {password}")
-        print(employee.email)
-        print(employee.password);
+       # print(employee.email)
+       # print(employee.password);
         
         if user is not None:
             # Check if the authenticated user is a customer
@@ -333,8 +332,11 @@ def logincustomer(request):
                 login(request, user)
                 if(customer.status=='1'):
                     request.session['login'] = 'yes'
-                
-                    return render(request, 'userloginhome.html', {'customer': customer})
+                    return redirect("userloginhome") 
+                elif(customer.status=='2'):
+                    request.session['login'] = 'yes'
+                    return redirect('admin1:index') 
+                    
                 else:
                      messages.success(request, 'Your account is in deactivated mode.')
                      return render(request, 'login1.html')
@@ -346,20 +348,20 @@ def logincustomer(request):
                 # Handle case where Customer record doesn't exist
                 return HttpResponse("Customer record not found.")
         
-        elif employee.email==email and employee.password==password and employee.status =='2':
-            # Authenticate user with email and password only (without status check)
-            # login(request, user)
-            name=employee.name;
-            request.session['username']=name;
-            request.session['login'] = 'yes'
-            name=request.session.get('username')
-            return redirect('employee:index1',{'customer':name}) 
+        # elif employee.email==email and employee.password==password and employee.status =='2':
+        #     # Authenticate user with email and password only (without status check)
+        #     # login(request, user)
+        #     name=employee.name;
+        #     request.session['username']=name;
+        #     request.session['login'] = 'yes'
+        #     name=request.session.get('username')
+        #     return redirect('employee:index1',{'customer':name}) 
             
             
             
         else:
                 # Authentication failed
-            return render(request, 'login1.html', {'error': 'Invalid credentials'})
+            return render(request, 'login.html', {'error': 'Invalid credentials'})
     
     return HttpResponse("GET request received. POST request expected.")
 
