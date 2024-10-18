@@ -54,16 +54,16 @@ INSTALLED_APPS = [
 AUTHENTICATION_BACKENDS = (
    'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-    'social_core.backends.google.GoogleOAuth2', 
-     'customerlogin.backends.CustomUserBackend', 
-      
+    'social_core.backends.google.GoogleOAuth2',
+     'customerlogin.backends.CustomUserBackend',
+
 )
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'optional' 
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
 
 SITE_ID = 1
@@ -210,7 +210,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT=os.path.join(BASE_DIR,"staticfiles/")
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATICFILES_DIRS=[
     os.path.join(BASE_DIR,'static')
 ]
@@ -252,7 +251,7 @@ AUTH_USER_MODEL = 'customerlogin.Customer'
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
-     
+
 )
 
 SOCIAL_AUTH_PIPELINE = (
