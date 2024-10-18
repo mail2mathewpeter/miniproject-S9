@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .receipt {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            border: 2px solid #000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .header h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #8B4513;
+        }
+        .logo {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .logo img {
+            width: 150px;
+            height: auto;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .row div {
+            width: 48%;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .table th, .table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+        .table th {
+            background-color: #f2f2f2;
+        }
+        .table th:nth-child(1) {
+            width: 5%;
+        }
+        .table th:nth-child(2) {
+            width: 20%;
+        }
+        .table th:nth-child(3) {
+            width: 25%;
+        }
+        .table th:nth-child(4) {
+            width: 15%;
+        }
+        .table th:nth-child(5) {
+            width: 15%;
+        }
+        .table th:nth-child(6) {
+            width: 10%;
+        }
+        .table th:nth-child(7) {
+            width: 25%;
+        }
+        .table th:nth-child(8) {
+            width: 15%;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            border-top: 1px solid #000;
+            padding-top: 10px;
+            font-size: 14px;
+            color: #777;
+        }
+        .terms {
+            margin-top: 20px;
+        }
+        .terms p {
+            font-size: 14px;
+        }
+        .signature {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .signature div {
+            width: 48%;
+            text-align: center;
+            border-top: 1px solid #000;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt">
+        <div class="header">
+            <div class="logo">
+                
+                <img src="{% static 'images/logonew.png' %}" width="250" alt="Company Logo">
+            </div>
+            <h2>EXPERT HOMECARE</h2>
+        </div>
+        <div class="row">
+            <div>
+             
+                <h2>RECEIPT</h2>
+                <!-- <strong>Receipt No:</strong> _______<br>
+                <strong>Payment Date:</strong> _______<br>
+                <strong>Payment Type:</strong> _______ -->
+            </div>
+            <div>
+                
+                <strong>Bill To:</strong><br>
+                Name: {{ customer_name }} <br>
+                Address: {{ address }} <br>
+               
+                Phone No: {{ customer_phone }}<br>
+                Email ID: {{ customer_email }} 
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <strong>From:</strong><br>
+                Name: {{ service_provider_name }}<br>
+                Phone No: {{ service_provider_phone }}<br>
+                Email ID: {{ service_provider_email }}
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Sl. No.</th>
+                    <th>Service Offered</th>
+                    <th>Service Offered Dates</th>
+                    <th>Service Provider Amount</th>
+                    <th>Additional Charge</th>
+                 
+                    <th>Transaction ID</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for accessory in accessories %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ service_name }}</td>
+                    <td>
+                        {% for date_slot in date_slots %}
+                            {{ date_slot.service_start_date }} ({{ date_slot.time_slot }})<br>
+                        {% endfor %}
+                    </td>
+                    <td>{{ amount }}</td>
+                    <td>{{ accessory.additional_amount }}</td>
+                 
+                    <td>{{ payment_id }}</td>
+                    <td>{{ accessory.total }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+      
+    </div>
+</body>
+</html>

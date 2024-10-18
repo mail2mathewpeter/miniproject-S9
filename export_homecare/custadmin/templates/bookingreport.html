@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>Booking Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7fa; /* Light background color for the whole page */
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow effect */
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .logo {
+            display: block;
+            margin: 20px auto;
+            width: 250px; /* Adjust the width as needed */
+        }
+    </style>
+</head>
+<body>
+    <!-- Company Logo -->
+    <img src="{% static 'images/logonew.png' %}" class="logo" alt="Company Logo">
+
+    <h1>Booking Report</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>Service Provider</th>
+                <th>Customer</th>
+                <th>Address</th>
+                <th>Booking Date</th>
+                <th>Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ booking.service_provider_name }}</td>
+                <td>{{ booking.customer_name }}</td>
+                <td>{{ booking.address }}</td>
+                <td>{{ booking.booking_date }}</td>
+                <td>{{ booking.amount }}</td>
+                <td>{{ booking.status }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" style="text-align: center;">No bookings available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
