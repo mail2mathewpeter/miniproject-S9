@@ -463,20 +463,20 @@ from .models import Booking, BookingDate, service  # Import the Payment model
 
 
 
-def chat_view(request):
-    if request.method == 'POST':
-        message_content = request.POST.get('message')
+# def chat_view(request):
+#     if request.method == 'POST':
+#         message_content = request.POST.get('message')
         
-        if message_content:
-            recipient = Customer.objects.get(email='mathew@gmail.com')
-            message = Message.objects.create(sender=request.user, recipient=recipient, content=message_content)
-            return redirect('chat_view')  
+#         if message_content:
+#             recipient = Customer.objects.get(email='mathew@gmail.com')
+#             message = Message.objects.create(sender=request.user, recipient=recipient, content=message_content)
+#             return redirect('chat_view')  
     
-    messages = Message.objects.filter(Q(sender=request.user) | Q(recipient=request.user)).order_by('timestamp')
+#     messages = Message.objects.filter(Q(sender=request.user) | Q(recipient=request.user)).order_by('timestamp')
 
-    context = {
-        'messages': messages,
-        'customer': request.user,
-    }
-    return render(request, 'chat.html', context)
+#     context = {
+#         'messages': messages,
+#         'customer': request.user,
+#     }
+#     return render(request, 'chat.html', context)
 
