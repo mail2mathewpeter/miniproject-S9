@@ -7,7 +7,6 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login1/', views.login1, name='login1'),
      path('service1/', views.service1, name='service1'),
-  
       path('registercustomer', views.registercustomer, name='registercustomer'),
       path('logincustomer', views.logincustomer, name='logincustomer'),
       path('forgot', views.forgot, name='forgot'),
@@ -26,8 +25,8 @@ urlpatterns = [
   path('validate_email/', views.validate_email, name='validate_email'),
     path('logout/', views.logout_view, name='logout'),
           path('verify_otp1emailset/', views.verify_otp1emailset, name='verify_otp1emailset'),
-            # path('chat/', views.chat_view, name='chat_view'),
-    
+         
+
  path('emailverify/', views.emailverify, name='emailverify'),
 
 

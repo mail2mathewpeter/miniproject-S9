@@ -412,6 +412,7 @@ def logout_view(request):
 
 
 
+# customerlogin/views.py
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -437,28 +438,3 @@ def validate_email(request):
         return JsonResponse(data)
     
     return JsonResponse({'error': 'Invalid request method.'}, status=400)
-
-from django.shortcuts import render, get_object_or_404
-from django.utils.dateformat import format as date_format
-from .models import Booking, BookingDate, service  # Import the Payment model
-
-
-
-
-# def chat_view(request):
-#     if request.method == 'POST':
-#         message_content = request.POST.get('message')
-        
-#         if message_content:
-#             recipient = Customer.objects.get(email='mathew@gmail.com')
-#             message = Message.objects.create(sender=request.user, recipient=recipient, content=message_content)
-#             return redirect('chat_view')  
-    
-#     messages = Message.objects.filter(Q(sender=request.user) | Q(recipient=request.user)).order_by('timestamp')
-
-#     context = {
-#         'messages': messages,
-#         'customer': request.user,
-#     }
-#     return render(request, 'chat.html', context)
-
