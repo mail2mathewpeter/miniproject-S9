@@ -38,7 +38,7 @@ urlpatterns = [
           path('logoutaemployee/', views.logoutaemployee, name='logoutaemployee'),
      path('serviceproviderpdfemployee/', views.serviceproviderpdfemployee, name='serviceproviderpdfemployee'),
     path('viewbookingpdfemployee/', views.viewbookingpdfemployee, name='viewbookingpdfemployee'),
-   path('validate_image/', views.validate_image, name='validate_image'),
+  #  path('validate_image/', views.validate_image, name='validate_image'),
     path('validate_email/', views.validate_email1, name='validate_email'),
 ] 
 if settings.DEBUG:
