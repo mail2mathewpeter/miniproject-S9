@@ -456,7 +456,81 @@ def validate_email(request):
     
     return JsonResponse({'error': 'Invalid request method.'}, status=400)
 
+from django.shortcuts import render, get_object_or_404
+from django.utils.dateformat import format as date_format
+from .models import Booking, BookingDate, service  # Import the Payment model
 
+def bookview(request):
+    if request.session.get('login') == 'yes':
+        customer = request.user
+      
+        
+        # Fetch all bookings with related customer, service provider, and service details
+        bookings = Booking.objects.filter(customer_id=customer.id).select_related('customer', 'service_provider').order_by('-id')
+        
+        data_to_display = {}
+
+        for booking in bookings:
+            # Fetch the related service provider instance
+            provider = booking.service_provider
+            # Fetch the related service instance
+            service1 = provider.service_table
+            service2 = get_object_or_404(service, id=service1)  # Ensure you have the correct service relation
+            
+            # Fetch related BookingDate instances
+            booking_dates = BookingDate.objects.filter(booking=booking)
+            
+            # Fetch payment details related to this booking
+            payment = payments.objects.filter(booking_id=booking.id).first()  # Assuming one payment per booking
+            
+            # Fetch Accessoriesbuy details related to this booking
+            accessoriesbuy = Accessoriesbuy.objects.filter(Booking1=booking).first()  # Assuming one Accessoriesbuy per booking
+            
+            # Group booking dates and time slots
+            date_slots = []
+            for booking_date in booking_dates:
+                date_slots.append({
+                    'service_start_date': date_format(booking_date.service_start_date, 'd M Y'),  # Format the date
+                    'time_slot': booking_date.time_slot,
+                })
+
+            # Prepare booking details
+            booking_data = {
+                'booking_id': booking.id,
+                'address': booking.address,
+                'notes': booking.notes,
+                'amount': booking.amount,
+                'status': booking.status,
+                'date_slots': date_slots,
+                'paymentstatus': booking.paymentstatus,
+                'service_provider_name': provider.service_provider_name,
+                'service_provider_email': provider.Service_Provider_Email,
+                'service_provider_phone': provider.Service_Provider_Phone,
+                'service_provider_location': provider.Service_Provider_location,
+                'service_name': service2.service_name,
+                'customer_name': f"{booking.customer.first_name} {booking.customer.last_name}",
+                'customer_email': booking.customer.email,
+                'customer_phone': booking.customer.phone1,
+            }
+
+            # Add payment details if available
+            if payment:
+                booking_data['payment_id'] = payment.Payment_id
+                booking_data['payment_status'] = payment.status
+
+            # Add Accessoriesbuy details if available
+            if accessoriesbuy:
+                booking_data['accessoriesbuy_amount'] = accessoriesbuy.Additionalaccessoriesamount
+                booking_data['accessoriesbuy_proof'] = accessoriesbuy.proofupdate.url  # Provide URL to the image
+                booking_data['accessoriesbuy_update_date'] = date_format(accessoriesbuy.update_date, 'd M Y')  # Format the date
+
+            data_to_display[booking.id] = booking_data
+           
+
+        return render(request, 'mybooking.html', {'data_to_display': data_to_display, 'customer': customer})
+    
+    else:
+        return render(request, 'login1.html')
 
 
 
