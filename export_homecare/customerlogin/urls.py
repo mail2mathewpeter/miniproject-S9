@@ -26,8 +26,11 @@ urlpatterns = [
   path('validate_email/', views.validate_email, name='validate_email'),
     path('logout/', views.logout_view, name='logout'),
           path('verify_otp1emailset/', views.verify_otp1emailset, name='verify_otp1emailset'),
-         
-
+            path('chat/', views.chat_view, name='chat_view'),
+          path('bookingservice/', views.bookingservice, name='bookingservice'),
+ path('book/', views.book_service, name='book'),
+ path('bookview/', views.bookview, name='bookview'),
+path('fetch-messages/', views.fetch_messages, name='fetch_messages'),
  path('emailverify/', views.emailverify, name='emailverify'),
 
 
