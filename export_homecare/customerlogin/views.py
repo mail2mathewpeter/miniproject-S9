@@ -1017,113 +1017,113 @@ def delete_booking(request, booking_id):
         messages.success(request, 'Booking and related dates have been successfully deleted.')
         return redirect('bookview')  # Replace with the URL where you want to redirect after deletion
     
-# views.py
-import cv2
-import os
-from django.http import StreamingHttpResponse, JsonResponse
-from django.shortcuts import render, get_object_or_404
-from django.core.files.base import ContentFile
-from django.core.files.storage import FileSystemStorage
-from django.conf import settings
+# # views.py
+# import cv2
+# import os
+# from django.http import StreamingHttpResponse, JsonResponse
+# from django.shortcuts import render, get_object_or_404
+# from django.core.files.base import ContentFile
+# from django.core.files.storage import FileSystemStorage
+# from django.conf import settings
 
-# Initialize the camera globally, but don't open it until needed
-cap = None
+# # Initialize the camera globally, but don't open it until needed
+# cap = None
 
-# Load pre-trained face detection model from OpenCV
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+# # Load pre-trained face detection model from OpenCV
+# face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-def generate_frames():
-    global cap
-    if cap is None:
-        cap = cv2.VideoCapture(0)  # Initialize the camera
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
+# def generate_frames():
+#     global cap
+#     if cap is None:
+#         cap = cv2.VideoCapture(0)  # Initialize the camera
+#     while True:
+#         ret, frame = cap.read()
+#         if not ret:
+#             break
 
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+#         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+#         faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
 
-        for (x, y, w, h) in faces:
-            cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
+#         for (x, y, w, h) in faces:
+#             cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
 
-        if len(faces) > 1:
-            cv2.putText(frame, "Multiple Faces Detected", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
-        elif len(faces) == 1:
-            cv2.putText(frame, "Single Face Detected", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
-        else:
-            cv2.putText(frame, "No Face Detected", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+#         if len(faces) > 1:
+#             cv2.putText(frame, "Multiple Faces Detected", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
+#         elif len(faces) == 1:
+#             cv2.putText(frame, "Single Face Detected", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+#         else:
+#             cv2.putText(frame, "No Face Detected", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
 
-        ret, buffer = cv2.imencode('.jpg', frame)
-        frame = buffer.tobytes()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+#         ret, buffer = cv2.imencode('.jpg', frame)
+#         frame = buffer.tobytes()
+#         yield (b'--frame\r\n'
+#                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-def camera_feed(request):
-    global cap
-    if cap is None or not cap.isOpened():
-        cap = cv2.VideoCapture(0)  # Initialize the camera if it's not opened
-    return StreamingHttpResponse(generate_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
+# def camera_feed(request):
+#     global cap
+#     if cap is None or not cap.isOpened():
+#         cap = cv2.VideoCapture(0)  # Initialize the camera if it's not opened
+#     return StreamingHttpResponse(generate_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
 
-def capture_photo(request):
-    global cap
-    if cap is None:
-        cap = cv2.VideoCapture(0)  # Initialize the camera if it's not opened
+# def capture_photo(request):
+#     global cap
+#     if cap is None:
+#         cap = cv2.VideoCapture(0)  # Initialize the camera if it's not opened
     
-    ret, frame = cap.read()
-    if ret:
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+#     ret, frame = cap.read()
+#     if ret:
+#         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+#         faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
 
-        if len(faces) > 1:
-            return JsonResponse({'status': 'error', 'message': 'Multiple Faces Detected. Photo not captured.'})
-        elif len(faces) == 1:
-            image_name = 'employee4.jpg'
-            image_path = os.path.join(settings.BASE_DIR, 'customerlogin/static/images/', image_name)
-            cv2.imwrite(image_path, frame)  # Save without drawing rectangle
+#         if len(faces) > 1:
+#             return JsonResponse({'status': 'error', 'message': 'Multiple Faces Detected. Photo not captured.'})
+#         elif len(faces) == 1:
+#             image_name = 'employee4.jpg'
+#             image_path = os.path.join(settings.BASE_DIR, 'customerlogin/static/images/', image_name)
+#             cv2.imwrite(image_path, frame)  # Save without drawing rectangle
 
-            fs = FileSystemStorage(location='customerlogin/static/images/')
-            with open(image_path, 'rb') as f:
-                photo = ContentFile(f.read(), image_name)
+#             fs = FileSystemStorage(location='customerlogin/static/images/')
+#             with open(image_path, 'rb') as f:
+#                 photo = ContentFile(f.read(), image_name)
             
-            customer = request.user
-            employee = get_object_or_404(Customer, email=customer)
+#             customer = request.user
+#             employee = get_object_or_404(Customer, email=customer)
 
-            if employee:
-                filename = fs.save(image_name, photo)
-                employee.photo = f'images/{filename}'
-                employee.save()
-                cap.release()  # Release the camera
-                messages.success(request, 'Your profile picture has been updated successfully!')
-                return JsonResponse({'status': 'success', 'message': 'Photo captured and saved successfully!'})
-            else:
-                cap.release()  # Release the camera
-                return JsonResponse({'status': 'error', 'message': 'Employee not found.'})
-        else:
-            return JsonResponse({'status': 'error', 'message': 'No Face Detected. Photo not captured.'})
-    else:
-        return JsonResponse({'status': 'error', 'message': 'Failed to capture image.'})
+#             if employee:
+#                 filename = fs.save(image_name, photo)
+#                 employee.photo = f'images/{filename}'
+#                 employee.save()
+#                 cap.release()  # Release the camera
+#                 messages.success(request, 'Your profile picture has been updated successfully!')
+#                 return JsonResponse({'status': 'success', 'message': 'Photo captured and saved successfully!'})
+#             else:
+#                 cap.release()  # Release the camera
+#                 return JsonResponse({'status': 'error', 'message': 'Employee not found.'})
+#         else:
+#             return JsonResponse({'status': 'error', 'message': 'No Face Detected. Photo not captured.'})
+#     else:
+#         return JsonResponse({'status': 'error', 'message': 'Failed to capture image.'})
 
-def camera_page(request):
-    return render(request, 'camera_page.html')
+# def camera_page(request):
+#     return render(request, 'camera_page.html')
 
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
-from django.template.loader import get_template
-from xhtml2pdf import pisa  # If you want to generate PDF
-from io import BytesIO 
-def render_to_pdf(template_src, context_dict={}):
-    template = get_template(template_src)
-    html = template.render(context_dict)
-    result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
-    if not pdf.err:
-        return HttpResponse(result.getvalue(), content_type='application/pdf')
-    return None
+# from django.shortcuts import render, get_object_or_404
+# from django.http import HttpResponse
+# from django.template.loader import get_template
+# from xhtml2pdf import pisa  # If you want to generate PDF
+# from io import BytesIO 
+# def render_to_pdf(template_src, context_dict={}):
+#     template = get_template(template_src)
+#     html = template.render(context_dict)
+#     result = BytesIO()
+#     pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
+#     if not pdf.err:
+#         return HttpResponse(result.getvalue(), content_type='application/pdf')
+#     return None
 
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
- # Adjust import paths as necessary
+# from django.shortcuts import get_object_or_404, render
+# from django.http import HttpResponse
+#  # Adjust import paths as necessary
 
 
 def payment_receipt(request, payment_id):
