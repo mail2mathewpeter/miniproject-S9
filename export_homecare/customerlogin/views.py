@@ -5,16 +5,12 @@ from django .http import HttpResponse
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.hashers import make_password
-from .models import Customer,Booking
-from custadmin.models import Employee, payments;
-from employee.models import service,service_provider;   # Import your Customer model
+from .models import Customer 
+from custadmin.models import Employee;
+from employee.models import service;   # Import your Customer model
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth import update_session_auth_hash   
 from django.contrib import messages 
-
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.cache import cache_control
-
 # Create your views here.
 # def registercustomer(request):
 #     if request.method=="POST":
@@ -33,9 +29,8 @@ from django.views.decorators.cache import cache_control
 
 def forgot(request):
     return render(request,'forgot.html')
-
 def service1(request):
-    services = service.objects.filter(status=1)
+    services = service.objects.all()  
     print(services)
     data_to_display1 = []
     for services in services:
@@ -48,30 +43,10 @@ def service1(request):
           data_to_display1.append(customer_data)
 
     return render(request,'service.html', {'data_to_display': data_to_display1})
-def servicelogin(request):
-   if request.session.get('login') == 'yes':
-    services = service.objects.filter(status=1) 
-    customer = request.user
-    print(services)
-    data_to_display1 = []
-    for services in services:
-          customer_data = {
-              'id': services.id,
-            'service_name': services.service_name,
-            'service_description': services.service_description,
-            'photo': services.photo,
-        }
-          data_to_display1.append(customer_data)
-
-    return render(request,'servicelogin.html', {'data_to_display': data_to_display1,'customer': customer})
-   else:
-     return render(request, 'login1.html')
-
 
 def register(request):
     return render(request,'register.html')
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login1(request):
     return render(request, 'login1.html')
 
@@ -83,41 +58,24 @@ def home(request):
 def emailverify(request):
     return render(request, 'emailverify.html')
 
-@login_required
+
 def userloginhome(request):
-    request.session['login'] = 'yes'
-    customer = request.user  # Get the logged-in user
- 
-    return render(request, 'userloginhome.html', {'customer': customer})
     
+    customer = request.user  # Get the logged-in user
+    return render(request, 'userloginhome.html', {'customer': customer})
 
 def useraccount(request):
-    customer = request.user 
-     # Get the logged-in user
-    if request.session.get('login') == 'yes':
-       return render(request, 'accountview.html', {'customer': customer})
-    else:
-        return render(request, 'login1.html')
-    
+    customer = request.user  # Get the logged-in user
+    return render(request, 'accountview.html', {'customer': customer})
 def editaccount(request):
     customer = request.user  # Get the logged-in user
-    if request.session.get('login') == 'yes':
-       return render(request, 'editaccount.html', {'customer': customer})
-    else:
-        return render(request, 'login1.html')
+    return render(request, 'editaccount.html', {'customer': customer})
 def updatepassword(request):
-    
     customer = request.user  # Get the logged-in user
-    if request.session.get('login') == 'yes':
-        return render(request, 'changepassword.html', {'customer': customer})
-    else:
-        return render(request, 'login1.html')
+    return render(request, 'changepassword.html', {'customer': customer})
 def deactiveaccountuser(request):
     customer = request.user  # Get the logged-in user
-    if request.session.get('login') == 'yes':
-       return render(request, 'deactiveuseraccount.html', {'customer': customer})
-    else:
-        return render(request, 'login1.html')
+    return render(request, 'deactiveuseraccount.html', {'customer': customer})
 
 
 from django.shortcuts import render, redirect
@@ -136,16 +94,7 @@ def send_otp_email(user_email, otp):
 
 def send_otp_emailregister(user_email, otp):
     subject = 'OTP for Email Registration on Expert Homecare Account'
-    message = (
-    f"Hello,\n\n"
-    f"Thank you for registering with Expert Homecare!\n\n"
-    f"To complete your registration, please use the following One-Time Password (OTP):\n\n"
-    f"{otp}\n\n"
-    f"This OTP is valid for a short period of time. If you did not request this registration, please ignore this email.\n\n"
-    f"Best regards,\n"
-    f"The Expert Homecare Team"
-    )
- 
+    message = f'Your OTP Register Email is: {otp}'
     from_email = settings.EMAIL_HOST_USER
     recipient_list = [user_email]
     send_mail(subject, message, from_email, recipient_list)
@@ -277,7 +226,7 @@ def changepassworduser(request):
        
         customer.save()
 
-        messages.success(request, 'Your account password has been updated successfully!')
+        messages.success(request, 'Your profile has been updated successfully!')
         update_session_auth_hash(request, customer)
         customer = request.user  # Get the logged-in user
         return render(request, 'accountview.html', {'customer': customer}) # Redirect to a success page
@@ -295,7 +244,7 @@ def updatecustomerdata(request):
         phone1 = request.POST['phone1']
         filenotupdate = request.POST['file1']
         
-        address = request.POST.get('address')
+
         gender = request.POST.get('gender')
       
         file = request.FILES.get('file')
@@ -311,37 +260,11 @@ def updatecustomerdata(request):
         customer.first_name = first_name
         customer.last_name = last_name
         customer.gender = gender
-        customer.address=address
         customer.phone1 = phone1
        
         customer.save()
 
-        messages.success(request, 'Your profile has been updated successfully!')
-        return redirect('useraccount')  # Redirect to a success page
-   
-
-    return render(request, 'editaccount.html', {'customer': customer})
-def updatecustomerdata1(request):
-    if request.method == 'POST':
-        customer = request.user
-        form = Customer(request.POST, request.FILES)
-        
-        
-      
-        file = request.FILES.get('file')
-        filename = None  
-        if file:
-                fs = FileSystemStorage(location='customerlogin/static/images/')
-                filename = fs.save(file.name, file)
-                customer.photo = f'images/{filename}'
-
-
-            # Update the customer record
-    
-      
-        customer.save()
-
-        messages.success(request, 'Your profile has been updated successfully!')
+        # messages.success(request, 'Your profile has been updated successfully!')
         return redirect('useraccount')  # Redirect to a success page
    
 
@@ -356,7 +279,33 @@ def deactivefunctionuser(request):
         return redirect('login1')  # Redirect to a safe place, e.g., home page
   else:
     return render(request, 'useraccount')
+# def logincustomer(request):
+#     if request.method == 'POST':
+#         # email = "mail2mathewpeter@gmail.com"
+#         email = request.POST['email']
+#         password = request.POST['password']
+#         # password="Mathew@2001"
+#         user = authenticate(request, email=email, password=password,status='1')
+#         print(f"Username entered: {email}")
+#         print(f"Password entered: {password}")
+        
+#         if user is not None:
+#             # Login successful
+#             login(request, user)
+#             # Fetch customer details directly from the authenticated user
+#             try:
+#                 customer1 = Customer.objects.get(email=user.email)
+#                 return render(request, 'userloginhome.html', {'customer': customer1})
+#             except Customer.DoesNotExist:
+#                 # Handle case where Customer record doesn't exist for the user
+#                 return HttpResponse("Customer record not found.")
+#         else:
+#             # Authentication failed
+#             return render(request, 'login1.html', {'error': 'Invalid credentials'})
+    
+#     return HttpResponse("GET request received. POST request expected.")
 
+# customerlogin/views.py
 
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login
@@ -366,12 +315,15 @@ def logincustomer(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
-      
-     #   Authenticate user with email, password, and status check ('1' for customers)
+       # employee = Employee.objects.get(email='experthomecare43@gmail.com')
+        #print(employee)
+        # Authenticate user with email, password, and status check ('1' for customers)
         user = authenticate(request, email=email, password=password)
-        # print(user);
-      
-    
+        print(user);
+        print(f"Username entered: {email}")
+        print(f"Password entered: {password}")
+       # print(employee.email)
+       # print(employee.password);
         
         if user is not None:
             # Check if the authenticated user is a customer
@@ -382,7 +334,7 @@ def logincustomer(request):
                     request.session['login'] = 'yes'
                     return redirect("userloginhome") 
                 elif(customer.status=='2'):
-                    request.session['login'] = 'admin'
+                    request.session['login'] = 'yes'
                     return redirect('admin1:index') 
                     
                 else:
@@ -395,56 +347,23 @@ def logincustomer(request):
             except Customer.DoesNotExist:
                 # Handle case where Customer record doesn't exist
                 return HttpResponse("Customer record not found.")
- 
-        elif email and password :
-          try:
-           employee = Employee.objects.get(email=email)
-     
-           
-           if employee.email==email and employee.password==password and employee.status=="3":
-         
-            # Authenticate user with email and password only (without status check)
-            # login(request, user)
-            name=employee.name;
-            id=employee.id;
-            request.session['username']=name;
-            request.session['id']=id;
-            request.session['login'] = 'employee'
-            name=request.session.get('username')
-            return redirect('employee:index1') 
-           else:
-               messages.success(request, 'Account is not activated.')
-               return render(request, 'login1.html')
-           
-          except Employee.DoesNotExist:
-              try:
-               serviceprovider = service_provider.objects.get(Service_Provider_Email=email)
-               if serviceprovider.Service_Provider_Email==email and serviceprovider.password==password and serviceprovider.status=="4":
-                print(serviceprovider.Service_Provider_Email)
-                print(serviceprovider.password);
-                print(serviceprovider.status);
-            # Authenticate user with email and password only (without status check)
-            # login(request, user)
-                name=serviceprovider.service_provider_name;
-                id=serviceprovider.id;
-                request.session['username']=name;
-                request.session['id']=id;
-                request.session['login'] = 'serviceprovider'
-                name=request.session.get('username')
-                return redirect('customserviceprovider:index2') 
-              except service_provider.DoesNotExist:
-                    messages.error(request, 'Invalid credentials.')
-                    return render(request, 'login1.html')
+        
+        # elif employee.email==email and employee.password==password and employee.status =='2':
+        #     # Authenticate user with email and password only (without status check)
+        #     # login(request, user)
+        #     name=employee.name;
+        #     request.session['username']=name;
+        #     request.session['login'] = 'yes'
+        #     name=request.session.get('username')
+        #     return redirect('employee:index1',{'customer':name}) 
             
             
             
         else:
                 # Authentication failed
-            messages.success(request, 'Invalid credentials')
-            return render(request, 'login1.html', {'error': 'Invalid credentials'})
+            return render(request, 'login.html', {'error': 'Invalid credentials'})
     
-    messages.success(request, 'Invalid credentials')
-    return render(request, 'login1.html', {'error': 'Invalid credentials'})
+    return HttpResponse("GET request received. POST request expected.")
 
 
 from django.shortcuts import redirect
@@ -457,7 +376,7 @@ def handle_google_login(request):
     try:
         # Attempt to retrieve the Google account associated with the authenticated user
         google_account = SocialAccount.objects.get(provider='google', user=request.user)
-       
+        
         # Google account already associated, redirect to profile page
         return redirect('profile')
     
@@ -492,7 +411,24 @@ def logout_view(request):
     return redirect('login1')
 
 
+def servicelogin(request):
+   if request.session.get('login') == 'yes':
+    services = service.objects.filter(status=1) 
+    customer = request.user
+    print(services)
+    data_to_display1 = []
+    for services in services:
+          customer_data = {
+              'id': services.id,
+            'service_name': services.service_name,
+            'service_description': services.service_description,
+            'photo': services.photo,
+        }
+          data_to_display1.append(customer_data)
 
+    return render(request,'servicelogin.html', {'data_to_display': data_to_display1,'customer': customer})
+   else:
+     return render(request, 'login1.html')
 # customerlogin/views.py
 
 from django.http import JsonResponse
@@ -519,633 +455,3 @@ def validate_email(request):
         return JsonResponse(data)
     
     return JsonResponse({'error': 'Invalid request method.'}, status=400)
-
-
-def viewserviceprovider(request, id):
-  if request.session.get('login') == 'yes':
-    try:
-        service_providers = service_provider.objects.all(status=4)  
-        print(service_providers)
-        data_to_display = []
-      #  print(id)
-        
-        for provider in service_providers:
-            if provider.service_table == id:
-                customer_data = {
-                    'service_provider_id': provider.id,
-                    'service_provider_name': provider.service_provider_name,
-                    'Service_Provider_Experience': provider.Service_Provider_Experience,
-                    'Service_Provider_Phone': provider.Service_Provider_Phone,
-                    'Service_Provider_Email': provider.Service_Provider_Email,
-                    'Service_Provider_gender': provider.Service_Provider_gender,
-                    'Service_Provider_location': provider.Service_Provider_location,
-                    'Service_Provider_amountdefalult': provider.Service_Provider_amountdefalult,
-                    'photo': provider.photo,
-                }
-                data_to_display.append(customer_data)
-
-        if not data_to_display:
-            customer_data = {
-                'error': 'No service providers found for the given ID.'
-            }
-            data_to_display.append(customer_data)
-
-        return render(request, 'viewserviceprovider.html', {'data_to_display': data_to_display})
-
-    except Exception as e:
-        print(f"Error: {e}")
-        return render(request, 'viewserviceprovider.html', {'error': 'An error occurred while fetching data.'})
-  else:
-                # Authentication failed
-       
-      return render(request, 'login1.html')
-
-
-from employee.models import service,service_provider;  
-from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
- # Ensure these are the correct model names
-
-def fetch_providers_by_filters(request, id):
-    # Retrieve filter parameters from the request
-    location = request.GET.get('location')
-    experience = request.GET.get('experience')
-    print(experience)
-
-   
-    
-
-    # Apply filters based on parameters
-    providers = service_provider.objects.filter(service_table=id , status=4)  # Start with all providers for the given service_table
-
-    if location:
-        providers = providers.filter(Service_Provider_location=location)
-    
-    if experience:
-        try:
-            experience = int(experience)
-            if experience == 1:
-                experience_min, experience_max = 1, 4
-            elif experience == 5:
-                experience_min, experience_max = 5, 8
-            elif experience == 9:
-                experience_min, experience_max = 9, 30
-            providers = providers.filter(
-                Service_Provider_Experience__gte=experience_min,
-                Service_Provider_Experience__lte=experience_max
-            )
-        except ValueError:
-            pass  # Handle the case where conversion fails
-
-    data = {
-        'providers': []
-    }
-
-    for provider in providers:
-        try:
-            service1 = service.objects.get(id=provider.service_table)
-            service_name = service1.service_name
-            print(service1.service_name)
-        except service.DoesNotExist:
-            service_name = "Unknown"  # Default value if service not found
-
-        data['providers'].append({
-            'service_provider_name': provider.service_provider_name,
-            'Service_Provider_Email': provider.Service_Provider_Email,
-            'Service_Provider_Phone': provider.Service_Provider_Phone,
-            'Service_Provider_gender': provider.Service_Provider_gender,
-            'Service_Provider_Experience': provider.Service_Provider_Experience,
-            'photo': provider.photo.url,
-            'Service_Provider_location': provider.Service_Provider_location,
-             'Service_Provider_amountdefalult': provider.Service_Provider_amountdefalult,
-            'service_name': service_name,  # Add the service name to the response
-            'id': provider.id,
-        })
-  
-    return JsonResponse(data)
-
-
-
-from django.shortcuts import render
-from django.http import JsonResponse
-from .models import Booking, service_provider
-from datetime import timedelta
-
-
-from django.shortcuts import render, get_object_or_404
-from .models import Booking, service_provider, BookingDate
-from datetime import timedelta
-import json
-
-def bookingservice(request):
-   if request.session.get('login') == 'yes':
-    provider_id = request.GET.get('provider_id')
-    print(provider_id)
-    serviceprovider = get_object_or_404(service_provider, id=provider_id)
-    print(serviceprovider.id)
-    data_to_display = []
-    
-    customer_data = {
-        'service_provider_id': serviceprovider.id,
-        'service_provider_name': serviceprovider.service_provider_name,
-        'Service_Provider_Experience': serviceprovider.Service_Provider_Experience,
-        'Service_Provider_Phone': serviceprovider.Service_Provider_Phone,
-        'Service_Provider_Email': serviceprovider.Service_Provider_Email,
-        'Service_Provider_gender': serviceprovider.Service_Provider_gender,
-        'Service_Provider_location': serviceprovider.Service_Provider_location,
-        'photo': serviceprovider.photo,
-    }
-    data_to_display.append(customer_data)
-   
-
-    # Fetch booked dates and time slots
-    bookings = Booking.objects.filter(service_provider=serviceprovider)
-    booked_slots = {}
-
-    for booking in bookings:
-        booked_dates = BookingDate.objects.filter(booking=booking)
-        for booked_date in booked_dates:
-            date_str = booked_date.service_start_date.strftime('%Y-%m-%d')
-            if date_str not in booked_slots:
-                booked_slots[date_str] = []
-            booked_slots[date_str].append(booked_date.time_slot)
-            print(data_to_display)
-    return render(request, 'multipledate.html', {
-        'service_provider_name': data_to_display,
-        'booked_slots': json.dumps(booked_slots)  # Pass booked slots as JSON
-    })
-   else:
-       
-      return render(request, 'login1.html', {'error': 'Invalid credentials'})
-
-
-
-
-from django.shortcuts import render, get_object_or_404
-from datetime import datetime
-from .models import Booking, BookingDate
-
-def book_service(request):
-    if request.method == 'POST':
-        
-        provider_id = request.POST.get('serviceid')
-       
-
-        service_provider1 = get_object_or_404(service_provider, id=provider_id)
-        address = request.POST.get('address')
-        start = request.POST.get('dates')  # Expecting a comma-separated string of dates
-        time_slots = request.POST.get('timeslot') 
-        print(time_slots) # Expecting a comma-separated string of time slots
-        detail = request.POST.get('detail')
-        customer_id = request.POST.get('customer_id')
-        customer = get_object_or_404(Customer, id=customer_id)
-        
-        # Convert date string to the proper format
-        try:
-            old_format = '%d-%m-%Y'
-            new_format = '%Y-%m-%d'
-            
-            # If `start` contains multiple dates, split them and convert
-            start_dates = start.split(',')
-            time_slots = time_slots.split(',')
-           
-            
-            # Ensure both lists have the same length
-            if len(start_dates) != len(time_slots):
-                return render(request, 'multipledate.html', {'error': 'Mismatch between dates and time slots.'})
-            
-            formatted_start_dates = [datetime.strptime(date.strip(), old_format).strftime(new_format) for date in start_dates]
-
-            today_date = datetime.today().date()
-
-        except ValueError:
-            return render(request, 'multipledate.html', {'error': 'Invalid date format. Use DD-MM-YYYY.'})
-
-        # Save the booking
-        booking = Booking(
-            service_provider=service_provider1,
-            customer=customer,
-            address=address,
-            amount="pending",
-            booking_date=today_date,
-            notes=detail,
-            status="pending",
-            paymentstatus="pending",
-        )
-        booking.save()
-
-        # Save each booking date with time slot
-        for start_date, time_slot in zip(formatted_start_dates, time_slots):
-            BookingDate.objects.create(
-                booking=booking,
-                service_start_date=start_date,
-                time_slot=time_slot.strip()
-            )
-        
-        # Redirect to a success page or render a success template
-        return redirect('bookview')
-       
-    
-    else:
-        return render(request, 'multipledate.html')
-    
-    
-
-
-
-
-
-from django.utils.dateparse import parse_date
-from django.http import JsonResponse
-from .models import Booking
-from datetime import datetime
-
-def check_date_availability(request):
-    if request.method == "POST":
-        start_date_str = request.POST.get('start_date')
-        end_date_str = request.POST.get('end_date')
-        
-        # Convert dates from string to datetime objects
-        start_date = datetime.strptime(start_date_str, '%d-%m-%Y').date()
-        end_date = datetime.strptime(end_date_str, '%d-%m-%Y').date()
-        
-        # Check if start date is greater than end date
-        if start_date > end_date:
-            return JsonResponse({'available': None, 'error': 'Invalid date range: Start date is greater than end date.'})
-        
-        # Check if the date range overlaps with any existing bookings
-        overlapping_bookings = Booking.objects.filter(
-            service_start_date__lte=end_date,
-            service_end_date__gte=start_date
-        )
-        
-        available = not overlapping_bookings.exists()
-        
-        return JsonResponse({'available': available})
-
-    return JsonResponse({'error': 'Invalid request method'}, status=400)
-
-# def bookview(request):
-#     services = Booking.objects.all()  
-#     customer = request.user
-#     print(services)
-#     data_to_display1 = []
-#     for services in services:
-#           customer_data = {
-#               'id': services.id,
-#             'service_name': services.service_name,
-#             'service_description': services.service_description,
-#             'photo': services.photo,
-#         }
-#           data_to_display1.append(customer_data)
-
-#     return render(request,'mybooking.html', {'data_to_display': data_to_display1,'customer': customer})
-
-# from django.shortcuts import render, get_object_or_404
-# from django.utils.dateformat import format as date_format
-# from .models import Booking, BookingDate, service
-
-# def bookview(request):
-#   if request.session.get('login') == 'yes':
-#     customer = request.user
-#     print(customer.id)
-#     # Fetch all bookings with related customer, service provider, and service details
-#     bookings = Booking.objects.filter(customer_id=customer.id).select_related('customer', 'service_provider').order_by('-id')
-   
-    
-#     data_to_display = {}
-
-#     for booking in bookings:
-#         # Fetch the related service provider instance
-#         provider = booking.service_provider
-#         # Fetch the related service instance
-#         service1 = provider.service_table
-#         service2 = get_object_or_404(service, id=service1)  # Ensure you have the correct service relation
-        
-#         # Fetch related BookingDate instances
-#         booking_dates = BookingDate.objects.filter(booking=booking)
-        
-#         # Group booking dates and time slots
-#         date_slots = []
-#         for booking_date in booking_dates:
-#             date_slots.append({
-#                 'service_start_date': date_format(booking_date.service_start_date, 'd M Y'),  # Format the date
-#                 'time_slot': booking_date.time_slot,
-#             })
-
-#         # Prepare booking details
-#         booking_data = {
-#             'booking_id': booking.id,
-#             'address': booking.address,
-#             'notes': booking.notes,
-#             'amount': booking.amount,
-#             'status': booking.status,
-#             'date_slots': date_slots,
-#             'paymentstatus':booking.paymentstatus,
-#             'service_provider_name': provider.service_provider_name,
-#             'service_provider_email': provider.Service_Provider_Email,
-#             'service_provider_phone': provider.Service_Provider_Phone,
-#             'service_provider_location': provider.Service_Provider_location,
-#             'service_name': service2.service_name,
-#             'customer_name': f"{booking.customer.first_name} {booking.customer.last_name}",
-#             'customer_email': booking.customer.email,
-#             'customer_phone': booking.customer.phone1,
-#         }
-
-#         data_to_display[booking.id] = booking_data
-#         print(data_to_display)
-
-#     return render(request, 'mybooking.html', {'data_to_display': data_to_display, 'customer':customer})
-  
-#   else:
-#       return render(request, 'login1.html')
-
-
-from django.shortcuts import render, get_object_or_404
-from django.utils.dateformat import format as date_format
-from .models import Booking, BookingDate, service  # Import the Payment model
-
-def bookview(request):
-    if request.session.get('login') == 'yes':
-        customer = request.user
-      
-        
-        # Fetch all bookings with related customer, service provider, and service details
-        bookings = Booking.objects.filter(customer_id=customer.id).select_related('customer', 'service_provider').order_by('-id')
-        
-        data_to_display = {}
-
-        for booking in bookings:
-            # Fetch the related service provider instance
-            provider = booking.service_provider
-            # Fetch the related service instance
-            service1 = provider.service_table
-            service2 = get_object_or_404(service, id=service1)  # Ensure you have the correct service relation
-            
-            # Fetch related BookingDate instances
-            booking_dates = BookingDate.objects.filter(booking=booking)
-            
-            # Fetch payment details related to this booking
-            payment = payments.objects.filter(booking_id=booking.id).first()  # Assuming one payment per booking
-            
-            # Fetch Accessoriesbuy details related to this booking
-            accessoriesbuy = Accessoriesbuy.objects.filter(Booking1=booking).first()  # Assuming one Accessoriesbuy per booking
-            
-            # Group booking dates and time slots
-            date_slots = []
-            for booking_date in booking_dates:
-                date_slots.append({
-                    'service_start_date': date_format(booking_date.service_start_date, 'd M Y'),  # Format the date
-                    'time_slot': booking_date.time_slot,
-                })
-
-            # Prepare booking details
-            booking_data = {
-                'booking_id': booking.id,
-                'address': booking.address,
-                'notes': booking.notes,
-                'amount': booking.amount,
-                'status': booking.status,
-                'date_slots': date_slots,
-                'paymentstatus': booking.paymentstatus,
-                'service_provider_name': provider.service_provider_name,
-                'service_provider_email': provider.Service_Provider_Email,
-                'service_provider_phone': provider.Service_Provider_Phone,
-                'service_provider_location': provider.Service_Provider_location,
-                'service_name': service2.service_name,
-                'customer_name': f"{booking.customer.first_name} {booking.customer.last_name}",
-                'customer_email': booking.customer.email,
-                'customer_phone': booking.customer.phone1,
-            }
-
-            # Add payment details if available
-            if payment:
-                booking_data['payment_id'] = payment.Payment_id
-                booking_data['payment_status'] = payment.status
-
-            # Add Accessoriesbuy details if available
-            if accessoriesbuy:
-                booking_data['accessoriesbuy_amount'] = accessoriesbuy.Additionalaccessoriesamount
-                booking_data['accessoriesbuy_proof'] = accessoriesbuy.proofupdate.url  # Provide URL to the image
-                booking_data['accessoriesbuy_update_date'] = date_format(accessoriesbuy.update_date, 'd M Y')  # Format the date
-
-            data_to_display[booking.id] = booking_data
-           
-
-        return render(request, 'mybooking.html', {'data_to_display': data_to_display, 'customer': customer})
-    
-    else:
-        return render(request, 'login1.html')
-      
-from django.shortcuts import render, get_object_or_404
-from django.utils.dateformat import format as date_format
-from .models import Booking, BookingDate, service
-
-from django.http import JsonResponse
-from django.core.serializers.json import DjangoJSONEncoder
-import json
-
-def editbooking(request, id):
-    booking = get_object_or_404(Booking, id=id)
-   
-    if request.session.get('login') == 'yes':
-        customer = request.user
-        
-        bookings = Booking.objects.filter(id=booking.id).select_related('customer', 'service_provider')
-        
-        data_to_display = {}
-        booked_slots = {}
-
-        for booking in bookings:
-            provider = booking.service_provider
-            service2 = get_object_or_404(service, id=provider.service_table)
-            
-            booking_dates = BookingDate.objects.filter(booking=booking)
-            
-            date_slots = []
-            for booking_date in booking_dates:
-                date_str = booking_date.service_start_date.strftime('%Y-%m-%d')
-                time_slot = booking_date.time_slot
-                if date_str not in booked_slots:
-                    booked_slots[date_str] = []
-                booked_slots[date_str].append(time_slot)
-
-                date_slots.append({
-                    'service_start_date': booking_date.service_start_date,
-                    'time_slot': time_slot,
-                })
-
-            booking_data = {
-                'booking_id': booking.id,
-                'address': booking.address,
-                'notes': booking.notes,
-                'status': booking.status,
-                'date_slots': date_slots,
-                'service_provider_name': provider.service_provider_name,
-                'service_provider_email': provider.Service_Provider_Email,
-                'service_provider_phone': provider.Service_Provider_Phone,
-                'service_provider_location': provider.Service_Provider_location,
-                'service_name': service2.service_name,
-                'customer_name': f"{booking.customer.first_name} {booking.customer.last_name}",
-                'customer_email': booking.customer.email,
-                'customer_phone': booking.customer.phone1,
-            }
-
-            data_to_display[booking.id] = booking_data
-
-        # Serialize the booked_slots to JSON format
-        booked_slots_json = json.dumps(booked_slots, cls=DjangoJSONEncoder)
-
-        return render(request, 'editbooking.html', {
-            'data_to_display1': data_to_display,
-            'customer': customer,
-            'booked_slots_json': booked_slots_json
-        })
-
-    else:
-        return render(request, 'mybooking.html')
-    
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
-from .models import Booking
-
-def delete_booking(request, booking_id):
-    booking = get_object_or_404(Booking, id=booking_id)
-    
-    if request.method == 'GET':
-        booking.delete()  # This will also delete all related BookingDate records
-        messages.success(request, 'Booking and related dates have been successfully deleted.')
-        return redirect('bookview')  # Replace with the URL where you want to redirect after deletion
-    
-
-
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
- # Adjust import paths as necessary
-
-
-def payment_receipt(request, payment_id):
-    if request.session.get('login') == 'yes':
-        customer = request.user
-        
-        # Fetch the payment details based on the given payment_id and ensure it belongs to the customer
-        payment = get_object_or_404(payments, booking_id=payment_id, booking_id__customer=customer)
-          
-        # Fetch the related booking using the correct foreign key relationship
-        booking = payment.booking_id
-        
-        # Fetch the related service provider and service instance
-        provider = booking.service_provider
-        service_instance = get_object_or_404(service, id=provider.service_table)  # Ensure correct service relation
-        
-        # Fetch related BookingDate instances
-        booking_dates = BookingDate.objects.filter(booking=booking)
-        
-        # Fetch related Accessoriesbuy instances
-        accessories = Accessoriesbuy.objects.filter(Booking1=booking)
-
-        # Group booking dates and time slots
-        date_slots = []
-        for booking_date in booking_dates:
-            date_slots.append({
-                'service_start_date': date_format(booking_date.service_start_date, 'd M Y'),  # Format the date
-                'time_slot': booking_date.time_slot,
-            })
-        if booking_date.time_slot=="fullday":
-            amount=int(provider.Service_Provider_amountdefalult)+int(provider.Service_Provider_amountdefalult)
-        else:
-            amount=int(provider.Service_Provider_amountdefalult)
-
-      
-
-        # Prepare accessories details
-        accessories_data = []
-        for accessory in accessories:
-            accessories_data.append({
-                'additional_amount': accessory.Additionalaccessoriesamount,
-                'total': booking.amount,
-                'proof_image': accessory.proofupdate.url if accessory.proofupdate else None,
-                'update_date': date_format(accessory.update_date, 'd M Y'),
-            })
-        
-        # Prepare booking details
-        booking_data = {
-            'booking_id': booking.id,
-            'address': booking.customer.address,
-            'notes': booking.notes,
-            'amount':amount,
-            'status': booking.status,
-            'date_slots': date_slots,
-            'paymentstatus': payment.status,
-            'service_provider_name': provider.service_provider_name,
-            'service_provider_email': provider.Service_Provider_Email,
-            'service_provider_phone': provider.Service_Provider_Phone,
-            'service_provider_location': provider.Service_Provider_location,
-            'service_name': service_instance.service_name,
-            'customer_name': f"{booking.customer.first_name} {booking.customer.last_name}",
-            'customer_email': booking.customer.email,
-            'customer_phone': booking.customer.phone1,
-            'payment_id': payment.Payment_id,
-            'payment_status': payment.status,
-            'accessories': accessories_data,  # Include accessories data
-        }
-        
-        print(booking_data)
-        
-        # Generate PDF (Optional)
-        pdf = render_to_pdf('receipt_template_payment.html', booking_data)
-        if pdf:
-            response = HttpResponse(pdf, content_type='application/pdf')
-            filename = f"Receipt_{payment_id}.pdf"
-            content = f"inline; filename={filename}"  # Use 'inline' for inline display in browser, 'attachment' to force download
-            response['Content-Disposition'] = content
-            return response
-
-        # If PDF generation fails, render the HTML template instead
-        return render(request, 'receipt_template_payment.html', booking_data)
-    
-    else:
-        return render(request, 'login1.html')
-
-
-# views.py
-
-from django.shortcuts import render, redirect
-from django.views.decorators.http import require_POST
-from .forms import ChatForm  # Make sure you have a form for handling the chat messages
-from .utils import get_bot_response  # Assuming you have a utility function to get bot responses
-
-
-
-from django.http import JsonResponse
-from django.shortcuts import render, redirect
-from django.db.models import Q
-from .models import Message, Customer
-
-def chat_view(request):
-    if request.method == 'POST':
-        message_content = request.POST.get('message')
-        
-        if message_content:
-            recipient = Customer.objects.get(email='mathew@gmail.com')
-            message = Message.objects.create(sender=request.user, recipient=recipient, content=message_content)
-            return redirect('chat_view')  
-    
-    messages = Message.objects.filter(Q(sender=request.user) | Q(recipient=request.user)).order_by('timestamp')
-
-    context = {
-        'messages': messages,
-        'customer': request.user,
-    }
-    return render(request, 'chat.html', context)
-
-def fetch_messages(request):
-    messages = Message.objects.filter(Q(sender=request.user) | Q(recipient=request.user)).order_by('timestamp')
-
-    # Prepare message data for JSON response
-    message_data = [{
-        'content': message.content,
-        'is_admin': message.sender.email == 'mathew@gmail.com'
-    } for message in messages]
-
-    return JsonResponse({'messages': message_data})
