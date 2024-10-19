@@ -36,7 +36,6 @@ urlpatterns = [
  path('bookview/', views.bookview, name='bookview'),
 path('editbooking/<int:id>/', views.editbooking, name='editbooking'),
 path('delete_booking/<int:booking_id>/', views.delete_booking, name='delete_booking'),
-  
 path('check_date_availability/', views.check_date_availability, name='check_date_availability'),
 
  path('fetch-messages/', views.fetch_messages, name='fetch_messages'),
