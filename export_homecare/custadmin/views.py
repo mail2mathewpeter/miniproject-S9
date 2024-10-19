@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import make_password
  # Import your Customer model
 from django.shortcuts import redirect, get_object_or_404
 from customerlogin.models import Customer; 
-  
+from employee.models import service,service_provider; 
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth import update_session_auth_hash   
 from django.contrib import messages 
@@ -22,7 +22,11 @@ from django.utils.crypto import get_random_string
 # Create your views here.
 
 def index(request):
-    return render(request, 'adminindex.html')
+    if request.session.get('login') == 'yes':
+       return render(request, 'adminindex.html')
+    else:
+        return render(request, 'login1.html')
+
 def editemployee(request,email):
     employee = Employee.objects.get(email=email)
     print(employee);
@@ -102,6 +106,27 @@ def displayuser(request):
           data_to_display.append(customer_data)
     
     return render(request, 'displayuser.html', {'data_to_display': data_to_display})
+
+
+
+def serviceproviderdisplay(request):
+    customers = Customer.objects.all()  
+    print(customers)
+    data_to_display = []
+    for customer in customers:
+          customer_data = {
+       
+            'first_name': customer.first_name,
+            'last_name': customer.last_name,
+            'gender': customer.gender,
+            'phone': customer.phone1,
+            'email': customer.email,
+            'status': customer.status,
+            'photo': customer.photo
+        }
+          data_to_display.append(customer_data)
+    
+    return render(request, 'serviceproviderdisplay.html', {'data_to_display': data_to_display})
   
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
@@ -128,7 +153,7 @@ def changeuserstatus(request, email):
     except Customer.DoesNotExist:
         messages.error(request, 'Customer not found.')
 
-    return redirect('displayuser')
+    return redirect('admin1:displayuser')
 
 from django.http import JsonResponse
 from .models import Employee
@@ -185,6 +210,7 @@ def registeremployee(request):
             gender=gender,
             designation=designation,
             experience=experience,
+            status=2,
             photo=f'images/{filename}'
         )
         
@@ -192,7 +218,7 @@ def registeremployee(request):
         
 
 
-        return redirect('index')  # Redirect to a view that lists employees or a success page
+        return redirect('admin1:index')  # Redirect to a view that lists employees or a success page
     else:
         return render(request, 'adminemployee.html')  # Render the form template
 def disableemployee(request, email):
@@ -210,7 +236,7 @@ def disableemployee(request, email):
     except Customer.DoesNotExist:
         messages.error(request, 'Customer not found.')
 
-    return redirect('employeedisplay')
+    return redirect('admin1:employeedisplay')
 
 
 
@@ -252,7 +278,7 @@ def editemployeeupdate(request, email):
         # Save the updated employee object
         employee.save()
         messages.success(request, 'Employee data updated successfully!')
-        return redirect('employeedisplay')  # Adjust the redirect as needed
+        return redirect('admin1:employeedisplay')  # Adjust the redirect as needed
     return render(request, 'update_employee.html', {'data_to_display': employee})
 
 
@@ -262,9 +288,9 @@ def passwordaddemployee(request, email):
     if request.method == 'POST':
        employee = get_object_or_404(Employee, email=email)
        password = request.POST.get('password')
-    #    hashed_password = make_password(password)
+       hashed_password = make_password(password)
        
-       employee.password=password
+       employee.password=hashed_password
        employee.save()
        messages.success(request, 'Employee password updated Successfully.Please login with new credentials')
        return redirect('login1')
@@ -272,3 +298,64 @@ def passwordaddemployee(request, email):
 def employeepasswordadd(request,email):
         
     return render(request, 'employeepasswordadd.html',{'email':email})
+
+
+def displayserviceadmin(request):
+    services = service.objects.all()  
+    print(services)
+    data_to_display1 = []
+    for services in services:
+          customer_data = {
+              'id': services.id,
+            'service_name': services.service_name,
+            'service_description': services.service_description,
+            'photo': services.photo,
+        }
+          data_to_display1.append(customer_data)
+
+        
+    return render(request, 'displayseriviceadmin.html', {'data_to_display': data_to_display1})
+
+def displayserviceprovideradmin(request):
+    service_providers = service_provider.objects.all()
+    data_to_display1 = []
+
+    for provider in service_providers:
+        # Fetch the related service instance
+        services = get_object_or_404(service, id=provider.service_table)
+       
+        customer_data = {
+            'id': provider.id,
+            'service_name': provider.service_provider_name,
+            'service_address': provider.Service_Provider_Address,
+            'Service_Provider_Email': provider.Service_Provider_Email,
+            'Service_Provider_Phone': provider.Service_Provider_Phone,
+            'Service_Provider_gender': provider.Service_Provider_gender,
+            'Service_Provider_Designation': services.service_name,
+            'Service_Provider_Experience': provider.Service_Provider_Experience,
+            'photo': provider.photo,
+            'Service_Provider_Id_proof': provider.Service_Provider_Id_proof,
+            'Service_Provider_Qualification_Certificate': provider.Service_Provider_Qualification_Certificate,
+            'status':provider.status,
+        }
+
+        data_to_display1.append(customer_data)
+
+    return render(request, 'displayserviceprovideradmin.html', {'data_to_display': data_to_display1})
+
+def changeserviceproviderstatus2(request, service_id):
+    try:
+        customer = service_provider.objects.get(id=service_id)
+        print(customer)
+        if customer.status == '1':  # Assuming 1 means active and 0 means inactive
+            customer.status = '0'
+            customer.save()
+            messages.success(request, f'{customer.service_provider_name}\'s account has been deactivated.')
+        else:
+            customer.status = '1'
+            customer.save()
+            messages.success(request, f'{customer.service_provider_name} \'s account has been activated.')
+    except Customer.DoesNotExist:
+        messages.error(request, 'Customer not found.')
+
+    return redirect('admin1:displayserviceprovideradmin')

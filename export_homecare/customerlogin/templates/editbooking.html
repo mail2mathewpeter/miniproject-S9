@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Booking Form HTML Template</title>
+
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="{% static 'bookingcss/bootstrap.min.css' %}" />
+
+    <!-- Custom stylesheet -->
+    <link type="text/css" rel="stylesheet" href="{% static 'bookingcss/style.css' %}" />
+
+    <!-- jQuery UI CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <!-- Bootstrap Datepicker CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .nav1 {
+            background: white;
+            width: 100%;
+            height: 75px;
+            overflow: hidden;
+            z-index: 1000;
+            position: fixed;
+            top: 0;
+            left: 0px;
+        }
+        .error1 {
+            color: green;
+            font-size: 15px;
+        }
+        .datepicker-days .day.disabled1 {
+            background-color: rgb(174, 137, 137) !important;
+            color: white !important;
+            cursor: not-allowed;
+        }
+        .k {
+        border-radius: 100%;
+    }
+    .n9 {
+        color: black;
+        text-decoration: none;
+        margin-top: -10px;
+        margin-bottom: 10px;
+
+        padding: 10 21;
+        text-transform: uppercase;
+        float: left;
+
+    }
+
+    .n9:hover {
+
+        text-decoration: none;
+        font-weight: bold;
+        color: green;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+   
+
+
+    .desc {
+        padding: 15px;
+        text-align: center;
+
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        margin-top: 5px;
+        margin-left: 40px;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #564646;
+        min-width: 190px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        margin-left: -140px;
+        
+    }
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    .service-item {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .service-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .service-item img {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ddd;
+        }
+        .down-content {
+            padding: 20px;
+        }
+        .down-content h4 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .down-content h5 {
+            font-size: 1em;
+            color: #777;
+            margin-bottom: 15px;
+        }
+        .down-content .price {
+            font-size: 1.2em;
+            color: #dc3545;
+        }
+        .filled-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .filled-button:hover {
+            background-color: #0056b3;
+        }
+  
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+
+.col-md-4 {
+    flex: 1 1 calc(33.333% - 20px); /* Three columns with space for gaps */
+    box-sizing: border-box;
+}
+
+.service-item {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #ddd;
+    text-align: left; /* Align text to the left */
+}
+
+.service-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.service-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+}
+
+.down-content {
+    padding: 15px;
+}
+
+.down-content h4 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.down-content h5 {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 1.2em;
+    color: #28a745;
+    margin-bottom: 15px;
+}
+
+.filled-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.filled-button:hover {
+    background-color: #0056b3;
+}
+
+.navbar-custom {
+    background-color: #4CAF50; /* Change to your desired navbar color */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.navbar-custom .navbar-brand img {
+    max-height: 52px;
+}
+
+.navbar-custom .navbar-nav .nav-link {
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 15px 20px;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.navbar-custom .navbar-nav .nav-link:hover,
+.navbar-custom .navbar-nav .nav-link.active {
+    color: #fff;
+    background-color: #45a049; /* Darker green for hover */
+    border-radius: 5px;
+}
+
+/* Dropdown Styles */
+
+.dropdown img {
+    border-radius: 50%;
+}
+
+
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: #575757;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .navbar-nav {
+        text-align: center;
+    }
+    .navbar-nav .nav-link {
+        padding: 10px 15px;
+    }
+    
+}
+.time-slot-select {
+    position: relative;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px 16px;
+    padding-right: 40px; /* space for the arrow */
+    font-size: 16px;
+}
+
+    .disabled-slot {
+        background-color: #640c0c; /* Light gray background for disabled slots */
+        color: #a0a0a0; /* Light gray text color for disabled slots */
+      /* Change cursor to indicate slot is disabled */
+    }
+    .disabled1 {
+    background-color: #f8d7da; /* Light red background for booked slots */
+    color: #721c24; /* Dark red text color */
+}
+.booked-slot {
+    background-color: #f8d7da; /* Light red background for booked slots */
+    color: #721c24; /* Dark red text color */
+}
+
+.available-slot {
+    background-color: #d4edda; /* Light green background for available slots */
+    color: #155724; /* Dark green text color */
+}
+    </style>
+</head>
+<script>
+      function showAlert() {
+    alert("You have been successfully booked the service.");
+    
+
+  }
+
+</script>
+<body>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Bootstrap Datepicker JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- Navbar -->
+    
+     
+
+            <nav class="navbar navbar-expand-lg navbar-custom">
+                <div style="margin-top: -30px;">
+                <a class="navbar-brand" href="{% url 'userloginhome' %}">
+                    <img src="{% static 'images/logonew.png' %}" alt="Company Logo">
+                </a>
+            </div>
+                <div style="margin-left: 350px;">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'userloginhome' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'userloginhome' %}#about">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'userloginhome' %}#projects">Images</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'servicelogin' %}">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'userloginhome' %}#contact-us">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <img src="{% static user.photo %}" alt="User Photo" width="70" height="50" class="k">
+                                <div class="dropdown-content">
+                                    <a href="{% url 'useraccount' %}" target="__blank">Manage Account</a>
+                                    <a href="bookingview.php">My Bookings</a>
+                                    <a href="{% url 'logout' %}">Logout</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            </nav>
+        </div>
+    </nav1>
+
+    <!-- Booking Form -->
+    <form action="{% url 'book' %}" method="POST">
+        {% csrf_token %}
+        <div id="booking" class="section">
+            <div class="section-center"><br>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-7 col-md-push-5">
+                            <div class="booking-cta">
+                                <h1>BOOK YOUR SERVICE</h1>
+                                <p>
+                                    <font color="white">
+                                        <h4>At Expert Homecare, we understand the importance of a well-maintained home and the peace of mind that comes with it. Whether you need a skilled plumber to fix a leaky faucet, an experienced electrician to handle your wiring issues, or any other home maintenance service, we are here to help. Our team of certified professionals is dedicated to providing top-notch services with utmost reliability and efficiency.</h4>
+                                    </font>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-md-pull-7">
+                            <div class="booking-form">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Customer Name</span>
+                                            <input class="form-control" type="text" placeholder="Service Provider Name" value="{{ user.first_name }} {{ user.last_name }}" name="sp_name" required readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {% for booking_id, booking_data in data_to_display1.items %}
+                                     
+                                            <div class="form-group">
+                                                <span class="form-label">Service Provider Name</span>
+                                                <input class="form-control" type="text" placeholder="Service Provider Name" value="{{ booking_data.service_provider_name }}" name="sp_name" required readonly>
+                                                <input class="form-control" type="hidden" value="{{ booking_id }}" name="serviceid">
+                                            </div>
+                                        </div>
+                                        </div>
+                                    
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <span class="form-label">Service Location Address</span>
+                                                    <input class="form-control" type="text" placeholder="Service Location Address" id="address" name="address" value="{{ booking_data.service_provider_location }}" required>
+                                                    <input class="form-control" type="hidden" value="{{ user.id }}" name="customer_id">
+                                                    <input class="form-control" type="hidden" value="{{ booking_data.service_provider_id }}" name="service_provider_id">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <span class="form-label">Preferred Dates</span>
+                                                    <input class="form-control datepicker" type="text" placeholder="Select dates" id="booking_dates" name="dates" required readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <span id="selected_dates_list1" class="form-label"></span>
+                                                    <ul id="selected_dates_list" name="timeslot" class="list-group">
+                                                        {% for date_slot in booking_data.date_slots %}
+                                                        <li class="list-group-item">{{ date_slot.service_start_date }} - {{ date_slot.time_slot }}</li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <span class="form-label">Description of the Issue or Service Needed</span>
+                                            <textarea class="form-control" id="detail" name="detail" placeholder="Description of the Issue or Service Needed..." style="width: 100%; height: 100px;" required>{{ booking_data.notes }}</textarea>
+                                        </div>
+                                        <br>
+                                        <div style="margin-top:-20px;"><span id="availability"></span></div><br>
+                                        <div class="row">
+                                            <div class="col-sm-6"></div>
+                                        </div>
+                                        {% endfor %}
+                                  
+                                <div class="form-btn">
+                                    <input type="submit" value="Book" id="register" onclick="showAlert()" class="submit-btn">
+                                    <div style="margin-left:230px;margin-top:-40px">
+                                        <a href="\mathew\miniproject-s6/caravan1.php" class="submit-btn"   style="text-decoration:none">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+    </form>
+
+  
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<script>
+$(document).ready(function() {
+    var bookedSlotsRaw = '{{ booked_slots_json|escapejs }}';
+    var bookedSlots = {};
+    if (bookedSlotsRaw) {
+        try {
+            bookedSlots = JSON.parse(bookedSlotsRaw);
+        } catch (e) {
+            console.error("Error parsing booked slots JSON:", e);
+        }
+    }
+
+    var selectedDates = {};
+
+    function updateButtonState() {
+        if (Object.keys(selectedDates).length === 0) {
+            $('#register').attr("disabled", true).css("background", "lightblue");
+        } else {
+            $('#register').attr("disabled", false).css("background", "#4272d7");
+        }
+    }
+
+    function addSelectedDates(dates) {
+        var selectedDatesList = $('#selected_dates_list');
+        var list1 = $('#selected_dates_list1');
+        list1.empty();
+        list1.text("Selected Dates and Slots");
+        selectedDatesList.empty(); // Clear the list before adding new dates
+
+        dates.forEach(function(date, index) {
+            var dateStr = formatDate(date); // Format date as dd-mm-yyyy
+            var listItem = $('<li>').addClass('list-group-item');
+            listItem.append(`<span>${dateStr}</span>`);
+            var timeSlotSelect = $('<select>')
+                .attr('id', 'time-slot-select-' + index) // Assign a unique id
+                .addClass('form-control time-slot-select')
+                .css('display', 'inline-block')
+                .css('width', '150px')
+                .css('margin-left', '150px');
+
+            timeSlotSelect.append('<option value="am">AM</option>');
+            timeSlotSelect.append('<option value="pm">PM</option>');
+            timeSlotSelect.append('<option value="fullday">Full Day</option>');
+            listItem.append(timeSlotSelect);
+            selectedDatesList.append(listItem);
+
+            // Initialize the time slot for the date if not already present
+            if (!selectedDates[dateStr]) {
+                selectedDates[dateStr] = 'am'; // Default value for time slot
+                timeSlotSelect.val('am'); // Set default selection
+            } else {
+                timeSlotSelect.val(selectedDates[dateStr]); // Set previously selected value
+            }
+
+            updateSlotOptions(dateStr, timeSlotSelect);
+        });
+
+        updateHiddenInputs();
+    }
+
+    function formatDate(date) {
+        var day = date.getDate().toString().padStart(2, '0');
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    }
+
+    function updateSlotOptions(dateStr, timeSlotSelect) {
+        var dateToDisableStr = new Date(dateStr.split('-').reverse().join('-')).toISOString().slice(0, 10);
+        var timeSlots = bookedSlots[dateToDisableStr] || [];
+
+        timeSlotSelect.find('option').each(function() {
+            var slotValue = $(this).val();
+            if (timeSlots.includes(slotValue)) {
+                $(this).prop('disabled', true).addClass('disabled-slot');
+            } else {
+                $(this).prop('disabled', false).removeClass('disabled-slot');
+            }
+        });
+
+        if (timeSlots.includes('am') || timeSlots.includes('pm')) {
+            timeSlotSelect.find('option[value="fullday"]').prop('disabled', true).addClass('disabled-slot');
+        } else {
+            timeSlotSelect.find('option[value="fullday"]').prop('disabled', false).removeClass('disabled-slot');
+        }
+    }
+
+    function updateHiddenInputs() {
+        $("input[name='timeslot']").remove();
+
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'timeslot',
+            value: JSON.stringify(selectedDates)
+        }).appendTo('form');
+    }
+
+    function initializeBookedDates() {
+        var bookedDatesArray = [];
+        Object.keys(bookedSlots).forEach(function(dateStr) {
+            var date = new Date(dateStr);
+            bookedDatesArray.push(date);
+            selectedDates[formatDate(date)] = bookedSlots[dateStr][0]; // Assuming the first slot is the default
+        });
+
+        $('.datepicker').datepicker('setDates', bookedDatesArray);
+        addSelectedDates(bookedDatesArray);
+    }
+
+    $('.datepicker').datepicker({
+        format: 'dd-mm-yyyy',
+        startDate: '0d',
+        multidate: true,
+        todayHighlight: true,
+        beforeShowDay: function(date) {
+            var dateStr = formatDate(date);
+            var disableDate = false;
+
+            if (selectedDates[dateStr]) {
+                return { enabled: true, classes: 'selected-date' };
+            }
+
+            Object.keys(bookedSlots).forEach(function(bookedDateStr) {
+                if (bookedSlots[bookedDateStr].includes('fullday')) {
+                    var bookedDate = new Date(bookedDateStr);
+                    if (formatDate(bookedDate) === dateStr) {
+                        disableDate = true;
+                    }
+                }
+                if (bookedSlots[bookedDateStr].includes('am') && bookedSlots[bookedDateStr].includes('pm')) {
+                    var bookedDateAMPM = new Date(bookedDateStr);
+                    if (formatDate(bookedDateAMPM) === dateStr) {
+                        disableDate = true;
+                    }
+                }
+            });
+
+            if (disableDate) {
+                return { enabled: true, classes: 'disabled1' };
+            }
+
+            return { enabled: true };
+        }
+    }).on('changeDate', function(e) {
+        var dates = e.dates.map(date => formatDate(date));
+        var dateStr = formatDate(e.date);
+
+        // If the date is in selectedDates, remove it
+        if (selectedDates.hasOwnProperty(dateStr)) {
+            delete selectedDates[dateStr];
+            $('#selected_dates_list').find(`span:contains(${dateStr})`).closest('li').remove();
+        } else {
+            // Add the date if not selected
+            selectedDates[dateStr] = 'am';  // Default to AM slot
+        }
+
+        addSelectedDates(Object.keys(selectedDates).map(function(dateStr) {
+            return new Date(dateStr.split('-').reverse().join('-'));
+        }));
+
+        updateButtonState();
+        updateHiddenInputs();
+    });
+
+    $(document).on('change', '.time-slot-select', function() {
+        var dateStr = $(this).siblings('span').text();
+        selectedDates[dateStr] = $(this).val();
+        updateHiddenInputs();
+    });
+
+    initializeBookedDates();
+    updateButtonState();
+});
+
+
+
+</script>
+</body>
+</html>

@@ -273,8 +273,8 @@
         <div class="sidebar-brand-text mx-3">Expert Homecare</div>
       </a>
       <hr class="sidebar-divider my-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'index' %}">
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'admin1:index' %}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -282,27 +282,43 @@
       <div class="sidebar-heading">
         Features
       </div>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'employeedisplay' %}">
+      <li class="nav-item   ">
+        <a class="nav-link" href="{% url 'admin1:displayuser' %}">
           <i class="fa fa-users"></i>
           <span>User Details</span>
         </a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true"
           aria-controls="collapseForm">
-          <i class="fas fa-user-cog"></i>
+          <i class="fa fa-user-plus" style="font-size:16px"></i>
           <span>Employee</span>
         </a>
         <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Employee</h6>
-            <a class="collapse-item" href="{% url 'addemployee' %}">Add Employee</a>
-            <a class="collapse-item" href="{% url 'employeedisplay' %}">View Employee</a>
+            <a class="collapse-item" href="{% url 'admin1:addemployee' %}">Add Employee</a>
+            <a class="collapse-item active" href="{% url 'admin1:employeedisplay' %}">View Employee</a>
           </div>
         </div>
       </li>
-      <li class="nav-item">
+      <li class="nav-item   ">
+        <a class="nav-link" href="{% url 'admin1:displayserviceadmin' %}">
+          <i class="fa fa-gear" style="font-size:15px;"></i>
+          <span>View Services</span>
+        </a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'admin1:displayserviceprovideradmin' %}">
+          <i class="fas fa-user-cog"></i>
+          <span>View Service Provider</span>
+        </a>
+      </li>
+      
+     
+   
+   
+      <!-- <li class="nav-item">
         
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
           aria-expanded="true" aria-controls="collapseBootstrap">
@@ -383,7 +399,7 @@
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Charts</span>
         </a>
-      </li>
+      </li> -->
       <hr class="sidebar-divider">
       <div class="version" id="version-ruangadmin"></div>
     </ul>
@@ -420,21 +436,23 @@
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
-                <span class="badge badge-danger badge-counter">0</span>
+                <span class="badge badge-danger badge-counter">3+</span>
               </a>
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
                   Alerts Center
                 </h6>
-                <!-- <a class="dropdown-item d-flex align-items-center" href="#">
+                <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="mr-3">
                     <div class="icon-circle bg-primary">
                       <i class="fas fa-file-alt text-white"></i>
                     </div>
                   </div>
                   <div>
-                 
+                    <div class="small text-gray-500">December 12, 2019</div>
+                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                  </div>
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="mr-3">
@@ -443,7 +461,9 @@
                     </div>
                   </div>
                   <div>
-                  
+                    <div class="small text-gray-500">December 7, 2019</div>
+                    $290.29 has been deposited into your account!
+                  </div>
                 </a>
                 <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="mr-3">
@@ -452,24 +472,47 @@
                     </div>
                   </div>
                   <div>
-                  
+                    <div class="small text-gray-500">December 2, 2019</div>
+                    Spending Alert: We've noticed unusually high spending for your account.
+                  </div>
+                </a>
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
               </div>
-            </li> -->
+            </li>
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
-                <span class="badge badge-warning badge-counter">0</span>
+                <span class="badge badge-warning badge-counter">2</span>
               </a>
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="messagesDropdown">
                 <h6 class="dropdown-header">
                   Message Center
                 </h6>
-               
-                
-                <!-- <a class="dropdown-item d-flex align-items-center" href="#">
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="img/man.png" style="max-width: 60px" alt="">
+                    <div class="status-indicator bg-success"></div>
+                  </div>
+                  <div class="font-weight-bold">
+                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been
+                      having.</div>
+                    <div class="small text-gray-500">Udin Cilok · 58m</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="img/girl.png" style="max-width: 60px" alt="">
+                    <div class="status-indicator bg-default"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them
+                      sent to you?</div>
+                    <div class="small text-gray-500">Jaenab · 1d</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="dropdown-list-image mr-3">
                     <img class="rounded-circle" src="img/boy.png" style="max-width: 60px" alt="">
                     <div class="status-indicator bg-warning"></div>
@@ -479,7 +522,7 @@
                       far, keep up the good work!</div>
                     <div class="small text-gray-500">Udin Cilok · 2d</div>
                   </div>
-                </a> -->
+                </a>
                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
               </div>
             </li>

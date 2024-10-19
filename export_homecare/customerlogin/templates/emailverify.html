@@ -42,13 +42,7 @@
 }
  </style>
 	<body>
-        {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
+      
 		<section class="ftco-section">
 			<div style="margin-top:-100px">
 			<div class="container">
@@ -69,10 +63,18 @@
 											<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
 										</p>
 									</div>
+								
 						  </div>
 								<form action="{% url 'verify_otp1emailset' %}"method="post" class="signin-form">
+									{% if messages %}
+									{% for message in messages %}
+										<div class="alert alert-{{ message.tags }}">
+											<font color="red">{{ message }}</font>
+										</div>
+									{% endfor %}
+								{% endif %}
 									{% csrf_token %} 
-									{% csrf_token %} 
+								
 								<center><font color="red">{% if error %}
 									<p>{{ error }}</p>
 								{% endif %}</font></center>
