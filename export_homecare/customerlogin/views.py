@@ -659,13 +659,3 @@ def chat_view(request):
     }
     return render(request, 'chat.html', context)
 
-def fetch_messages(request):
-    messages = Message.objects.filter(Q(sender=request.user) | Q(recipient=request.user)).order_by('timestamp')
-
-    # Prepare message data for JSON response
-    message_data = [{
-        'content': message.content,
-        'is_admin': message.sender.email == 'mathew@gmail.com'
-    } for message in messages]
-
-    return JsonResponse({'messages': message_data})

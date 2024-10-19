@@ -30,7 +30,7 @@ urlpatterns = [
           path('bookingservice/', views.bookingservice, name='bookingservice'),
  path('book/', views.book_service, name='book'),
  path('bookview/', views.bookview, name='bookview'),
-path('fetch-messages/', views.fetch_messages, name='fetch_messages'),
+
  path('emailverify/', views.emailverify, name='emailverify'),
 
 
