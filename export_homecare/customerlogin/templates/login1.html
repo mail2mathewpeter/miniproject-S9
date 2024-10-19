@@ -9,8 +9,31 @@
 
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
     <link rel="stylesheet" href="{% static 'css/style1.css' %}">
 </head>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Function to prevent back navigation
+        function preventBack() {
+            history.pushState(null, null, location.href);
+            window.onpopstate = function () {
+                history.go(1);
+            };
+        }
+
+        // Check if the loggedOut flag is set
+        if (document.cookie.includes("loggedOut=true")) {
+            preventBack(); // Prevent back navigation
+            // Optionally, remove the cookie to prevent future issues
+            document.cookie = "loggedOut=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        } else {
+            preventBack(); // Ensure the user can't go back to this page
+        }
+    });
+</script>
 <style>
     body {
         background-image: url("{% static 'images/3.jpeg' %}");
@@ -53,7 +76,37 @@
 .google-signin-box a:hover {
     opacity: 0.8; /* Lower opacity on hover for visual feedback */
 }
+@media only screen and (max-width: 768px) {
+    .login-wrap {
+        padding: 20px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .social-media {
+        justify-content: center;
+        margin-bottom: 20px;
+    }
 
+    .social-icon {
+        margin: 0 10px;
+    }
+
+    .google-signin-box {
+        margin-top: 20px;
+    }
+
+    .google-signin-box a {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
 </style>
 <body>
     <section class="ftco-section">
@@ -81,7 +134,7 @@
                     </div>
                     {% if messages %}
     {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
+    <div class="alert alert-success" role="alert" id="delete-success-message" >
             {{ message }}
         </div>
     {% endfor %}
@@ -98,7 +151,7 @@
                             <input type="password" class="form-control" placeholder="Password" name="password" required>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
+                            <button type="submit" id="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
                         </div>
                         <div class="form-group d-md-flex">
                             <div class="w-50 text-left">
@@ -124,6 +177,20 @@
             </div>
         </div>
     </section>
+    <script>
+             document.addEventListener("DOMContentLoaded", function() {
+        var messageElement = document.getElementById("delete-success-message");
+        if (messageElement) {
+            // alert(messageElement.innerText);  // This will show a browser alert with the message
+            
+            // Optional: Hide the message after 5 seconds
+            setTimeout(function() {
+                messageElement.style.display = 'none';
+            }, 3000);
+        }
+    });
+      </script>
+    </script>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/popper.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
