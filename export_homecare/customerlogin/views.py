@@ -411,25 +411,7 @@ def logout_view(request):
     return redirect('login1')
 
 
-def servicelogin(request):
-   if request.session.get('login') == 'yes':
-    services = service.objects.filter(status=1) 
-    customer = request.user
-    print(services)
-    data_to_display1 = []
-    for services in services:
-          customer_data = {
-              'id': services.id,
-            'service_name': services.service_name,
-            'service_description': services.service_description,
-            'photo': services.photo,
-        }
-          data_to_display1.append(customer_data)
 
-    return render(request,'servicelogin.html', {'data_to_display': data_to_display1,'customer': customer})
-   else:
-     return render(request, 'login1.html')
-# customerlogin/views.py
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
