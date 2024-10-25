@@ -159,9 +159,9 @@
 
 
         });
-        function fileValidation() {
+        function fileValidation1() {
             var fileInput =
-                document.getElementById('inputfileupload');
+                document.getElementById('uploadInput');
              
             var filePath = fileInput.value;
          
@@ -263,7 +263,7 @@
                
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="account-email">E-mail Address</label>
+                        <label for="account-email">Customer E-mail </label>
                         <input class="form-control" type="email" id="Email" name="email"value="{{ customer.email }}"disabled>
                         <input type="hidden" id="phone" name="file1" value="{{ customer.photo }}">
                         <span id="text3"></span>
@@ -278,9 +278,10 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="account-phone">Update Profile Picture</label>
-                        <input class="form-control" type="file"  id="inputfileupload" name="file" onchange="fileValidation()"value="{{ customer.photo }}"title=" dsf" >
-                        <span id="text17"></span></td>
+                        <label for="account-phone">Update Profile Picture</label><br>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">
+                            Upload Photo
+                        </button>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -292,21 +293,21 @@
 </div>
                 </div>
                
-                <!-- <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="form-group">
-                        <label for="account-pass">New Password</label>
-                        <input class="form-control" type="password" name="pass"id="password"value="{{ customer.password }}"disabled>
+                        <label for="account-pass">Customer Address</label>
+                        <input class="form-control" type="text" placeholder="Enter address" name="address"id="txt14"value="{{ customer.address }}">
                         <span id="text5"></span>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <!-- <div class="col-md-6"> 
                     <div class="form-group">
                         <label for="account-confirm-pass">Confirm Password</label>
                         <input class="form-control" type="password" name="cpass" id="cpassword"value=""disabled>
                         <span id="text6"></span>
                     </div>
                 </div>
-                -->
+        -->
                 <div class="col-12">
                     <hr class="mt-2 mb-3">
                     <div class="d-flex flex-wrap justify-content-between align-items-center">
@@ -327,5 +328,111 @@
 
 </script>
 </body>
-
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       
+          
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="uploadModalLabel">Choose an Option</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Option Buttons -->
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <!-- Capture Photo Option -->
+                        <a class="btn btn-secondary" href="{% url 'camera_page' %}" >
+                            Capture Photo
+                        </a>
+                    </div>
+                 
+                    <div class="col-md-6 text-center">
+                        <!-- Upload Photo Option -->
+                        <button class="btn btn-secondary" onclick="triggerUpload()">
+                            Upload Photo
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Hidden File Input for Capture -->
+                <input class="form-control" type="file" id="captureInput" name="file" style="display:none;" accept="image/*" capture="environment" onchange="fileValidation()">
+                <form class="row" action="{% url 'updatecustomerdata1' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                <!-- Hidden File Input for Upload -->
+                <input class="form-control" type="file" id="uploadInput" name="file" style="display:none;" accept="image/*" onchange="fileValidation()">
+                
+                <!-- Display Selected File Name -->
+                <div class="mt-3 text-center">
+                    <div style="margin-left: 30px">    <span id="text17"></span>
+                   <span id="fileNameDisplay"></span></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" id="saveButton"class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
 </html>
+<script>
+    // Function to trigger the capture input
+    function triggerCapture() {
+        document.getElementById('captureInput').click();
+    }
+    
+    // Function to trigger the upload input
+    function triggerUpload() {
+        document.getElementById('uploadInput').click();
+    }
+    
+    // Function to display the selected file name and validate the file type
+    function fileValidation() {
+        var fileInput = document.getElementById('captureInput').files[0] || document.getElementById('uploadInput').files[0];
+        
+        if (fileInput) {
+            var filePath = fileInput.name; // Use the file name for validation
+            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i; // Define allowed file extensions
+            
+            if (!allowedExtensions.exec(filePath)) {
+                document.getElementById("text17").innerHTML = "<span class='error'>Invalid file type. Only .jpg, .jpeg, .png, and .gif files are allowed.</span>";
+                document.getElementById('fileNameDisplay').innerText = "Selected file: " + fileInput.name;
+                fileInput.value = '';
+                saveButton.disabled = true; // Clear the input field
+                return false;
+            }
+             else {
+                document.getElementById("text17").innerHTML = ""; // Clear any error messages
+                document.getElementById('fileNameDisplay').innerText = "Selected file: " + fileInput.name;
+                saveButton.disabled = false;
+            }
+        }
+         else {
+        saveButton.disabled = true; // Disable the Save button if no file is selected
+    }
+        }
+    
+    </script>
+    
+
+<style>
+    /* Base style for the button */
+    .btn-primary {
+        background-color: #007bff; /* Default primary color */
+        border: none;
+        color: white;
+    }
+    
+    /* Style for disabled button */
+    .btn-primary:disabled {
+        background-color: #d6eaf8; /* Light blue background */
+        color: #a0a0a0; /* Light gray text */
+        cursor: not-allowed;
+        border: 1px solid #a0a0a0; /* Optional border to match the text color */
+    }
+    </style>
+    
