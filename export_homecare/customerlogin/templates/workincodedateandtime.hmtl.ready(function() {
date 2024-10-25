@@ -1,0 +1,195 @@
+$(document).ready(function() {
+    var bookedSlots = JSON.parse('{{ booked_slots|escapejs }}'); // Parse booked slots JSON
+    console.log(bookedSlots); // Verify data format
+
+    var mod1 = 1; // Initialize mod1
+    var selectedDates = {}; // Object to store selected dates and their time slots
+
+    // Function to update button state
+    function updateButtonState() {
+        if (mod1 === 1) {
+            $('#register').attr("disabled", true).css("background", "lightblue");
+        } else {
+            $('#register').attr("disabled", false).css("background", "#4272d7");
+        }
+    }
+
+    // Function to add selected dates to the list with time slot options
+    function addSelectedDates(dates) {
+        var selectedDatesList = $('#selected_dates_list');
+        var list1 = $('#selected_dates_list1');
+        list1.empty();
+        list1.text("Selected Dates and Slots");
+        selectedDatesList.empty(); // Clear the list before adding new dates
+
+        dates.forEach(function(date, index) {
+            var dateStr = formatDate(date); // Format date as dd-mm-yyyy
+            var listItem = $('<li>').addClass('list-group-item');
+            listItem.append(`<span>${dateStr}</span>`);
+            var timeSlotSelect = $('<select>')
+                .attr('id', 'time-slot-select-' + index) // Assign a unique id
+                .addClass('form-control time-slot-select')
+                .css('display', 'inline-block')
+                .css('width', '150px')
+                .css('margin-left', '150px');
+               
+            timeSlotSelect.append('<option value="am">AM</option>');
+            timeSlotSelect.append('<option value="pm">PM</option>');
+            timeSlotSelect.append('<option value="fullday">Full Day</option>');
+            listItem.append(timeSlotSelect);
+            selectedDatesList.append(listItem);
+
+            // Initialize the time slot for the date if not already present
+            if (!selectedDates[dateStr]) {
+                selectedDates[dateStr] = 'am'; // Default value for time slot
+                timeSlotSelect.val('am'); // Set default selection
+            } else {
+                timeSlotSelect.val(selectedDates[dateStr]); // Set previously selected value
+            }
+        });
+
+        // Update hidden input with initial time slots
+        updateHiddenInputs();
+    }
+
+    // Function to format date as dd-mm-yyyy
+    function formatDate(date) {
+        var day = date.getDate().toString().padStart(2, '0');
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var year = date.getFullYear();
+        return `${day}-${month}-${year}`;
+    }
+
+    // Function to update hidden inputs with selected time slots
+    function updateHiddenInputs() {
+        // Clear existing hidden input to avoid duplication
+        $("input[name='timeslot']").remove();
+
+        var allDateTimeSlots = [];
+        $('#selected_dates_list li').each(function() {
+            var dateStr = $(this).find('span').text();
+            var selectedTimeSlot = $(this).find('.time-slot-select').val();
+            selectedDates[dateStr] = selectedTimeSlot; // Update time slot in the dictionary
+            allDateTimeSlots.push(selectedTimeSlot); // Collect all time slots
+        });
+
+        // Create a single hidden input with all time slots
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'timeslot',
+            value: allDateTimeSlots.join(',') // Concatenate all time slots with comma separator
+        }).appendTo('form');
+    }
+
+    // Event handler for time slot selection change
+    $(document).on('change', '.time-slot-select', function() {
+        updateHiddenInputs(); // Update hidden input whenever a time slot is changed
+    });
+
+    $("#booking_dates").blur(function () {
+        var n = $(this).val();
+        if (n === "") { // Check for empty string
+            mod1 = 1;
+        } else {
+            mod1 = 0; // Update mod1 to 0 if input is not empty
+        }
+        updateButtonState(); // Update button state based on mod1
+    });
+
+    // Initialize datepicker
+    $('.datepicker').datepicker({
+        format: 'dd-mm-yyyy',
+        startDate: '0d', // Today is the earliest selectable date
+        multidate: true,  // Allow multiple date selections
+        todayHighlight: true,
+        beforeShowDay: function(date) {
+            var dateStr = formatDate(date); // Format as dd-mm-yyyy
+
+            // Check if AM and PM slots are booked for the same date
+            var isAMPMBooked = bookedSlots.hasOwnProperty(dateStr) &&
+                bookedSlots[dateStr].includes('am') &&
+                bookedSlots[dateStr].includes('pm');
+
+            // Find the earliest date to disable after a full day booking or AM/PM booked together
+            var disableDate = false;
+            Object.keys(bookedSlots).forEach(function(bookedDateStr) {
+                if (bookedSlots[bookedDateStr].includes('fullday')) {
+                    var bookedDate = new Date(bookedDateStr);
+                    var dateToDisable = new Date(bookedDate);
+                    dateToDisable.setDate(dateToDisable.getDate() ); // One day after the full day booking
+
+                    if (formatDate(dateToDisable) === dateStr) {
+                        disableDate = true;
+                    }
+                }
+                if (bookedSlots[bookedDateStr].includes('am') && bookedSlots[bookedDateStr].includes('pm')) {
+                    var bookedDateAMPM = new Date(bookedDateStr);
+                    var dateToDisableAMPM = new Date(bookedDateAMPM);
+                    dateToDisableAMPM.setDate(dateToDisableAMPM.getDate() - 1); // One day after AM/PM booked together
+
+                    if (formatDate(dateToDisableAMPM) === dateStr) {
+                        disableDate = true;
+                    }
+                }
+            });
+
+            // Disable the date if it's either one day after a full day booking, has both AM and PM booked, or the date is a booked date
+            if (disableDate) {
+                return { enabled: false, classes: 'disabled1' };
+            }
+
+            // Enable the date
+            return { enabled: true };
+        }
+    }).on('changeDate', function(e) {
+        // Enable the button when a date is selected
+        if (e.dates.length > 0) {
+            mod1 = 0; // Update mod1 to 0 when dates are selected
+            addSelectedDates(e.dates); // Add selected dates with time slot options
+        } else {
+            mod1 = 1; // Update mod1 to 1 when no dates are selected
+            $('#selected_dates_list').empty(); // Clear the list when no dates are selected
+            selectedDates = {}; // Clear selected dates dictionary
+        }
+        updateButtonState(); // Update button state based on mod1
+    });
+
+    // Disable time slots based on selected date and booked slots
+    $(document).on('click', '.time-slot-select', function() {
+        var selectedDate = $(this).closest('li').find('span').text();
+        var selectedTimeSlot = $(this).val();
+        var dateStr = new Date(selectedDate.split('-').reverse().join('-')).toISOString().slice(0, 10);
+        console.log(selectedTimeSlot);
+
+        // Refresh the datepicker
+        $('.datepicker').datepicker('update');
+
+        // Disable time slots based on booked slots
+        var timeSlots = bookedSlots[dateStr] || [];
+        console.log(timeSlots)
+        $('.time-slot-select').each(function() {
+            var currentDate = $(this).closest('li').find('span').text();
+            var currentSlot = $(this).val();
+           // console.log(currentSlot)
+
+            if (currentDate === selectedDate) {
+               
+                if (timeSlots.includes('fullday')) {
+                   
+                    $(this).prop('disabled', true).addClass('disabled-slot'); // Disable and style all slots if full day is booked
+                } else if (timeSlots.includes('am') ) {
+                    console.log("djkf")
+                    
+                    $(this).prop('disabled1', false).addClass('disabled-slot');// Enable PM if AM is booked
+                } else if (timeSlots.includes('pm')) {
+                    $(this).prop('disabled1', false).addClass('disabled-slot'); // Enable AM if PM is booked
+                } else {
+                  //  $(this).prop('disabled', timeSlots.includes(currentSlot)).toggleClass('disabled-slot', timeSlots.includes(currentSlot)); // Disable slot if it is booked
+                }
+            }
+        });
+    });
+
+    // Initially set the button state based on mod1
+    updateButtonState();
+});

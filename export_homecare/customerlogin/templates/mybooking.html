@@ -1,0 +1,651 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <title></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'caravan/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'caravan/assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'caravan/assets/css/style1.css' %}">
+    <link rel="stylesheet" href="{% static 'caravan/assets/css/owl.css' %}">
+  </head>
+  <script>
+   
+  function showAlert() {
+    alert("Please login to book a service.");
+    
+
+  }
+
+
+  </script>
+<style>
+   .k {
+        border-radius: 100%;
+    }
+    .n9 {
+        color: black;
+        text-decoration: none;
+        margin-top: -10px;
+        margin-bottom: 10px;
+
+        padding: 10 21;
+        text-transform: uppercase;
+        float: left;
+
+    }
+
+    .n9:hover {
+
+        text-decoration: none;
+        font-weight: bold;
+        color: green;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+   
+
+
+    .desc {
+        padding: 15px;
+        text-align: center;
+
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        margin-top: -10px;
+        margin-left: 40px;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 190px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    .service-item {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .service-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .service-item img {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ddd;
+        }
+        .down-content {
+            padding: 20px;
+        }
+        .down-content h4 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .down-content h5 {
+            font-size: 1em;
+            color: #777;
+            margin-bottom: 15px;
+        }
+        .down-content .price {
+            font-size: 1.2em;
+            color: #dc3545;
+        }
+        .filled-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .filled-button:hover {
+            background-color: #0056b3;
+        }
+  
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Add space between items */
+}
+
+.col-md-4 {
+    flex: 1 1 calc(33.333% - 20px); /* Three columns with space for gaps */
+    box-sizing: border-box;
+}
+
+.service-item {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #ddd;
+    text-align: left; /* Align text to the left */
+}
+
+.service-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.service-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+}
+
+.down-content {
+    padding: 15px;
+}
+
+.down-content h4 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.down-content h5 {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 1.2em;
+    color: #28a745;
+    margin-bottom: 15px;
+}
+
+.filled-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.filled-button:hover {
+    background-color: #0056b3;
+}
+
+    </style>
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
+
+    <!-- Header -->
+ 
+
+    <header class="">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <div style="margin-top: -20px">   <img src="{% static 'images/logonew.png' %}"alt=""width="200"height="60"></div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'userloginhome' %}">Home
+                  <span class="sr-only"></span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'userloginhome' %}#about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'userloginhome' %}#projects">Images</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'servicelogin' %}">Services</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'userloginhome' %}#contact-us">Contact Us</a>
+              </li>
+                
+         
+              <div style="margin-top:9px;">
+                  <div class="dropdown">
+                 
+                      <img src="{% static customer.photo %}" alt="Cinque Terre" width="70"
+                          height="50" class="k">
+                      <div class="dropdown-content" style="right:0;">
+
+                          <div class="desc"><a href="{% url 'useraccount' %}" class=n9
+                                  target="__blank">Manage Account</a></div>
+                                  <div style="margin-left:25px">  <div class="desc"><a href="{% url 'bookview' %}" class=n9
+                                  >My Bookings</a></div></div>
+
+                          <div style="margin-left:50px">
+                              <div class="desc"><a href="{% url 'logout' %}" class=n9>LOGOUT</a></div>
+                          </div>
+
+                      </div>
+                  </div>
+
+             
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+      </nav>
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-success" role="alert" id="delete-success-message" style="max-width: 400px; margin-left:800px;">
+              {{ message }}
+          </div>
+      {% endfor %}
+  {% endif %}
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <style>
+          .custom-table {
+              margin-top: 20px;
+          }
+          .custom-table th, .custom-table td {
+              text-align: center;
+          }
+          .custom-table .btn {
+              padding: 5px 10px;
+          }
+      </style>
+  </head>
+  <body>
+      <div class="container">
+     
+    </header>
+
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="main-banner header-text" id="top">
+        <div class="Modern-Slider">
+          <!-- Item -->
+          <div class="item item-1">
+            <div class="img-fill">
+                <div class="text-content">
+                  <h6>Welcome Expert Homecare Booking website</h6>
+                 
+                  <p>
+                    Welcome to Expert Homecare, your go-to platform for all home maintenance and repair needs! Our user-friendly website allows you to easily book services from a wide range of categories including plumbing, electrical work, cleaning, and more. With just a few clicks, you can schedule an appointment at your convenience, track the status of your booking in real-time, and make secure payments.</p>
+                  <a href="index.html#about" class="filled-button">About</a>
+                </div>
+            </div>
+          </div>
+          <!-- // Item -->
+          <!-- Item -->
+          <div class="item item-2">
+            <div class="img-fill">
+              <div class="text-content">
+                <h6>Welcome Expert Homecare Booking website</h6>
+               
+                <p>
+                  Our team of vetted and experienced professionals is dedicated to providing top-notch service to ensure your home stays in perfect condition. Additionally, our integrated messaging system allows seamless communication between you and the service provider. Experience hassle-free home maintenance with Expert Homecare, where quality and customer satisfaction are our top priorities. Book your service today!</p>
+                <a href="{% url 'userloginhome' %}#about" class="filled-button">About</a>
+              </div>
+            </div>
+          </div>
+          <!-- // Item -->
+          <!-- Item -->
+          <div class="item item-3">
+            <div class="img-fill">
+              <div class="text-content">
+                <h6>Welcome Expert Homecare Booking website</h6>
+               
+                <p>
+                  At Expert Homecare, we prioritize your safety and convenience. Our platform features robust security measures to protect your personal information and payment details. We also offer a flexible cancellation policy and transparent pricing with no hidden fees, so you know exactly what to expect. For any assistance, our dedicated customer support team is just a message away, ready to help you with any queries or concerns. Discover the ease and reliability of home maintenance with Expert Homecare – your trusted partner for a well-maintained home.</p>
+                <a href="{% url 'userloginhome' %}#about" class="filled-button">About</a>
+              </div>
+            </div>
+          </div>
+          <!-- // Item -->
+        </div>
+    </div>
+    <!-- Banner Ends Here -->
+
+ 
+    <div class="services">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div style="margin-top:-100px">
+            <div class="section-heading">
+                <h2>Booked <em>Services</em></h2>
+          
+                <div class="container">
+                
+                    <input type="text" id="searchInput" class="form-control search-bar" placeholder="Search for bookings..">
+            
+                    <table class="table table-striped custom-table" id="bookingTable">
+                        <thead>
+                            <tr>
+                                <th>Serial No.</th>
+                               
+                                <th scope="col">Service offered</th>
+                                <th scope="col">Problem Description </th>
+                                <th scope="col">Technician Name</th>
+                                <th scope="col">Technician Mobile </th>
+                                <th scope="col">Booked Dates</th>
+
+                                <th scope="col">Total Amount</th>
+                                <th scope="col">More Info</th>
+                                <th scope="col">Payment Status</th>
+                                <th scope="col">Service Status</th>
+                               
+                                <th scope="col">Download Receipt</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for booking in data_to_display.values %}
+                            <tr>
+                               
+                                
+                                <td>{{ forloop.counter }}</td> 
+                                  
+                                    <td>{{ booking.service_name }}</td>
+                                    <td>{{ booking.notes }}</td>
+                                    <td>{{ booking.service_provider_name }}</td>
+                                <td>{{ booking.service_provider_phone }}</td>
+                                <td ><ul>
+                                    {% for date_slot in booking.date_slots %}
+                                    <li>{{ date_slot.service_start_date }} - {{ date_slot.time_slot }}</li>
+                                    {% empty %}
+                                    <li>No dates available</li>
+                                    {% endfor %}
+                                </ul>
+                                </td>
+                                {% if booking.amount == "pending" %}
+                                <td>  <div style="margin-top: -10px;">  <span class="text-danger">Not Initiated</span></div</td>
+                                  {% else %}
+                                    <td>{{booking.amount}}</td>
+                                  {% endif %}
+
+
+                                  <td><button class="btn btn-primary edit" data-toggle="modal" data-target="#editModal" 
+                                    data-address="{{ booking.address }}"
+                                    data-serviceprovider="{{ booking.service_provider_name }}"
+                                    data-service_name="{{ booking.service_name }}"
+                                    data-email="{{ booking.service_provider_email }}" 
+                                    data-location="{{ booking.service_provider_location }}" 
+                                    data-phone="{{ booking.service_provider_phone }}" 
+                                    data-service_provider_amount10="{{ booking.accessoriesbuy_proof }}" 
+                                    data-note="{{ booking.notes }}" 
+                                  
+                                    data-id="{{ booking.id }}">view</button></td>
+                                                  
+                                    {% if booking.paymentstatus == "pending" %}
+                                  <td>  <div style="margin-top: -10px;">  <span class="text-danger">Not Initiated</span></div</td>
+                                {% elif booking.paymentstatus == "Done" %}
+                              <td> <div style="margin-top: -5px;">
+                                    <span class="badge custom-badge">{{ booking.paymentstatus }}</span>
+                                </div></td> 
+                                {% elif booking.paymentstatus == "Notdone" %}
+                                <td> 
+                                      <a href="{% url 'admin1:payment' booking.booking_id %}" class="btn btn-danger btn-sm">Pay Amount</a></span>
+                                </td> 
+                                
+                                {% endif %}
+                                <td>
+                                    {% if booking.status == "pending" %}
+                                  
+                                   
+                                       <div style="margin-top:10px"> <a href="{% url 'delete_booking' booking.booking_id %}" class="btn btn-danger btn-sm">Delete</a></div></td> 
+                                  {% else %}
+                                 <div style="margin-top:-5px"> <span class="badge custom-badge">{{booking.status}}</span></div>  
+                                  {% endif %}
+                                    
+                                  {% if booking.paymentstatus == "pending" %}
+                                <td>  <font color="red">NOT PROVIDED</font></td>
+                                {% elif booking.paymentstatus == "Notdone" %}
+                              
+                                    <td>  <font color="red">NOT PROVIDED</font></td>
+                               
+                                  {% else %}
+                                  <td><a href="{% url 'payment_receipt' booking.booking_id %}" target="_blank">Receipt</a></td>
+                                  {% endif %}
+                               
+                            </tr>
+                                {% endfor %}
+                                
+                              
+                               
+                            
+                        
+                            <!-- <tr>
+                                <td>2</td>
+                                <td>Jane Smith</td>
+                                <td>Standard Caravan</td>
+                                <td>2024-08-12</td>
+                                <td>2024-08-18</td>
+                                <td><font color="orange">Pending</font></td>
+                                <td><font color="lightgreen">Pending</font></td>
+                                <td><button type="button" class="btn btn-success">Details</button></td>
+                                <td><a href="receipt2.pdf" target="_blank"><img src="{% static 'caravan/assets/img/receipt.png' %}" width="30" height="30" alt="Receipt"></a></td>
+                            </tr> -->
+                            <!-- Add more rows as needed -->
+                        </tbody>
+                    </table>
+                </div>
+            
+                <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                <script>
+                    // JavaScript to filter table based on search input
+                    document.getElementById('searchInput').addEventListener('keyup', function() {
+                        var searchValue = this.value.toLowerCase();
+                        var rows = document.querySelectorAll('#bookingTable tbody tr');
+                        
+                        rows.forEach(function(row) {
+                            var cells = row.querySelectorAll('td');
+                            var rowText = '';
+                            
+                            cells.forEach(function(cell) {
+                                rowText += cell.textContent.toLowerCase();
+                            });
+                            
+                            if (rowText.includes(searchValue)) {
+                                row.style.display = '';
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        });
+                    });
+                   
+    document.addEventListener("DOMContentLoaded", function() {
+        var messageElement = document.getElementById("delete-success-message");
+        if (messageElement) {
+            alert(messageElement.innerText);  // This will show a browser alert with the message
+            
+            // Optional: Hide the message after 5 seconds
+            setTimeout(function() {
+                messageElement.style.display = 'none';
+            }, 3000);
+        }
+    });
+
+                </script>
+            </div>
+            <style>
+.custom-badge {
+    font-size: 0.75rem; /* Adjust the font size as needed */
+    padding: 0.25rem 0.4rem; /* Adjust the padding as needed */
+    background-color: rgb(70, 249, 70); /* Set the background color to green */
+    color: rgb(165, 0, 0); /* Optional: Set text color to white for contrast */
+}
+            </style>
+              <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+              <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+              <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+          </body>
+          <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Booking Service Detail</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="modal_address">Service Book Address:</label>
+                                <input type="text" class="form-control" id="address" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="modal_serviceoffered">Service Offered</label>
+                                <input type="text" class="form-control" id="modal_serviceoffered" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="modal_description">Problem Description</label>
+                                <textarea class="form-control" id="modal_description" readonly></textarea>
+                               
+                            </div>
+                            <div class="form-group">
+                                <label for="modal_name">Technician Name</label>
+                                <input type="text" class="form-control" id="modal_name" readonly>
+                            </div>
+                        
+                            <div class="form-group">
+                                <label for="modal_email">Technician Email:</label>
+                                <input type="text" class="form-control" id="modal_email" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="modal_phone">Technician Mobile:</label>
+                                <input type="text" class="form-control" id="modal_phone" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="modal_location">Technician Location:</label>
+                                <input type="text" class="form-control" id="modal_location" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="modal_location">Additional Accessories Buy Bill</label><br>
+                                {% if service_provider_amount4 == "" %}
+                                Not Defined
+                            {% else %}
+                                <a id="service_provider_amount4" href="{% static '' %}{{ modal_id_proof }}" class="btn btn-sm btn-primary" target="_blank">View Bill</a>
+                            {% endif %}
+                            </div>
+                            
+                         
+                            <input type="hidden" id="modal_id">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                   
+                    </div>
+                </div>
+            </div>
+          </div>
+          </html>
+          
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'caravan/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'caravan/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Additional Scripts -->
+    <script src="{% static 'caravan/assets/js/custom.js' %}"></script>
+    <script src="{% static 'caravan/assets/js/owl.js' %}"></script>
+    <script src="{% static 'caravan/assets/js/slick.js' %}"></script>
+    <script src="{% static 'caravan/assets/js/accordions.js' %}"></script>
+
+    <script language = "text/Javascript"> 
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
+          }
+      }
+      </script>
+  
+    
+  <script>
+    $(document).ready(function() {
+        $(document).on('click', '.edit', function() {
+            var id = $(this).data('id');
+            var name = $(this).data('serviceprovider');
+            var service_name = $(this).data('service_name');
+            var phone = $(this).data('phone');
+            var email = $(this).data('email');
+            var location = $(this).data('location');
+            var note = $(this).data('note');
+            var address = $(this).data('address');
+            var service_provider_amount10 = $(this).data('service_provider_amount10');
+             console.log(service_provider_amount10)
+            console.log("Clicked ID:", id); // Verify in the console that the correct ID is logged
+            console.log("Name:", name);
+            console.log("Phone:", phone);
+            console.log("Email:", email);
+           
+            console.log("Status:", status);
+    
+            // Assign values to modal fields
+            $('#modal_name').val(name);
+            $('#modal_email').val(email);
+            $('#modal_phone').val(phone);
+            $('#modal_serviceoffered').val(service_name);
+            $('#modal_location').val(location);
+            $('#modal_description').val(note);
+            $('#address').val(address);
+
+            $('#service_provider_amount4').attr('href', '{% static "" %}' + 'images/openstack_Ra1llvf.pdf');
+            $('#modal_id').val(id);
+
+    
+            // Show the modal
+            $('#editModal').modal('show');
+        });
+    });
+    </script>
+  </body>
+</html>
