@@ -25,8 +25,7 @@ SECRET_KEY = 'django-insecure-r$^0y4ht1p&&7o$7ham*3f_bw$f-asm02xa*q0m!nn@%$z1dgx
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['miniproject-s9.onrender.com']
-
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,[::1],frantic-ashley-amaljyothi-8a63d756.koyeb.app,miniproject-s9.onrender.com").split(",")
 
 # Application definition
 
@@ -39,7 +38,6 @@ INSTALLED_APPS = [
     'customerlogin',
     'custadmin',
     'employee',
-    'customserviceprovider',
     'django.contrib.staticfiles',
 
     'social_django',
@@ -54,16 +52,16 @@ INSTALLED_APPS = [
 AUTHENTICATION_BACKENDS = (
    'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-    'social_core.backends.google.GoogleOAuth2', 
-     'customerlogin.backends.CustomUserBackend', 
-      
+    'social_core.backends.google.GoogleOAuth2',
+     'customerlogin.backends.CustomUserBackend',
+
 )
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'optional' 
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
 
 SITE_ID = 1
@@ -120,7 +118,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-
+     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -152,10 +150,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'export_homecare.wsgi.application'
 
-# MEDIA_URL = 'media/'
 
-# # Define the path to the media directory
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -165,8 +160,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # DATABASES = {
 #   'default': {
 #         'ENGINE': 'mysql.connector.django',
@@ -217,8 +211,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS=[
     os.path.join(BASE_DIR,'static')
 ]
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -257,7 +249,7 @@ AUTH_USER_MODEL = 'customerlogin.Customer'
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
-     
+
 )
 
 SOCIAL_AUTH_PIPELINE = (
