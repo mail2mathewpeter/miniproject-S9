@@ -2,71 +2,19 @@
 <html lang="en">
 {% load static %}
 <head>
-
-  <script type="text/javascript">
-  document.addEventListener("DOMContentLoaded", function() {
-            if (sessionStorage.getItem("loggedOut")) {
-                // Prevent going back to the login page
-                history.pushState(null, null, location.href);
-                window.onpopstate = function() {
-                    history.go(1);
-                };
-                sessionStorage.removeItem("loggedOut");
-            }
-        });
-</script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link href="{% static 'images/1.png' %}" rel="icon">
-  <title>Expert Homecare Employee</title>
+  <link href="{% static 'img/logo/logo.png' %}" rel="icon">
+  <title>RuangAdmin - Dashboard</title>
   <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
   <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
   <link href="{% static 'css/ruang-admin.min1.css' %}" rel="stylesheet">
 </head>
-<script src="path/to/jquery.js"></script>
-<script src="path/to/bootstrap.js"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script>
-  // Function to handle login
-  function onLogin() {
-      // Set a flag in sessionStorage to indicate the user is logged in
-      sessionStorage.setItem('loggedIn', 'true');
-      
-      // Push a new state to prevent going back to the login page
-      history.pushState(null, null, window.location.href);
-      var addServiceUrl = '{% url "employee:index1" %}';
-      // Redirect to home page
-      window.location.href = addServiceUrl; // Adjust the URL as needed
-  }
-
-  // Function to handle page load on home page
-  function onPageLoad() {
-      if (sessionStorage.getItem('loggedIn') === 'true') {
-          // Push a new state to prevent back navigation
-          history.pushState(null, null, window.location.href);
-
-          // Handle popstate event to override back navigation
-          window.addEventListener('popstate', function () {
-              history.go(1); // Move forward in history
-          });
-      }
-  }
-
-  // Call onPageLoad when the DOM is fully loaded
-  window.addEventListener('DOMContentLoaded', onPageLoad);
-
-  // Function to be called on logout
-  function onLogout() {
-      sessionStorage.removeItem('loggedIn');
-  }
-</script>
 
 <body id="page-top">
-  
   <div id="wrapper">
     <!-- Sidebar -->
     <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
@@ -74,62 +22,95 @@
         <div class="sidebar-brand-icon">
           <img src="{% static 'img/logo/logo2.png' %}">
         </div>
-        <div class="sidebar-brand-text mx-3">Expert Homecare</div>
-       <!-- <div class="sidebar-brand-text mx-3">Expert Homecare</div>  -->
+        <div class="sidebar-brand-text mx-3">RuangAdmin</div>
       </a>
       <hr class="sidebar-divider my-0">
-      <li class="nav-item active ">
+      <li class="nav-item active">
         <a class="nav-link" href="{% url 'employee:index1' %}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
+     
+
+     
       <hr class="sidebar-divider">
       <div class="sidebar-heading">
         Features
       </div>
-      <li class="nav-item   ">
-        <a class="nav-link" href="{% url 'employee:displayuser1' %}">
-          <i class="fa fa-users"></i>
-          <span>User Details</span>
-        </a>
-      </li>
       <li class="nav-item ">
+        <a class="nav-link" href="{% url 'employee:addservice1' %}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Add Service</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
+          aria-expanded="true" aria-controls="collapseBootstrap">
+          <i class="far fa-fw fa-window-maximize"></i>
+          <span>Bootstrap UI</span>
+        </a>
+   
+      <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true"
           aria-controls="collapseForm">
-          <i class="fa fa-gear" style="font-size:15px;"></i>
-          <span>Services</span>
-        </a> 
+          <i class="fab fa-fw fa-wpforms"></i>
+          <span>Forms</span>
+        </a>
         <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Employee</h6>
-              <a class="collapse-item" href="{% url 'employee:addservice1' %}">Add Service</a>
-              <a class="collapse-item " href="{% url 'employee:displayservice' %}">View Service</a>
+            <h6 class="collapse-header">Forms</h6>
+            <a class="collapse-item" href="">Form Basics</a>
+            <a class="collapse-item" href="">Form Advanceds</a>
           </div>
         </div>
-      </li> 
-      <li class="nav-item ">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm2" aria-expanded="true"
-          aria-controls="collapseForm">
-          <i class="fas fa-user-cog"></i>
-          <span>Service Provider</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
+          aria-controls="collapseTable">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Tables</span>
         </a>
-        <div id="collapseForm2" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
+        <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Service Provider Details</h6>
-            <a class="collapse-item " href="{% url 'employee:addserviceprovider' %}">Add Service Provider</a>
-            <a class="collapse-item" href="{% url 'employee:displayserviceproviderdata1' %}">View Service Provider</a>
+            <h6 class="collapse-header">Tables</h6>
+            <a class="collapse-item" href="">Simple Tables</a>
+            <a class="collapse-item" href="">DataTables</a>
           </div>
         </div>
       </li>
-      <li class="nav-item   ">
-        <a class="nav-link" href="{% url 'employee:viewbooking' %}">
-          <i class="fa fa-users"></i>
-          <span>View Booking</span>
+      <li class="nav-item">
+        <a class="nav-link" href="">
+          <i class="fas fa-fw fa-palette"></i>
+          <span>UI Colors</span>
         </a>
       </li>
-   
-      
-     
+      <hr class="sidebar-divider">
+      <div class="sidebar-heading">
+        Examples
+      </div>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage" aria-expanded="true"
+          aria-controls="collapsePage">
+          <i class="fas fa-fw fa-columns"></i>
+          <span>Pages</span>
+        </a>
+        <div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Example Pages</h6>
+            <a class="collapse-item" href="">Login</a>
+            <a class="collapse-item" href="">Register</a>
+            <a class="collapse-item" href="">404 Page</a>
+            <a class="collapse-item" href="">Blank Page</a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Charts</span>
+        </a>
+      </li>
+      <hr class="sidebar-divider">
+      <div class="version" id="version-ruangadmin"></div>
     </ul>
     <!-- Sidebar -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -150,7 +131,7 @@
                 <form class="navbar-search">
                   <div class="input-group">
                     <input type="text" class="form-control bg-light border-1 small" placeholder="What do you want to look for?"
-                      aria-label="Search" aria-describedby="basic-addon2" style="border-color: #ef6767;">
+                      aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="button">
                         <i class="fas fa-search fa-sm"></i>
@@ -164,42 +145,118 @@
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
-                <span class="badge badge-danger badge-counter"></span>
+                <span class="badge badge-danger badge-counter">3+</span>
               </a>
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
                   Alerts Center
                 </h6>
-             
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-primary">
+                      <i class="fas fa-file-alt text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 12, 2019</div>
+                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-success">
+                      <i class="fas fa-donate text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 7, 2019</div>
+                    $290.29 has been deposited into your account!
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-warning">
+                      <i class="fas fa-exclamation-triangle text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 2, 2019</div>
+                    Spending Alert: We've noticed unusually high spending for your account.
+                  </div>
+                </a>
+                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+              </div>
+            </li>
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
-                <span class="badge badge-warning badge-counter"></span>
+                <span class="badge badge-warning badge-counter">2</span>
               </a>
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="messagesDropdown">
                 <h6 class="dropdown-header">
                   Message Center
                 </h6>
-               
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="img/man.png" style="max-width: 60px" alt="">
+                    <div class="status-indicator bg-success"></div>
+                  </div>
+                  <div class="font-weight-bold">
+                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been
+                      having.</div>
+                    <div class="small text-gray-500">Udin Cilok · 58m</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="img/girl.png" style="max-width: 60px" alt="">
+                    <div class="status-indicator bg-default"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them
+                      sent to you?</div>
+                    <div class="small text-gray-500">Jaenab · 1d</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="img/boy.png" style="max-width: 60px" alt="">
+                    <div class="status-indicator bg-warning"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so
+                      far, keep up the good work!</div>
+                    <div class="small text-gray-500">Udin Cilok · 2d</div>
+                  </div>
+                </a>
+                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+              </div>
             </li>
             <div class="topbar-divider d-none d-sm-block"></div>
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                <img src="{% static customer.photo %} "class="img-profile rounded-circle"  style="max-width: 60px">
-                <span class="ml-2 d-none d-lg-inline text-white small">{{ customer.name}}</span>
+                <img class="img-profile rounded-circle" src="{% static 'img/boy.png' %}" style="max-width: 60px">
+                <span class="ml-2 d-none d-lg-inline text-white small">{{ customer.name }}</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="{% url 'employee:employeccount1' %}">
+                <a class="dropdown-item" href="">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
                 </a>
-              
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Settings
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Activity Log
+                </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'employee:logoutaemployee' %}">
+                <a class="dropdown-item" href="">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
@@ -226,9 +283,9 @@
                   <div class="row align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-uppercase mb-1">Earnings (Monthly)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{total_amount}}</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
                       <div class="mt-2 mb-0 text-muted text-xs">
-                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>{{total_amount}}</span>
+                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
                         <span>Since last month</span>
                       </div>
                     </div>
@@ -245,10 +302,10 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-uppercase mb-1">Booked</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{total_bookings_for_location}}</div>
+                      <div class="text-xs font-weight-bold text-uppercase mb-1">Sales</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">650</div>
                       <div class="mt-2 mb-0 text-muted text-xs">
-                        <span class="text-success mr-2"><i class="fas fa-arrow-up"></i>{{total_bookings_for_location}}</span>
+                        <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
                         <span>Since last years</span>
                       </div>
                     </div>
@@ -266,9 +323,9 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-uppercase mb-1">New User</div>
-                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{total_customers}}</div>
+                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">366</div>
                       <div class="mt-2 mb-0 text-muted text-xs">
-                        <span class="text-success mr-2"><i class="fas fa-arrow-up"></i>{{total_customers}}</span>
+                        <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 20.4%</span>
                         <span>Since last month</span>
                       </div>
                     </div>
@@ -286,9 +343,9 @@
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-uppercase mb-1">Pending Requests</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                       <div class="mt-2 mb-0 text-muted text-xs">
-                        <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i>0</span>
+                        <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
                         <span>Since yesterday</span>
                       </div>
                     </div>
@@ -301,7 +358,7 @@
             </div>
 
             <!-- Area Chart -->
-            <!-- <div class="col-xl-8 col-lg-7">
+            <div class="col-xl-8 col-lg-7">
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Monthly Recap Report</h6>
@@ -326,9 +383,9 @@
                   </div>
                 </div>
               </div>
-            </div> -->
+            </div>
             <!-- Pie Chart -->
-            <!-- <div class="col-xl-4 col-lg-5">
+            <div class="col-xl-4 col-lg-5">
               <div class="card mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Products Sold</h6>
@@ -399,12 +456,12 @@
                       class="fas fa-chevron-right"></i></a>
                 </div>
               </div>
-            </div> -->
+            </div>
             <!-- Invoice Example -->
-         
+            <div class="col-xl-8 col-lg-7 mb-4">
               <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Pending Approval</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Invoice</h6>
                   <a class="m-0 float-right btn btn-danger btn-sm" href="#">View More <i
                       class="fas fa-chevron-right"></i></a>
                 </div>
@@ -412,61 +469,49 @@
                   <table class="table align-items-center table-flush">
                     <thead class="thead-light">
                       <tr>
-                        <th>SI NO</th>
-                 
-                        <th>Customer Name</th>
-                        <th>Service Offered Address</th>
-                        <th>Service Offered</th>
-                        <th>Booked Dates</th>
-                      
-                        <th>Technician Name</th>
-                        <th>More Info</th>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Item</th>
+                        <th>Status</th>
                         <th>Action</th>
-                       
                       </tr>
                     </thead>
                     <tbody>
-                      {% for booking in data_to_display %}
                       <tr>
-                        <td>{{ forloop.counter }}</td>
-                       
-                        <td>{{ booking.customer_name }}</td>
-                        <td>{{ booking.address }}</td>
-                        <td>{{ booking.service_name }}</td>
-                        <td>
-                          {% for item in booking.dates_and_slots %}
-                              <div>
-                                  {{ item.date }} - {{ item.slot }}
-                              </div>
-                          {% endfor %}
-                      </td>
-                        <td>{{ booking.service_provider_name }}</td>
-                     
-                        <td> <button class="btn btn-sm btn-primary edit" data-toggle="modal" data-target="#editModal" 
-                          data-customer_name="{{ booking.customer_name }} " 
-                          data-address="{{ booking.address }}"
-                        
-                          data-service_provider_name="{{ booking.service_provider_name }} " 
-                          data-modal_customeremail="{{ booking.customer_email }} " 
-                          data-modal_customerphone="{{ booking.customer_phone }} " 
-                          data-service_name="{{ booking.service_name }}" 
-                          data-gender="{{ booking.service_provider_gender }}" 
-                          data-location="{{ booking.service_provider_location }}" 
-                          data-Experience="{{ booking.Service_Provider_Experience }}"
-                          data-notes="{{ booking.notes }}" 
-                          data-modal_email="{{ booking.service_provider_email }}" 
-                          data-service_provider_phone1="{{ booking.service_provider_phone }}" 
-                          
-                        
-                          data-id="{{ booking.id }}">View</button></td>
-                        {% if booking.status == "pending" %}
-                        <td><a href="{% url 'employee:changebookingstatus' booking.booking_id %}" class="btn btn-sm btn-warning">{{ booking.status }}</a></td>
-                        {% endif %}
-                       
-                     
+                        <td><a href="#">RA0449</a></td>
+                        <td>Udin Wayang</td>
+                        <td>Nasi Padang</td>
+                        <td><span class="badge badge-success">Delivered</span></td>
+                        <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
                       </tr>
-                      {% endfor %}
-                     
+                      <tr>
+                        <td><a href="#">RA5324</a></td>
+                        <td>Jaenab Bajigur</td>
+                        <td>Gundam 90' Edition</td>
+                        <td><span class="badge badge-warning">Shipping</span></td>
+                        <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                      </tr>
+                      <tr>
+                        <td><a href="#">RA8568</a></td>
+                        <td>Rivat Mahesa</td>
+                        <td>Oblong T-Shirt</td>
+                        <td><span class="badge badge-danger">Pending</span></td>
+                        <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                      </tr>
+                      <tr>
+                        <td><a href="#">RA1453</a></td>
+                        <td>Indri Junanda</td>
+                        <td>Hat Rounded</td>
+                        <td><span class="badge badge-info">Processing</span></td>
+                        <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                      </tr>
+                      <tr>
+                        <td><a href="#">RA1998</a></td>
+                        <td>Udin Cilok</td>
+                        <td>Baby Powder</td>
+                        <td><span class="badge badge-success">Delivered</span></td>
+                        <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -474,7 +519,7 @@
               </div>
             </div>
             <!-- Message From Customer-->
-            <!-- <div class="col-xl-4 col-lg-5 ">
+            <div class="col-xl-4 col-lg-5 ">
               <div class="card">
                 <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-light">Message From Customer</h6>
@@ -519,15 +564,15 @@
           </div>
           <!--Row-->
 
-          <!-- <div class="row">
+          <div class="row">
             <div class="col-lg-12 text-center">
               <p>Do you like this template ? you can download from <a href="https://github.com/indrijunanda/RuangAdmin"
                   class="btn btn-primary btn-sm" target="_blank"><i class="fab fa-fw fa-github"></i>&nbsp;GitHub</a></p>
             </div>
-          </div> -->
+          </div>
 
           <!-- Modal Logout -->
-          <!-- <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+          <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -546,13 +591,13 @@
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
 
-        <!-- </div> -->
+        </div>
         <!---Container Fluid-->
       </div>
-      
-      <!-- <footer class="sticky-footer bg-white">
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
             <span>copyright &copy; <script> document.write(new Date().getFullYear()); </script> - developed by
@@ -568,133 +613,11 @@
             </span>
           </div>
         </div>
-      </footer> -->
+      </footer>
       <!-- Footer -->
     </div>
   </div>
-  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel"> Booking Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="modal_name">Customer Name:</label>
-                        <input type="text" class="form-control" id="modal_name" readonly>
-                    </div>
-                    <div class="form-group">
-                      <label for="modal_customermobile">Customer Mobile:</label>
-                      <input type="text" class="form-control" id="modal_customerphone" readonly>
-                  </div>
-                  <div class="form-group">
-                    <label for="modal_name">Customer Email:</label>
-                    <input type="text" class="form-control" id="modal_customeremail" readonly>
-                </div>
-                    <div class="form-group">
-                      <label for="modal_name">Technician Name:</label>
-                      <input type="text" class="form-control" id="service_provider_name" readonly>
-                  </div>
-                    
-                    <div class="form-group">
-                      <label for="modal_Address">Service Booked Address:</label>
-                      <input type="text" class="form-control" id="modal_address" readonly>
-                  </div>
-                  <div class="form-group">
-                    <label for="modal_designation">Service Offered:</label>
-                    <input type="text" class="form-control" id="service_name" readonly>
-                </div>
-                
-             
-                <div class="form-group">
-                  <label for="modal_Experience">Problem Description:</label>
-                  <textarea class="form-control" id="modal_location" readonly style="width:100%;"></textarea>
-              </div>
-            
-                    <div class="form-group">
-                        <label for="modal_email">Technician Email:</label>
-                        <input type="text" class="form-control" id="modal_email" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="service_provider_phone">Technician Mobile:</label>
-                        <input type="text" class="form-control" id="service_provider_phone1" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="modal_gender">Gender:</label>
-                        <input type="text" class="form-control" id="modal_gender" readonly>
-                    </div>
-                   
-                   
-                    <input type="hidden" id="modal_id">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-           
-            </div>
-        </div>
-    </div>
-  </div>
-  <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-  <script>
-    $(document).ready(function() {
-        $(document).on('click', '.edit', function() {
-            var id = $(this).data('id');
-            var customer_name = $(this).data('customer_name');
-            var service_provider_name = $(this).data('service_provider_name');
-            
-            var customeremail = $(this).data('modal_customeremail');
-            var customerephone = $(this).data('modal_customerphone');
-            var gender = $(this).data('gender');
-             var service_name = $(this).data('service_name');
-            var address = $(this).data('address');
-            var designation = $(this).data('designation');
-            var modal_email = $(this).data('modal_email');
-            var location = $(this).data('notes');
-            var service_provider_phone1 = $(this).data('service_provider_phone1');
-            var status = $(this).data('status');
-            // var status = $(this).data('date');
-            
-            console.log("Clicked ID:", id); // Verify in the console that the correct ID is logged
-            console.log("Name:", customer_name);
-           // console.log("Phone:", phone);
-            // console.log("Email:", email);
-            // console.log("Gender:", service_provider_name);
-           // console.log("Status:", Experience);
-    
-            // Assign values to modal fields
-            $('#modal_name').val(customer_name);
-            $('#modal_customeremail').val(customeremail);
-            $('#modal_customerphone').val(customerephone);
-            $('#modal_gender').val(gender);
-            $('#modal_status').val(status);
-            
-            $('#modal_address').val(address);
-            $('#service_provider_name').val(service_provider_name);
-            $('#modal_email').val(modal_email);
-             $('#service_name').val(service_name);
-            $('#service_provider_phone1').val(service_provider_phone1);
-            $('#modal_location').val(location);
-    
-            $('#modal_id').val(id);
-    
-            // Show the modal
-            $('#editModal').modal('show');
-        });
-    });
-    </script>
-<!-- Page level custom scripts -->
-<script>
-  $(document).ready(function () {
-    $('#dataTable').DataTable(); // ID From dataTable 
-    $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-  });
-</script>
+
   <!-- Scroll to top -->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>

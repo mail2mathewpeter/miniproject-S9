@@ -6,8 +6,6 @@ class service(models.Model):
     service_description = models.CharField(max_length=100)
     photo = models.ImageField(upload_to='images/', null=True, blank=True)
     
-    status = models.CharField(max_length=100)
-    
     def __str__(self):
        return self.service_name
 class service_provider(models.Model):
@@ -15,11 +13,9 @@ class service_provider(models.Model):
     Service_Provider_Address = models.CharField(max_length=100)
     Service_Provider_Email = models.CharField(max_length=100)
     Service_Provider_Phone = models.CharField(max_length=100)
-    Service_Provider_location = models.CharField(max_length=100)
     Service_Provider_gender = models.CharField(max_length=10,blank=True,null=True)
     service_table= models.IntegerField()
     Service_Provider_Experience = models.CharField(max_length=100)
-    Service_Provider_amountdefalult = models.CharField(max_length=100)
     Service_Provider_Id_proof = models.FileField(upload_to='images/')
     photo = models.ImageField(upload_to='images/')
     Service_Provider_Qualification_Certificate = models.FileField(upload_to='images/')
@@ -28,6 +24,4 @@ class service_provider(models.Model):
     
     def __str__(self):
        return self.service_provider_name
-    
-    
 

@@ -1,8 +1,5 @@
 from django.urls import path
-from django.conf import settings
 from . import views
-from django.conf.urls.static import static
-
 app_name = 'admin1'
 urlpatterns = [
     path('', views.index, name='index'),
@@ -23,38 +20,5 @@ path('editemployee/<str:email>/', views.editemployee, name='editemployee'),
       path('employeepasswordadd/<str:email>/', views.employeepasswordadd, name='employeepasswordadd'),
         path('changeserviceproviderstatus2/<int:service_id>/', views.changeserviceproviderstatus2, name='changeserviceproviderstatus2'),
     # path('employeepasswordadd/<str:email>/', views.employeepasswordadd, name='employeepasswordadd'),
-     path('enable_disable_service/<int:service_id>/', views.enable_disable_service, name='enable_disable_service'),
-       path('adminaccount1/', views.adminaccount1, name='adminaccount1'),
-       path('editaccount2/', views.editaccount2, name='editaccount2'),
-       path('updateadminaccount/', views.updateadminaccount, name='updateadminaccount'),
-      path('changepasswordadmin/', views.changepasswordadmin, name='changepasswordadmin'),
-      path('updateadminpassword/', views.updateadminpassword, name='updateadminpassword'),
-      path('logoutadmin/', views.logoutadmin, name='logoutadmin'),
-        path('payment/<int:booking_id>/', views.payment, name='payment'),
-        path('addserviceproviderdata', views.addserviceproviderdata, name='addserviceproviderdata'),
-        path('addservice1', views.addservice1, name='addservice1'),
-        path('addserviceprovideradminview', views.addserviceprovideradminview, name='addserviceprovideradminview'),
-         path('addservicesubmit', views.addservicesubmit, name='addservicesubmit'),
-      path('updatepayment/', views.updatepayment, name='updatepayment'),
-      path('editservice/<int:service_id>/', views.edit_service, name='editservice'),
-      path('updateservicedata/<int:service_id>/', views.updateservicedata, name='updateservicedata'),
-              path('editserviceproviderdata/<int:id2>/', views.editserviceproviderdata1, name='editserviceproviderdata'),
-        path('displayserviceproviderdataeditpage/<int:id1>/', views.displayserviceproviderdataeditpage, name='displayserviceproviderdataeditpage'),
-               path('viewbookingadmin/', views.viewbookingadmin, name='viewbookingadmin'),
-               path('transactionadmin/', views.transactionadmin, name='transactionadmin'),
-                path('booking_report_pdf/', views.booking_report_pdf, name='booking_report_pdf'),
-                path('employeeppdf/', views.employeeppdf, name='employeeppdf'),
-                path('customerpdf/', views.customerpdf, name='customerpdf'),
-                
-        path('servicepdf/', views.servicepdf, name='servicepdf'),
-         path('serviceproviderpdf/', views.serviceproviderpdf, name='serviceproviderpdf'),
-        path('transcstionpdf/', views.transactionpdf, name='transcstionpdf'),
-              path('search-users/', views.search_users, name='search_users'),
-    path('get-users/',views.get_users, name='get_users'),
-            path('admin-chat/', views.admin_chat_view, name='admin_chat_view'),
-            
-             path('chatadmin/<str:user_email>/', views.chatadmin, name='chatadmin'),
-                path('chat_with_customer_view/<str:user_email>/', views.chat_with_customer_view, name='chat_with_customer'),
-                path('display_feedback1/', views.display_feedback1, name='display_feedback1'),
-                
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+      
+]
