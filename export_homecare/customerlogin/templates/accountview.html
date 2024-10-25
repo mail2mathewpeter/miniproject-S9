@@ -231,15 +231,7 @@
         </div>
         <!-- Profile Settings-->
         {% csrf_token %}
-        
         <div class="col-lg-8 pb-5">
-            {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-success" role="alert" id="delete-success-message" >
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
             <form class="row" action="" method="POST"enctype="multipart/form-data">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -273,10 +265,9 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="account-phone">upload image</label><br>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal"disabled>
-                            Upload Photo
-                        </button>
+                        <label for="account-phone">upload image</label>
+                        <input class="form-control" type="file"  id="inputfileupload"  name="file" onchange="fileValidation()"value=""title=" dsf" disabled>
+                        <span id="text17"></span></td>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -287,14 +278,14 @@
                     </div>
                 </div>
                
-               <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <div class="form-group">
-                        <label for="account-pass">Customer Address</label>
-                        <input class="form-control" type="text" placeholder="Enter address" name="address"id="txt14"value="{{ customer.address }}"disabled>
+                        <label for="account-pass">New Password</label>
+                        <input class="form-control" type="password" name="pass"id="password"value="{{ customer.password }}"disabled>
                         <span id="text5"></span>
                     </div>
                 </div>
-                <!-- <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="account-confirm-pass">Confirm Password</label>
                         <input class="form-control" type="password" name="cpass" id="cpassword"value="{{ customer.password }}"disabled>

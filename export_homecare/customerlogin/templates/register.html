@@ -568,7 +568,7 @@ nav1 {
 
     $("#txt1").keyup(function () {
         var n = $(this).val();
-        var letter = /^[A-Za-z ' ']+$/;
+        var letter = /^[A-Za-z]+$/;
         if (n === "") {
             $("#text1").html("<span class='error'>Please enter a valid name</span>");
             mod1 = 1;
@@ -585,7 +585,7 @@ nav1 {
 
     $("#txt2").keyup(function () {
         var n = $(this).val();
-        var letter = /^[A-Za-z ' ']+$/;
+        var letter = /^[A-Za-z]+$/;
         if (n === "") {
             $("#text2").html("<span class='error'>Please enter a valid name</span>");
             mod2 = 1;
