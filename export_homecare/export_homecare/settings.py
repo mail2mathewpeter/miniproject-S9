@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-r$^0y4ht1p&&7o$7ham*3f_bw$f-asm02xa*q0m!nn@%$z1dgx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  # Change to False for production
+DEBUG = True
 
 ALLOWED_HOSTS = ['miniproject-s9.onrender.com']
 
@@ -73,6 +73,7 @@ LOGIN_URL = 'login1'
 # LOGOUT_URL = 'logout'
 # LOGIN_REDIRECT_URL = 'us'
 # LOGOUT_REDIRECT_URL = '/'
+
 # LOGIN_URL='login1'
 LOGIN_REDIRECT_URL = 'userloginhome'
 
@@ -119,7 +120,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-     'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -210,12 +211,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'  # Ensure this matches your deployment settings
+STATIC_URL = 'static/'
+STATIC_ROOT=os.path.join(BASE_DIR,"staticfiles/")
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # This should be where collectstatic puts files 
-# Add this line to use WhiteNoise for serving static files
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    os.path.join(BASE_DIR,'static')
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
