@@ -253,9 +253,13 @@
          
               <div style="margin-top:9px;">
                   <div class="dropdown">
-                 
-                      <img src="{% static customer.photo %}" alt="Cinque Terre" width="70"
-                          height="50" class="k">
+                    {% if customer.photo %}
+                    <img src="{{ static customer.photo }}" alt="Profile Photo" width="70"
+                    height="50" class="k" >
+                {% else %}
+                    <img src="{% static 'images/default_photo.jpg' %}" alt="Default Profile Photo"  class="k">
+                {% endif %}
+                     
                       <div class="dropdown-content" style="right:0;">
 
                           <div class="desc"><a href="{% url 'useraccount' %}" class=n9
