@@ -36,10 +36,10 @@ urlpatterns = [
  path('bookview/', views.bookview, name='bookview'),
 path('editbooking/<int:id>/', views.editbooking, name='editbooking'),
 path('delete_booking/<int:booking_id>/', views.delete_booking, name='delete_booking'),
-        path('camera/', views.camera_page, name='camera_page'),
-    path('camera_feed/', views.camera_feed, name='camera_feed'),
+    #     path('camera/', views.camera_page, name='camera_page'),
+    # path('camera_feed/', views.camera_feed, name='camera_feed'),
   
-    path('capture_photo/', views.capture_photo, name='capture_photo'),
+    # path('capture_photo/', views.capture_photo, name='capture_photo'),
 path('check_date_availability/', views.check_date_availability, name='check_date_availability'),
 
  path('fetch-messages/', views.fetch_messages, name='fetch_messages'),
