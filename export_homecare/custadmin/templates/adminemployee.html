@@ -207,7 +207,7 @@
                 
                 if (!allowedExtensions.exec(filePath)) {
                 
-                    document.getElementById("text17").innerHTML = "<span class='error'>invalid file type</span>";
+                    document.getElementById("text17").innerHTML = "<span class='error'>invalid image type</span>";
                     fileInput.value = '';
                     return false;
                 }
@@ -262,6 +262,62 @@
                 }
             });
         }
+
+
+        function fileValidation2() {
+            var fileInput =
+                document.getElementById('inputfileupload2');
+             
+            var filePath = fileInput.value;
+         
+            // Allowing file type
+            var allowedExtensions =
+                    /(\.pdf)$/i;
+             
+            if (!allowedExtensions.exec(filePath)) {
+              
+                document.getElementById("text19").innerHTML = "<span class='error'>invalid file type</span>";
+                fileInput.value = '';
+                $('#register').attr("disabled", true);
+                        $('#register').css("background","lightblue");
+                return false;
+                mod5=1;
+            }
+            else
+            {
+                document.getElementById("text19").innerHTML = "<span class='error'></span>";
+                $('#register').attr("disabled", false);
+                        $('#register').css("background","#4272d7");
+                        mod5=0;
+            }
+        }
+        function fileValidation3() {
+            var fileInput =
+                document.getElementById('inputfileupload3');
+             
+            var filePath = fileInput.value;
+         
+            // Allowing file type
+            var allowedExtensions =
+                    /(\.pdf)$/i;
+             
+            if (!allowedExtensions.exec(filePath)) {
+              
+                document.getElementById("text20").innerHTML = "<span class='error'>invalid file type</span>";
+                fileInput.value = '';
+                $('#register').attr("disabled", true);
+                        $('#register').css("background","lightblue");
+                return false;
+                mod5=1;
+            }
+            else
+            {
+                document.getElementById("text20").innerHTML = "<span class='error'></span>";
+                $('#register').attr("disabled", false);
+                        $('#register').css("background","#4272d7");
+                        mod5=0;
+            }
+        }
     </script>       
 </script>
 <body id="page-top">
@@ -272,7 +328,7 @@
         <div class="sidebar-brand-icon">
           <img src="{% static 'img/logo/logo2.png' %}">
         </div>
-        <div class="sidebar-brand-text mx-3">Expert Homecare</div>
+        <div class="sidebar-brand-text mx-3"><font color="white">Expert Homecare</font></div>
       </a>
       <hr class="sidebar-divider my-0">
       <li class="nav-item ">
@@ -305,19 +361,61 @@
         </div>
       </li>
       <li class="nav-item ">
-        <a class="nav-link" href="{% url 'admin1:displayserviceadmin' %}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm4" aria-expanded="true"
+          aria-controls="collapseForm">
           <i class="fa fa-gear" style="font-size:15px;"></i>
           <span>View Services</span>
         </a>
+        <div id="collapseForm4" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">View Service Details</h6>
+            <a class="collapse-item " href="{% url 'admin1:addservice1' %}">Add Service</a>
+            <a class="collapse-item" href="{% url 'admin1:displayserviceadmin' %}">View Service </a>
+          </div>
+        </div>
       </li>
-      <li class="nav-item ">
-        <a class="nav-link" href="{% url 'admin1:displayserviceprovideradmin' %}">
+     
+    
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm3" aria-expanded="true"
+          aria-controls="collapseForm">
           <i class="fas fa-user-cog"></i>
-          <span>View Service Provider</span>
+          <span>Service Provider</span>
+        </a>
+        <div id="collapseForm3" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Service Provider Details</h6>
+            <a class="collapse-item " href="{% url 'admin1:addserviceprovideradminview' %}">Add Service Provider</a>
+            <a class="collapse-item" href="{% url 'admin1:displayserviceprovideradmin' %}">View Service Provider</a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'admin1:viewbookingadmin' %}">
+          <i class="fa fa-users"></i>
+          <span>View Bookings</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'admin1:transactionadmin' %}">
+          <i class='fas fa-key'></i>
+          <span>Transaction Details</span>
         </a>
       </li>
       
-    
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'admin1:admin_chat_view' %}">
+          <i class="fa fa-question-circle"></i>
+          <span>Customer Queries</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'admin1:display_feedback1' %}">
+          <i class='fas fa-comment-dots'></i>
+          <span>View Feedback</span>
+        </a>
+      </li>
       <hr class="sidebar-divider">
       <div class="version" id="version-ruangadmin"></div>
     </ul>
@@ -421,24 +519,17 @@
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                <img class="img-profile rounded-circle" src="{% static 'img/boy.png' %}" style="max-width: 60px">
+                <img class="img-profile rounded-circle" src="{% static '' %}{{ user.photo }}" style="max-width: 60px">
                 <span class="ml-2 d-none d-lg-inline text-white small">{{ user.first_name }}</span>
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="">
+                <a class="dropdown-item" href="{% url 'admin1:adminaccount1' %}">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
                 </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
-                </a>
+           
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="">
+                <a class="dropdown-item" href="{% url 'admin1:logoutadmin' %}">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
@@ -492,11 +583,11 @@
                       <input type="radio"   required>&nbsp Other
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputPassword1">Employee Designation</label>
+                        <label for="exampleInputPassword1">Employee Manage Area</label>
                         <select name="designation"class="form-control" id="txt5"required>
                          
-                            <option value="Driver">Customer Support</option>
-                            <option value="cleaner">Developer</option>
+                            <option value="kottayam">Kottayam</option>
+                            <option value="Ernakulam">Ernakulam</option>
 </select>
                         <span id="text5"></span>
                       </div>
@@ -517,6 +608,27 @@
                         <span id="text17"></span>
                       </div>
                     </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Upload Employee  Qualification Certificate</label>
+                    <div class="custom-file">
+                  
+                     
+                      <input type="file" class="form-control" id="inputfileupload2" name="file2"accept="application/pdf" onchange="fileValidation2()"required
+                      placeholder="upload pdf">
+
+                      
+                      <span id="text19"></span><br>
+                      <div class="form-group">
+                      
+                        <label for="exampleInputPassword1">Upload Employee Previous Work Job Certificate </label>
+                     
+                      <div class="custom-file">
+                    
+                       
+                        <input type="file" class="form-control" id="inputfileupload3" name="file3"accept="application/pdf" onchange="fileValidation3()"required
+                        placeholder="upload pdf">   
+                        <span id="text20"></span>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="customControlAutosizing">

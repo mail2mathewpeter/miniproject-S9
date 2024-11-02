@@ -355,19 +355,21 @@ mod4=0;
                             <li class="scroll-to-section"><a href="#top" class="active"><font color="black">Home</font></a></li>
                             <li class="scroll-to-section"><a href="#about">About</a></li>
                             <li class="scroll-to-section"><a href="#projects">Images</a></li>
-                            <li class="scroll-to-section"><a href="">Services</a></li>
-                            <li class="scroll-to-section"><a href="#contact-us">Contact Us</a></li> 
-          
+                            <li class="scroll-to-section"><a href="{% url 'servicelogin' %}">Services</a></li>
+                            <li class="scroll-to-section"><a href="{% url 'chat_view' %}">Contact Us</a></li> 
+                             
+                        
                             <div style="margin-top:9px;">
                                 <div class="dropdown">
                                
                                     <img src="{% static customer.photo %}" alt="Cinque Terre" width="70"
-                                        height="50" class="k">
+                                        height="50" class="k" id="image">
                                     <div class="dropdown-content" style="right:0;">
 
                                         <div class="desc"><a href="{% url 'useraccount' %}" class=n9
                                                 target="__blank">Manage Account</a></div>
-                                                <div style="margin-left:25px">  <div class="desc"><a href="" class=n9
+
+<div style="margin-left:25px">  <div class="desc"><a href="{% url 'bookview' %}" class=n9
                                                 >My Bookings</a></div></div>
 
                                         <div style="margin-left:50px">
@@ -421,7 +423,7 @@ mod4=0;
                   <h3><font color="yellow"size="5"><div style="margin-top: 70px;"> Welcome To Expert Homecare website</div></font></h3>
                   <h5><font color="#feffea">Trusted Solutions for Every Home , Where Quality Meets Care</font></h5>
                   <a href="#about" class="main-stroked-button">Learn More</a>
-                  <a href="#" class="main-filled-button">Book Your Service</a>
+                  <a href="{% url 'servicelogin' %}" class="main-filled-button">Book Your Service</a>
  
                 </div>
 
@@ -438,7 +440,7 @@ mod4=0;
                   <h3><font color="yellow"size="5">Welcome To Expert Homecare website</font></h3>
                   <h5>Your Home, Our Expertise , Ensuring Comfort and Care Every Step of the Way</h5>
                   <a href="#about" class="main-stroked-button">Read More</a>
-                  <a href="#" class="main-filled-button">Book Your Service </a>
+                  <a href="{% url 'servicelogin' %}" class="main-filled-button">Book Your Service </a>
                 </div>
             </div>
           </div>

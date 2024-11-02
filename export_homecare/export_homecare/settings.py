@@ -23,9 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-r$^0y4ht1p&&7o$7ham*3f_bw$f-asm02xa*q0m!nn@%$z1dgx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False  # Change to False for production
 
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,[::1],frantic-ashley-amaljyothi-8a63d756.koyeb.app,miniproject-s9.onrender.com").split(",")
+ALLOWED_HOSTS = ['miniproject-s9.onrender.com']
+
 
 # Application definition
 
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'customerlogin',
     'custadmin',
     'employee',
+    'customserviceprovider',
     'django.contrib.staticfiles',
 
     'social_django',
@@ -52,16 +54,16 @@ INSTALLED_APPS = [
 AUTHENTICATION_BACKENDS = (
    'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-    'social_core.backends.google.GoogleOAuth2',
-     'customerlogin.backends.CustomUserBackend',
-
+    'social_core.backends.google.GoogleOAuth2', 
+     'customerlogin.backends.CustomUserBackend', 
+      
 )
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'optional'
+ACCOUNT_EMAIL_VERIFICATION = 'optional' 
 
 
 SITE_ID = 1
@@ -71,7 +73,6 @@ LOGIN_URL = 'login1'
 # LOGOUT_URL = 'logout'
 # LOGIN_REDIRECT_URL = 'us'
 # LOGOUT_REDIRECT_URL = '/'
-
 # LOGIN_URL='login1'
 LOGIN_REDIRECT_URL = 'userloginhome'
 
@@ -150,7 +151,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'export_homecare.wsgi.application'
 
+# MEDIA_URL = 'media/'
 
+# # Define the path to the media directory
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -160,7 +164,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # DATABASES = {
 #   'default': {
 #         'ENGINE': 'mysql.connector.django',
@@ -205,12 +210,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT=os.path.join(BASE_DIR,"staticfiles/")
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = '/static/'  # Ensure this matches your deployment settings
 STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,'static')
-]
+    os.path.join(BASE_DIR,'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # This should be where collectstatic puts files 
+# Add this line to use WhiteNoise for serving static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -249,7 +255,7 @@ AUTH_USER_MODEL = 'customerlogin.Customer'
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
-
+     
 )
 
 SOCIAL_AUTH_PIPELINE = (

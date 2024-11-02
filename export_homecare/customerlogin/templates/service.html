@@ -20,6 +20,16 @@
     <link rel="stylesheet" href="{% static 'caravan/assets/css/style1.css' %}">
     <link rel="stylesheet" href="{% static 'caravan/assets/css/owl.css' %}">
   </head>
+  <script>
+   
+  function showAlert() {
+    alert("Please login to book a service.");
+    
+
+  }
+
+
+  </script>
 <style>
    .k {
         border-radius: 100%;
@@ -259,7 +269,7 @@
                  
                   <p>
                     Welcome to Expert Homecare, your go-to platform for all home maintenance and repair needs! Our user-friendly website allows you to easily book services from a wide range of categories including plumbing, electrical work, cleaning, and more. With just a few clicks, you can schedule an appointment at your convenience, track the status of your booking in real-time, and make secure payments.</p>
-                  <a href="index.html#about" class="filled-button">About</a>
+                  <a href="{% url 'home' %}#about" class="filled-button">About</a>
                 </div>
             </div>
           </div>
@@ -272,7 +282,7 @@
                
                 <p>
                   Our team of vetted and experienced professionals is dedicated to providing top-notch service to ensure your home stays in perfect condition. Additionally, our integrated messaging system allows seamless communication between you and the service provider. Experience hassle-free home maintenance with Expert Homecare, where quality and customer satisfaction are our top priorities. Book your service today!</p>
-                <a href="index.html#about" class="filled-button">About</a>
+                <a href="{% url 'home' %}#about" class="filled-button">About</a>
               </div>
             </div>
           </div>
@@ -318,7 +328,8 @@
                                 <!-- <h5><sup>$</sup></h5> -->
                             </div>
                             <div style="text-align: center; margin-top: 15px;">
-                                <a href="?id={{ customer_data.id }}" class="filled-button">View More</a>
+                              <a href="{% url 'login1' %}" onclick="showAlert()" class="filled-button">Book</a>
+
                             </div>
                         </div>
                     </div>
@@ -347,6 +358,8 @@
           t.style.color='#fff';
           }
       }
+  
+
     </script>
 
   </body>
