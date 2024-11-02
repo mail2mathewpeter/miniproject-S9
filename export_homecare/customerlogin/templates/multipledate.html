@@ -385,7 +385,7 @@
                         </li>
                         <li class="nav-item">
                             <div class="dropdown">
-                                <img src="{% static user.photo %}" alt="User Photo" width="70" height="50" class="k">
+                                <img src="static{%  user.photo %}" alt="User Photo" width="70" height="50" class="k">
                                 <div class="dropdown-content">
                                     <a href="{% url 'useraccount' %}" target="__blank">Manage Account</a>
                                     <a href="bookingview.php">My Bookings</a>

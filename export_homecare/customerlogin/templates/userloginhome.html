@@ -362,7 +362,7 @@ mod4=0;
                             <div style="margin-top:9px;">
                                 <div class="dropdown">
                                     {% if customer.photo %}
-    <img src="static {{ customer.photo.url }}" alt="Profile Photo" width="70" height="50" class="k" id="image">
+    <img src="static{{ customer.photo.url }}" alt="Profile Photo" width="70" height="50" class="k" id="image">
 {% else %}
     <img src="{% static 'images/default_photo.jpg' %}" alt="Default Profile Photo" width="70" height="50" class="k" id="image">
 {% endif %}
