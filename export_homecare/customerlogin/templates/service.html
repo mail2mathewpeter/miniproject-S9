@@ -319,7 +319,7 @@
                 {% for customer_data in data_to_display %}
                 <div class="col-md-4">
                     <div class="service-item">
-                        <img src="{% static customer_data.photo %}" alt="{{ customer_data.service_name }}">
+                        <img src="static{% customer_data.photo %}" alt="{{ customer_data.service_name }}">
                         <div class="down-content">
                             <h4>{{ customer_data.service_name }}</h4>
                             <h5><p style="font-family: 'Times New Roman', Times, serif;">{{ customer_data.service_description }}</p>
