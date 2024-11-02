@@ -1107,23 +1107,23 @@ def delete_booking(request, booking_id):
 # def camera_page(request):
 #     return render(request, 'camera_page.html')
 
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
-from django.template.loader import get_template
-from xhtml2pdf import pisa  # If you want to generate PDF
-from io import BytesIO 
-def render_to_pdf(template_src, context_dict={}):
-    template = get_template(template_src)
-    html = template.render(context_dict)
-    result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
-    if not pdf.err:
-        return HttpResponse(result.getvalue(), content_type='application/pdf')
-    return None
+# from django.shortcuts import render, get_object_or_404
+# from django.http import HttpResponse
+# from django.template.loader import get_template
 
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
- # Adjust import paths as necessary
+# from io import BytesIO 
+# def render_to_pdf(template_src, context_dict={}):
+#     template = get_template(template_src)
+#     html = template.render(context_dict)
+#     result = BytesIO()
+#     pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
+#     if not pdf.err:
+#         return HttpResponse(result.getvalue(), content_type='application/pdf')
+#     return None
+
+# from django.shortcuts import get_object_or_404, render
+# from django.http import HttpResponse
+#  # Adjust import paths as necessary
 
 
 def payment_receipt(request, payment_id):
