@@ -191,7 +191,7 @@
                     <div class="author-card-avatar">
     
                         {% if customer.photo %}
-                        <img src="{{ customer.photo }}" alt="Profile Photo" class="k" >
+                        <img src="static {{ customer.photo }}" alt="Profile Photo" class="k" >
                     {% else %}
                         <img src="{% static 'images/default_photo.jpg' %}" alt="Default Profile Photo"  class="k">
                     {% endif %}
