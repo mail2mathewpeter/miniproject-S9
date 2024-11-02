@@ -213,9 +213,7 @@ USE_TZ = True
 STATIC_URL = '/static/'  # Ensure this matches your deployment settings
 STATICFILES_DIRS=[
     os.path.join(BASE_DIR,'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'assets')] 
- # This should be where collectstatic puts files 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # This should be where collectstatic puts files 
 # Add this line to use WhiteNoise for serving static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
