@@ -200,7 +200,7 @@
           {% for user in users %}
           <a href="{% url 'admin1:chat_with_customer' user.email %}">
             <div class="user-item" data-email="{{ user.email }}">
-              <img src="{% static user.photo %}" alt="User Avatar">
+              <img src="{% static user.photo.url %}" alt="User Avatar">
               <div class="user-info">
                 <h4>{{ user.first_name }} {{ user.last_name }}</h4>
                 <p>
