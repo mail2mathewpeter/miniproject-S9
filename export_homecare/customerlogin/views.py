@@ -1121,9 +1121,10 @@ def delete_booking(request, booking_id):
 #         return HttpResponse(result.getvalue(), content_type='application/pdf')
 #     return None
 
-# from django.shortcuts import get_object_or_404, render
-# from django.http import HttpResponse
-#  # Adjust import paths as necessary
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponse
+ # Adjust import paths as necessary
+from xhtml2pdf import pisa
 
 
 def payment_receipt(request, payment_id):
@@ -1195,13 +1196,7 @@ def payment_receipt(request, payment_id):
         print(booking_data)
         
         # Generate PDF (Optional)
-        pdf = render_to_pdf('receipt_template_payment.html', booking_data)
-        if pdf:
-            response = HttpResponse(pdf, content_type='application/pdf')
-            filename = f"Receipt_{payment_id}.pdf"
-            content = f"inline; filename={filename}"  # Use 'inline' for inline display in browser, 'attachment' to force download
-            response['Content-Disposition'] = content
-            return response
+      
 
         # If PDF generation fails, render the HTML template instead
         return render(request, 'receipt_template_payment.html', booking_data)

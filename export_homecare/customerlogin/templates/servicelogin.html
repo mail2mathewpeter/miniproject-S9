@@ -254,7 +254,7 @@
               <div style="margin-top:9px;">
                   <div class="dropdown">
                     {% if customer.photo %}
-                    <img src="static{{ customer.photo }}" alt="Profile Photo" width="70"
+                    <img src="/static/{{ customer.photo }}" alt="Profile Photo" width="70"
                     height="50" class="k" >
                 {% else %}
                     <img src="{% static 'images/default_photo.jpg' %}" alt="Default Profile Photo"  class="k">
@@ -345,7 +345,7 @@
                 {% for customer_data in data_to_display %}
                 <div class="col-md-4">
                     <div class="service-item">
-                        <img src="{{ static customer_data.photo }}" alt="{{ customer_data.service_name }}">
+                        <img src="/static/{{  customer_data.photo }}" alt="{{ customer_data.service_name }}">
                         <div class="down-content">
                             <h4>{{ customer_data.service_name }}</h4>
                           
