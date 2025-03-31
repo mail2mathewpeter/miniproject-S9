@@ -412,18 +412,6 @@ def logincustomer(request):
             request.session['login'] = 'employee'
             name=request.session.get('username')
             return redirect('employee:index1') 
-           
-           elif employee.email==email and employee.password==password and employee.status=="5":
-         
-            # Authenticate user with email and password only (without status check)
-            # login(request, user)
-            name=employee.name;
-            id=employee.id;
-            request.session['username']=name;
-            request.session['id']=id;
-            request.session['login'] = 'customersupport'
-            name=request.session.get('username')
-            return redirect('customersupport:index5') 
            else:
                messages.success(request, 'Account is not activated.')
                return render(request, 'login1.html')
@@ -447,24 +435,6 @@ def logincustomer(request):
               except service_provider.DoesNotExist:
                     messages.error(request, 'Invalid credentials.')
                     return render(request, 'login1.html')
-              try:
-               serviceprovider = service_provider.objects.get(Service_Provider_Email=email)
-               if serviceprovider.Service_Provider_Email==email and serviceprovider.password==password and serviceprovider.status=="5":
-                print(serviceprovider.Service_Provider_Email)
-                print(serviceprovider.password);
-                print(serviceprovider.status);
-            # Authenticate user with email and password only (without status check)
-            # login(request, user)
-                name=serviceprovider.service_provider_name;
-                id=serviceprovider.id;
-                request.session['username']=name;
-                request.session['id']=id;
-                request.session['login'] = 'serviceprovider'
-                name=request.session.get('username')
-                return redirect('customer_support:index5') 
-              except service_provider.DoesNotExist:
-                    messages.error(request, 'Invalid credentials.')
-                    return render(request, 'login1.html')  
             
             
             
@@ -475,7 +445,6 @@ def logincustomer(request):
     
     messages.success(request, 'Invalid credentials')
     return render(request, 'login1.html', {'error': 'Invalid credentials'})
-
 
 
 from django.shortcuts import redirect
