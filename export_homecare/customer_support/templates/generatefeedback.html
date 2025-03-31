@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="{% static 'images/1.png' %}" rel="icon">
+  <title>Expert Homecare Employee</title>
+  <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/ruang-admin.min2.css' %}" rel="stylesheet">
+</head>
+<script src="path/to/jquery.js"></script>
+<script src="path/to/bootstrap.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script>
+
+</script>
+
+<body id="page-top">
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'employee:index1' %}">
+          <div class="sidebar-brand-icon">
+            <img src="{% static 'img/logo/logo2.png' %}">
+          </div>
+          <div class="sidebar-brand-text mx-3">Expert Homecare</div>
+         <!-- <div class="sidebar-brand-text mx-3">Expert Homecare</div>  -->
+        </a>
+        <hr class="sidebar-divider my-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'customserviceprovider:index2' %}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+        </li>
+        <hr class="sidebar-divider">
+        <div class="sidebar-heading">
+          Features
+        </div>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'customserviceprovider:bookeduserdetails' %}">
+            <i class="fa fa-users"></i>
+            <span>Booked User Details</span>
+          </a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'customserviceprovider:display_feedback' %}">
+              <i class="fa fa-users"></i>
+              <span>View Feedback</span>
+            </a>
+          </li>
+          
+        
+       
+    </ul>
+    <!-- Sidebar -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <!-- TopBar -->
+        <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+          <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
+                <form class="navbar-search">
+                  <div class="input-group">
+                    <input type="text" class="form-control bg-light border-1 small" placeholder="What do you want to look for?"
+                      aria-label="Search" aria-describedby="basic-addon2" style="border-color: #ef6767;">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </li>
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <span class="badge badge-danger badge-counter"></span>
+              </a>
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header">
+                  Alerts Center
+                </h6>
+             
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-envelope fa-fw"></i>
+                <span class="badge badge-warning badge-counter"></span>
+              </a>
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="messagesDropdown">
+                <h6 class="dropdown-header">
+                  Message Center
+                </h6>
+               
+            </li>
+            <div class="topbar-divider d-none d-sm-block"></div>
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <img src="{% static customer.photo %} "class="img-profile rounded-circle"  style="max-width: 60px">
+                <span class="ml-2 d-none d-lg-inline text-white small">{{ customer.service_provider_name}}</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="{% url 'employee:employeccount1' %}">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'employee:logoutaemployee' %}">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Topbar -->
+        <!-- Container Fluid-->
+        <div class="container-fluid" id="container-wrapper">
+        
+        
+          <!-- Row -->
+        
+            <!-- Datatables -->
+            <div class="col-lg-12">
+              <div class="card mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Feedback</h6>
+                 
+               
+                    <a href="{% url 'customserviceprovider:index2' %}" target="_blank"><font color="blue">Generate Report</font>  </a>
+             </div>
+            
+             <div class="right">
+              {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-success" role="alert" id="delete-success-message" style="max-width: 400px; margin-left:600px;">
+                      {{ message }}
+                  </div>
+              {% endfor %}
+          {% endif %}
+       
+              </div>
+                <div class="table-responsive p-3">
+                
+                  <table class="table align-items-center table-flush" id="dataTable">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Customer Name</th>
+                         <!-- Changed from Service Name -->
+                         <!-- Changed from Service Description -->
+                        <th>Customer Email</th>
+                        <th>Service Offered</th> <!-- Changed from Image -->
+                        <th>Service status</th> <!-- Changed from Status -->
+                        <th>Generate Feedback</th> <!-- Changed from Action -->
+                      </tr>
+                    </thead>
+                  
+                    <tbody>
+                      {% for customer_data in data_to_display %}
+                      <tr>
+                        <td>{{ customer_data.customer.first_name }} {{ customer_data.customer.last_name }}</td> <!-- Updated field -->
+                        <td>{{ customer_data.service_received }}</td> <!-- Updated field -->
+                        <td>{{ customer_data.rating }}</td> <!-- Updated field -->
+                        <td>{{ customer_data.experience }}</td> <!-- Updated field -->
+                        <td>{{ customer_data.suggestions }}</td> <!-- Updated field -->
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div> 
+            
+          <!--Row
+
+          <!-- Documentation Link -->
+          
+
+          <!-- Modal Logout -->
+          <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure you want to logout?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+                  <a href="login.html" class="btn btn-primary">Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!---Container Fluid-->
+      </div>
+
+      <!-- Footer -->
+      
+      <!-- Footer -->
+    </div>
+  </div>
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Customer Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="modal_name">Name:</label>
+                        <input type="text" class="form-control" id="modal_name" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal_email">Email:</label>
+                        <input type="text" class="form-control" id="modal_email" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal_phone">Mobile:</label>
+                        <input type="text" class="form-control" id="modal_phone" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal_gender">Gender:</label>
+                        <input type="text" class="form-control" id="modal_gender" readonly>
+                    </div>
+                   
+                    <input type="hidden" id="modal_id">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+           
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Scroll to top -->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <script src="{% static 'vendor/jquery/jquery.min.js '%}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+  <script src="{% static 'js/ruang-admin.min.js' %}"></script>
+  <!-- Page level plugins -->
+  <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+  <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script>
+      $(document).ready(function() {
+          $(document).on('click', '.edit', function() {
+              var id = $(this).data('id');
+              var name = $(this).data('name');
+              var email = $(this).data('email');
+              var phone = $(this).data('phone');
+              var gender = $(this).data('gender');
+              var status = $(this).data('status');
+      
+              console.log("Clicked ID:", id); // Verify in the console that the correct ID is logged
+              console.log("Name:", name);
+              console.log("Phone:", phone);
+              console.log("Email:", email);
+              console.log("Gender:", gender);
+              console.log("Status:", status);
+      
+              // Assign values to modal fields
+              $('#modal_name').val(name);
+              $('#modal_email').val(email);
+              $('#modal_phone').val(phone);
+              $('#modal_gender').val(gender);
+              $('#modal_status').val(status);
+              $('#modal_id').val(id);
+      
+              // Show the modal
+              $('#editModal').modal('show');
+          });
+      });
+      document.addEventListener("DOMContentLoaded", function() {
+        var messageElement = document.getElementById("delete-success-message");
+        if (messageElement) {
+            // alert(messageElement.innerText);  // This will show a browser alert with the message
+            
+            // Optional: Hide the message after 5 seconds
+            setTimeout(function() {
+                messageElement.style.display = 'none';
+            }, 3000);
+        }
+    });
+      </script>
+  <!-- Page level custom scripts -->
+  <script>
+    $(document).ready(function () {
+      $('#dataTable').DataTable(); // ID From dataTable 
+      $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+    });
+  </script>
+  <style>
+    #dataTableSearchBox {
+        float: right;
+        
+    }
+</style>
+
+</body>
+
+</html>

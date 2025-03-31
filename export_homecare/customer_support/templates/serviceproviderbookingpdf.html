@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Provider Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50; /* Green color */
+        }
+        .logo {
+            display: block;
+            margin: 0 auto;
+            width: 150px; /* Adjust the width as needed */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50; /* Green color for headers */
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9; /* Alternate row color */
+        }
+        tr:hover {
+            background-color: #f1f1f1; /* Highlight row on hover */
+        }
+        .footer {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 14px;
+            color: #777;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        .company-details {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .company-details h2 {
+            margin: 0;
+        }
+        .company-details p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        /* Adjust column widths */
+        .id-column { width: 5%; }
+        .name-column { width: 20%; }
+        .photo-column { width: 10%; }
+        .phone-column { width: 15%; }
+        .address-column { width: 15%; }
+        .gender-column { width: 10%; }
+        .service-column { width: 15%; }
+        .experience-column { width: 20%; }
+    </style>
+</head>
+<body>
+    <div class="company-details">
+        <img src="{% static 'images/1.png' %}" alt="Company Logo" class="logo">
+        <h1><font size="6" color="green">Expert Homecare</font></h1>
+        <p>BUILDING NO 209/B, Aroor - Thoppumpady Rd, near ST MARYS CHURCH, Aroor gram panchayat, Kochi, Kerala 688534</p>
+        <p>Contact: experthomecare43@gmail.com | +9497036814</p>
+    </div>
+    <h1>Service Provider Report</h1>
+    <table>
+        <thead>
+            <tr>
+                <th class="id-column"><center>SI No.</center></th>
+                <th class="name-column"><center>Customer Name</center></th>
+                <th class="photo-column"><center>Customer Photo</center></th>
+                <th class="phone-column"><center>Customer Phone</center></th>
+                <th class="address-column"><center>Customer Address</center></th>
+                <th class="gender-column"><center>Gender</center></th>
+                <th class="service-column"><center>Service Booked Date</center></th>
+                <th class="service-column"><center>Service Amount</center></th>
+                <th class="experience-column"><center>Service Status</center></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for provider in service_providers %}
+                {% if provider.bookings %}
+                    {% for booking in provider.bookings %}
+                    <tr>
+                        <td><center>{{ forloop.counter }}</center></td>
+                        <td><center>{{ booking.customer_name }}</center></td>
+                        <td class="photo-column"><center>{% if booking.photo %}<img src="{% static booking.photo %}" alt="{{ booking.customer_name }}" style="max-width: 100px; max-height: 100px;">{% else %}No photo{% endif %}</center></td>
+                        <td><center>{{ booking.phone }}</center></td>
+                        <td><center>{{ booking.address }}</center></td>
+                        <td><center>{{ booking.gender }}</center></td>
+                        <td><center>{{ booking.booking_date }}</center></td>
+                        <td><center>{{ booking.amount }}</center></td>
+                        <td><center>{{ booking.status }}</center></td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="9"><center>No bookings available for this service provider.</center></td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="footer">
+        <p>Thank you for using our service.</p>
+        <p>&copy; {{ current_year }} Expert Homecare. All rights reserved.</p>
+    </div>
+</body>
+</html>
