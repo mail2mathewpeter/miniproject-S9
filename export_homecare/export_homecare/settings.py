@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'customerlogin',
     'custadmin',
     'employee',
-    'customersupport',
+     'customer_support',
     'customserviceprovider',
     'django.contrib.staticfiles',
 
